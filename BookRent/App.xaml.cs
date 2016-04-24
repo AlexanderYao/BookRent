@@ -20,18 +20,17 @@ namespace BookRent
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
             var main = new MainWindow();
-            //main.Width = 
-            //main.Height = 
-            //main.Top = 
-            //main.Left = 
+            Set(main, "width");
+            Set(main, "height");
+            Set(main, "top");
+            Set(main, "left");
             main.Show();
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        private void Set(MainWindow main, string prop)
         {
-            base.OnExit(e);
-            //TODO: remember size + location when exit
-            //MainWindow.Left
+            var width = IniFile.Instance.Read(prop);
+            if (!string.IsNullOrEmpty(width)) main.Width = double.Parse(width);
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

@@ -4,7 +4,7 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:local="clr-namespace:BookRent"
-        Title="图书借阅管理" Height="350" Width="525">
+        Title="图书借阅管理" Closed="win_Closed" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -50,7 +50,15 @@
                     </StackPanel>
 
                     <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
-                              AutoGenerateColumns="True">
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
+                              AlternatingRowBackground="Gainsboro" AlternationCount="2" IsReadOnly="True"
+                              ColumnWidth="*">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"/>
+                            <DataGridTextColumn Header="书名" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="作者" Binding="{Binding Author}"/>
+                            <DataGridTextColumn Header="出版日期" Binding="{Binding PubDate, StringFormat={}{0:yyyy.MM.dd}}"/>
+                        </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>

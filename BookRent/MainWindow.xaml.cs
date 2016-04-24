@@ -16,15 +16,21 @@ using System.Windows.Shapes;
 
 namespace BookRent
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : DXWindow
     {
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = new MainVm();
+        }
+
+        private void win_Closed(object sender, EventArgs e)
+        {
+            IniFile ini = IniFile.Instance;
+            ini.Write("width", Width.ToString());
+            ini.Write("height", Height.ToString());
+            ini.Write("top", Top.ToString());
+            ini.Write("left", Left.ToString());
         }
     }
 }

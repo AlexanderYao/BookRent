@@ -19,5 +19,9 @@ namespace BookRent
             set { base.SetProperty(ref _book, value); }
         }
 
+        public bool IsAdd
+        {
+            get { return null == Book || string.IsNullOrEmpty(Book.ISBN); }
+        }
     }
 }

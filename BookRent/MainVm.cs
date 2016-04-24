@@ -84,6 +84,10 @@ namespace BookRent
 
             var result = _bookRepo.Delete(SelectedBook);
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
+            if (result)
+            {
+                Books.Remove(SelectedBook);
+            }
         }
 
         private void UpdateBook()
@@ -94,7 +98,7 @@ namespace BookRent
             }
 
             var vm = new BookDialogVm();
-            vm.Book = SelectedBook;
+            vm.Book = SelectedBook.Clone();
             Action<CancelEventArgs> updateMethod = x =>
             {
                 var result = _bookRepo.Update(vm.Book);

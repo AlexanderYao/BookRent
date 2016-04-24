@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="BookDialogVm.cs" />
     <Compile Include="BookRepository.cs" />
+    <Compile Include="IniFile.cs" />
     <Compile Include="Rent.cs" />
     <Compile Include="SqliteHelper.cs" />
     <Compile Include="ViewModelBase.cs" />
@@ -116,7 +117,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Data\BookRent.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

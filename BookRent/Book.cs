@@ -28,5 +28,16 @@ namespace BookRent
         {
             return null == ISBN ? base.GetHashCode() : ISBN.GetHashCode();
         }
+
+        public Book Clone()
+        {
+            return new Book
+            {
+                ISBN = this.ISBN,
+                Name = this.Name,
+                Author = this.Author,
+                PubDate = this.PubDate
+            };
+        }
     }
 }

@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="ISBN：" Grid.Row="0" Grid.Column="0"/>
-        <TextBox Text="{Binding Book.ISBN}" Grid.Row="0" Grid.Column="1"/>
+        <TextBox Text="{Binding Book.ISBN}" IsEnabled="{Binding IsAdd}" Grid.Row="0" Grid.Column="1"/>
 
         <Label Content="书名：" Grid.Row="1" Grid.Column="0"/>
         <TextBox Text="{Binding Book.Name}" Grid.Row="1" Grid.Column="1"/>
