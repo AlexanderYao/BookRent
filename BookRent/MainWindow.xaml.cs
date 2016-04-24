@@ -27,10 +27,10 @@ namespace BookRent
         private void win_Closed(object sender, EventArgs e)
         {
             IniFile ini = IniFile.Instance;
-            ini.Write("width", Width.ToString());
-            ini.Write("height", Height.ToString());
-            ini.Write("top", Top.ToString());
-            ini.Write("left", Left.ToString());
+            ini.Write("Width", Width.ToString());
+            ini.Write("Height", Height.ToString());
+            ini.Write("Top", Top.ToString());
+            ini.Write("Left", Left.ToString());
         }
     }
 }

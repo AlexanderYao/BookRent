@@ -9,9 +9,6 @@ using System.Windows.Threading;
 
 namespace BookRent
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
@@ -20,17 +17,21 @@ namespace BookRent
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
             var main = new MainWindow();
-            Set(main, "width");
-            Set(main, "height");
-            Set(main, "top");
-            Set(main, "left");
+            Set(main, "Width");
+            Set(main, "Height");
+            Set(main, "Top");
+            Set(main, "Left");
             main.Show();
         }
 
         private void Set(MainWindow main, string prop)
         {
             var width = IniFile.Instance.Read(prop);
-            if (!string.IsNullOrEmpty(width)) main.Width = double.Parse(width);
+            if (!string.IsNullOrEmpty(width))
+            {
+                var value = double.Parse(width);
+                main.GetType().GetProperty(prop).SetValue(main, value);
+            }
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
