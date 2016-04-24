@@ -18,4 +18,14 @@ namespace BookRent
             this.RaisePropertyChanged(propName);
         }
     }
+
+    public abstract class MyBindableBase : BindableBase
+    {
+        protected new void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propName = null)
+        {
+            if (object.Equals(storage, value)) return;
+            storage = value;
+            this.RaisePropertyChanged(propName);
+        }
+    }
 }

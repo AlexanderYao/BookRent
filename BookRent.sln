@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{A5F1B1ED-ECD5-42BA-B3D2-995605DB9707}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\DevExpress.Mvvm.v14.1.dll = Lib\DevExpress.Mvvm.v14.1.dll
+		Lib\DevExpress.Xpf.Core.v14.1.dll = Lib\DevExpress.Xpf.Core.v14.1.dll
 		Lib\System.Data.SQLite.dll = Lib\System.Data.SQLite.dll
 	EndProjectSection
 EndProject

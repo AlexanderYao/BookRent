@@ -1,6 +1,9 @@
-﻿<Window x:Class="BookRent.MainWindow"
+﻿<dx:DXWindow x:Class="BookRent.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:local="clr-namespace:BookRent"
         Title="图书借阅管理" Height="350" Width="525">
     <Window.Resources>
         <ResourceDictionary>
@@ -9,12 +12,28 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DialogService DialogWindowStartupLocation="CenterOwner">
+            <dx:DialogService.ViewTemplate>
+                <DataTemplate>
+                    <local:BookDialog/>
+                </DataTemplate>
+            </dx:DialogService.ViewTemplate>
+            <dx:DialogService.DialogStyle>
+                <Style TargetType="dx:DXDialogWindow">
+                    <!--<Setter Property="Width" Value="300"/>
+                    <Setter Property="Height" Value="300"/>-->
+                    <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+                </Style>
+            </dx:DialogService.DialogStyle>
+        </dx:DialogService>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
+
         <TabControl Grid.Row="0">
             <TabItem Header="图书管理">
                 <Grid Background="#FFE5E5E5">
@@ -29,8 +48,8 @@
                         <Button Content="删除" Command="{Binding DelBookCmd}"/>
                         <Button Content="修改" Command="{Binding UpdateBookCmd}"/>
                     </StackPanel>
-                    
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" 
+
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
                               AutoGenerateColumns="True">
                     </DataGrid>
                 </Grid>
@@ -55,7 +74,15 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        
-        <TextBlock Text="{Binding Status}" Grid.Row="1"/>
+
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="{Binding Status}" Grid.Column="0"/>
+            <ProgressBar Value="50" Width="200" Grid.Column="1"/>
+        </Grid>
     </Grid>
-</Window>
+</dx:DXWindow>

@@ -14,15 +14,11 @@ using System.Windows.Shapes;
 
 namespace BookRent
 {
-    /// <summary>
-    /// BookDialog.xaml 的交互逻辑
-    /// </summary>
-    public partial class BookDialog : Window
+    public partial class BookDialog : UserControl
     {
         public BookDialog()
         {
             InitializeComponent();
-            this.DataContext = new BookDialogVm();
         }
     }
 }

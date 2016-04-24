@@ -18,6 +18,20 @@ namespace BookRent
         {
             base.OnStartup(e);
             Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
+            var main = new MainWindow();
+            //main.Width = 
+            //main.Height = 
+            //main.Top = 
+            //main.Left = 
+            main.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            //TODO: remember size + location when exit
+            //MainWindow.Left
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
