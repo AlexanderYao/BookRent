@@ -31,4 +31,8 @@
     <Style TargetType="TabControl">
         <Setter Property="FontSize" Value="15"/>
     </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
 </ResourceDictionary>
