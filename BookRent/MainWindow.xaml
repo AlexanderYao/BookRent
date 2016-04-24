@@ -4,7 +4,8 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:local="clr-namespace:BookRent"
-        Title="图书借阅管理" Closed="win_Closed" >
+        Title="图书借阅管理" Closed="win_Closed" Icon="Resources/rent.png" 
+        >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -36,7 +37,7 @@
 
         <TabControl Grid.Row="0">
             <TabItem Header="图书管理">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
@@ -63,7 +64,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="借阅管理">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
