@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    [Serializable]
     public class Book
     {
+        public long Id { get; set; }
         public string ISBN { get; set; }
         public string Name { get; set; }
-        public string Author { get; set; }
-        public DateTime PubDate { get; set; }
+        /// <summary>
+        /// 入库日期
+        /// </summary>
+        public DateTime InDate { get; set; }
+        public double Price { get; set; }
+        /// <summary>
+        /// 入库方式
+        /// </summary>
+        //public InMode InMode { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -28,16 +37,11 @@ namespace BookRent
         {
             return null == ISBN ? base.GetHashCode() : ISBN.GetHashCode();
         }
+    }
 
-        public Book Clone()
-        {
-            return new Book
-            {
-                ISBN = this.ISBN,
-                Name = this.Name,
-                Author = this.Author,
-                PubDate = this.PubDate
-            };
-        }
+    public enum InMode
+    {
+        手工 = 0,
+        自动 = 1
     }
 }

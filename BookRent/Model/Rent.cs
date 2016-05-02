@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 借阅
+    /// </summary>
+    [Serializable]
     public class Rent
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string UserName { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }

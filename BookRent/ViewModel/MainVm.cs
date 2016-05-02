@@ -61,7 +61,7 @@ namespace BookRent
         private void AddBook()
         {
             var vm = new BookDialogVm();
-            vm.Book = new Book { PubDate = DateTime.Today };
+            vm.Book = new Book { InDate = DateTime.Today };
             Action<CancelEventArgs> addMethod = x =>
             {
                 var result = _bookRepo.Add(vm.Book);
