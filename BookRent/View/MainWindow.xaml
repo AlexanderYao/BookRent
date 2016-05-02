@@ -56,31 +56,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="图书入库管理">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <Button Content="查询" Command="{Binding QueryBookCmd}"/>
-                        <Button Content="添加" Command="{Binding AddBookCmd}"/>
-                        <Button Content="删除" Command="{Binding DelBookCmd}"/>
-                        <Button Content="修改" Command="{Binding UpdateBookCmd}"/>
-                    </StackPanel>
-
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
-                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
-                              AlternatingRowBackground="Gainsboro" AlternationCount="2" IsReadOnly="True"
-                              ColumnWidth="*">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"/>
-                            <DataGridTextColumn Header="书名" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="入库日期" Binding="{Binding InDate, StringFormat={}{0:yyyy.MM.dd}}"/>
-                            <DataGridTextColumn Header="价格" Binding="{Binding Price}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                <local:BookManage />
             </TabItem>
             <TabItem Header="会员管理">
                 <Grid>

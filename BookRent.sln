@@ -9,7 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{A5F1B1ED-ECD
 	ProjectSection(SolutionItems) = preProject
 		Lib\DevExpress.Mvvm.v14.1.dll = Lib\DevExpress.Mvvm.v14.1.dll
 		Lib\DevExpress.Xpf.Core.v14.1.dll = Lib\DevExpress.Xpf.Core.v14.1.dll
+		Lib\DevExpress.Xpf.Grid.v14.1.Core.dll = Lib\DevExpress.Xpf.Grid.v14.1.Core.dll
+		Lib\DevExpress.Xpf.Grid.v14.1.dll = Lib\DevExpress.Xpf.Grid.v14.1.dll
 		Lib\System.Data.SQLite.dll = Lib\System.Data.SQLite.dll
+		Lib\System.Windows.Interactivity.dll = Lib\System.Windows.Interactivity.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0AC5565B-A882-45B9-9D59-C7ABD820ABC9}"

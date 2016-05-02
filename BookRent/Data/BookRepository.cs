@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
-    public class BookRepository
+    public class BookRepository : IRepository<Book>
     {
         private SqliteHelper _helper;
 
@@ -25,10 +25,10 @@ namespace BookRent
                 result.Add(new Book
                 {
                     Id = reader.GetInt64(0),
-                    ISBN = reader.GetString(1),
-                    Name = reader.GetString(2),
-                    InDate = reader.GetDateTime(3),
-                    Price = reader.GetDouble(4)
+                    ISBN = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                    Name = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                    InDate = reader.IsDBNull(3) ? DateTime.MinValue : reader.GetDateTime(3),
+                    Price = reader.IsDBNull(4) ? double.MinValue : reader.GetDouble(4)
                 });
             }
             return result;
