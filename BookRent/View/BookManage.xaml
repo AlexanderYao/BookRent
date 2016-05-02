@@ -11,6 +11,9 @@
     <UserControl.Resources>
         <ResourceDictionary  Source="../Style.xaml"/>
     </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -34,10 +37,10 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
-                <dxg:GridColumn  FieldName="ISBN"      Header="ISBN"     />
-                <dxg:GridColumn  FieldName="Name"      Header="书名"      />
-                <dxg:GridColumn  FieldName="InDate"    Header="入库日期"  />
-                <dxg:GridColumn  FieldName="Price"     Header="价格"     />
+                <dxg:GridColumn Width="150"  FieldName="ISBN"      Header="ISBN"     />
+                <dxg:GridColumn Width="150" FieldName="Name"      Header="书名"      />
+                <dxg:GridColumn Width="150"  FieldName="InDate"    Header="入库日期"  />
+                <dxg:GridColumn Width="80"  FieldName="Price"     Header="价格"     />
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

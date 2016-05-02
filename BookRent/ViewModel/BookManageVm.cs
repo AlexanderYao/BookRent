@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BookRent
@@ -34,6 +35,8 @@ namespace BookRent
         public ObservableCollection<Book> Books { get; set; }
 
         public virtual Book SelectedBook { get; set; }
+
+        public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
         public void Query()
         {
@@ -65,6 +68,11 @@ namespace BookRent
         public void Delete()
         {
             if (null == SelectedBook)
+            {
+                return;
+            }
+            
+            if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
