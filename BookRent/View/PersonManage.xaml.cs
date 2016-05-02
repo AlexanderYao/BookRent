@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 
 namespace BookRent
 {
-    public partial class BookManage : UserControl
+    public partial class PersonManage : UserControl
     {
-        public BookManage()
+        public PersonManage()
         {
             InitializeComponent();
-            this.DataContext = BookManageVm.Create();
+            this.DataContext = PersonManageVm.Create();
         }
     }
 }

@@ -37,47 +37,13 @@
 
         <TabControl Grid.Row="0">
             <TabItem Header="借阅管理">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <Button Content="查询" Command="{Binding QueryRentCmd}"/>
-                        <Button Content="添加" Command="{Binding AddRentCmd}"/>
-                        <Button Content="删除" Command="{Binding DelRentCmd}"/>
-                        <Button Content="修改" Command="{Binding ModRentCmd}"/>
-                    </StackPanel>
-
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Rents}" 
-                              AutoGenerateColumns="True">
-                    </DataGrid>
-                </Grid>
+                
             </TabItem>
             <TabItem Header="图书入库管理">
                 <local:BookManage />
             </TabItem>
             <TabItem Header="会员管理">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <Button Content="查询" Command="{Binding QueryBookCmd}"/>
-                        <Button Content="添加" Command="{Binding AddBookCmd}"/>
-                        <Button Content="删除" Command="{Binding DelBookCmd}"/>
-                        <Button Content="修改" Command="{Binding UpdateBookCmd}"/>
-                    </StackPanel>
-
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
-                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" 
-                              AlternatingRowBackground="Gainsboro" AlternationCount="2" IsReadOnly="True"
-                              ColumnWidth="*">
-                    </DataGrid>
-                </Grid>
+                <local:PersonManage/>
             </TabItem>
         </TabControl>
 

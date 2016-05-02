@@ -10,18 +10,18 @@ using System.Windows.Input;
 
 namespace BookRent
 {
-    public class BookManageVm
+    public class PersonManageVm
     {
-        private IRepository<Book> _bookRepo;
-        protected BookManageVm()
+        private IRepository<Person> _personRepo;
+        protected PersonManageVm()
         {
-            _bookRepo = new BookRepository();
-            Books = new ObservableCollection<Book>();
+            _personRepo = new PersonRepository();
+            Persons = new ObservableCollection<Person>();
         }
 
-        public static BookManageVm Create()
+        public static PersonManageVm Create()
         {
-            return ViewModelSource.Create(() => new BookManageVm());
+            return ViewModelSource.Create(() => new PersonManageVm());
         }
 
         public string Status
@@ -32,77 +32,80 @@ namespace BookRent
             }
         }
 
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<Person> Persons { get; set; }
 
-        public virtual Book SelectedBook { get; set; }
+        public virtual Person SelectedPerson { get; set; }
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
         public void Query()
         {
-            var books = _bookRepo.Query();
-            Books.Clear();
-            foreach (var item in books)
+            var persons = _personRepo.Query();
+            Persons.Clear();
+            foreach (var item in persons)
             {
-                Books.Add(item);
+                Persons.Add(item);
             }
         }
 
         public void Add()
         {
-            var book = new Book
+            var person = new Person
             {
-                ISBN = string.Empty,
                 Name = string.Empty,
-                InDate = DateTime.Today,
-                Price = 0d
+                Sex = Sex.男,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddYears(1),
+                Fee = 0d,
+                Deposit = 0d,
+                PhoneNo = string.Empty
             };
 
-            var result = _bookRepo.Add(book);
+            var result = _personRepo.Add(person);
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                //Books.Add(book);
-                //SelectedBook = book;
+                //Persons.Add(person);
+                //SelectedPerson = person;
                 Query();
             }
         }
 
         public void Delete()
         {
-            if (null == SelectedBook)
+            if (null == SelectedPerson)
             {
                 return;
             }
-            
+
             if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
 
-            var result = _bookRepo.Delete(SelectedBook);
+            var result = _personRepo.Delete(SelectedPerson);
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
-                Books.Remove(SelectedBook);
+                Persons.Remove(SelectedPerson);
             }
         }
 
         public void Update()
         {
-            if (null == SelectedBook)
+            if (null == SelectedPerson)
             {
                 return;
             }
 
-            var result = _bookRepo.Update(SelectedBook);
+            var result = _personRepo.Update(SelectedPerson);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                var index = Books.IndexOf(SelectedBook);
-                Books[index] = SelectedBook;
+                var index = Persons.IndexOf(SelectedPerson);
+                Persons[index] = SelectedPerson;
             }
         }
     }

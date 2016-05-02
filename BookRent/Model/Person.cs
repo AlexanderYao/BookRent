@@ -46,7 +46,7 @@ namespace BookRent
 
         public override int GetHashCode()
         {
-            return null == Id ? base.GetHashCode() : Id.GetHashCode();
+            return null == Name ? Id.GetHashCode() : Name.GetHashCode();
         }
     }
 
