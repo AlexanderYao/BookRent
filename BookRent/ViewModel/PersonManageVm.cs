@@ -28,6 +28,14 @@ namespace BookRent
 
         public virtual Person SelectedPerson { get; set; }
 
+        public IEnumerable<Sex> Sexes
+        {
+            get
+            {
+                return Enum.GetValues(typeof(Sex)).Cast<Sex>();
+            }
+        }
+
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
         public void Query()

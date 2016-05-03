@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:BookRent"
@@ -38,7 +39,11 @@
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Width="100"  FieldName="Name"      Header="名字"      />
-                <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      />
+                <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      >
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings ItemsSource="{Binding Sexes}"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
                 <dxg:GridColumn Width="150"  FieldName="StartDate" Header="开始日期"      />
                 <dxg:GridColumn Width="150"  FieldName="EndDate"   Header="到期日期"      />
                 <dxg:GridColumn Width="50"   FieldName="Fee"       Header="会费"      />
