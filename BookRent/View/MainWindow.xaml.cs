@@ -21,7 +21,7 @@ namespace BookRent
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainVm();
+            this.DataContext = MainVm.Create();
         }
 
         private void win_Closed(object sender, EventArgs e)

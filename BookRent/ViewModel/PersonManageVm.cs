@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BookRent
 {
-    public class PersonManageVm
+    public class PersonManageVm : MyViewModelBase
     {
         private IRepository<Person> _personRepo;
         protected PersonManageVm()
@@ -22,14 +22,6 @@ namespace BookRent
         public static PersonManageVm Create()
         {
             return ViewModelSource.Create(() => new PersonManageVm());
-        }
-
-        public string Status
-        {
-            set
-            {
-                //SendMsg("status", value);
-            }
         }
 
         public ObservableCollection<Person> Persons { get; set; }

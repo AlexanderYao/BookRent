@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Data\PersonRepository.cs" />
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Messages.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Util\CopyHelper.cs" />

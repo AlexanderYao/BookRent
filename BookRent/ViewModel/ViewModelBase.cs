@@ -9,23 +9,18 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
-    public abstract class MyViewModelBase : ViewModelBase, INotifyPropertyChanged
+    /// <summary>
+    /// 提供发送消息等基本功能
+    /// </summary>
+    public abstract class MyViewModelBase
     {
-        protected new void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propName = null)
+        public virtual string Status
         {
-            if (object.Equals(storage, value)) return;
-            storage = value;
-            this.RaisePropertyChanged(propName);
-        }
-    }
-
-    public abstract class MyBindableBase : BindableBase
-    {
-        protected new void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propName = null)
-        {
-            if (object.Equals(storage, value)) return;
-            storage = value;
-            this.RaisePropertyChanged(propName);
+            set
+            {
+                if (null == value) return;
+                Messenger.Default.Send(value);
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BookRent
 {
-    public class BookManageVm
+    public class BookManageVm : MyViewModelBase
     {
         private IRepository<Book> _bookRepo;
         protected BookManageVm()
@@ -22,14 +22,6 @@ namespace BookRent
         public static BookManageVm Create()
         {
             return ViewModelSource.Create(() => new BookManageVm());
-        }
-
-        public string Status
-        {
-            set
-            {
-                //SendMsg("status", value);
-            }
         }
 
         public ObservableCollection<Book> Books { get; set; }
@@ -75,7 +67,7 @@ namespace BookRent
             {
                 return;
             }
-            
+
             if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;

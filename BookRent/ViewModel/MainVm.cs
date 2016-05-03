@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,17 +12,23 @@ using System.Windows.Input;
 
 namespace BookRent
 {
-    public class MainVm : MyViewModelBase
+    public class MainVm
     {
-        public MainVm()
+        protected MainVm()
         {
+            Messenger.Default.Register<string>(this, OnStatus);
         }
 
-        private string _status;
-        public string Status
+        public static MainVm Create()
         {
-            get { return _status; }
-            set { base.SetProperty(ref _status, value); }
+            return ViewModelSource.Create(() => new MainVm());
+        }
+
+        public virtual string Status { get; set; }
+
+        private void OnStatus(string value)
+        {
+            this.Status = value;
         }
     }
 }
