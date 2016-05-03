@@ -66,8 +66,6 @@ namespace BookRent
 
             if (result)
             {
-                //Persons.Add(person);
-                //SelectedPerson = person;
                 Query();
             }
         }

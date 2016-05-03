@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="BookRent.RentManage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:local="clr-namespace:BookRent"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary  Source="../Style.xaml"/>
+    </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
+    <dx:BackgroundPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Label Content="姓名："/>
+                <dxe:TextEdit Text="{Binding PersonName}" Width="200" VerticalAlignment="Center"
+                              NullText="可输入拼音首字母"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Label Content="书名："/>
+                <dxe:TextEdit Text="{Binding BookName}" Width="200" VerticalAlignment="Center"
+                              NullText="可输入拼音首字母"/>                
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
+                <Label Content="ISBN: "/>
+                <dxe:TextEdit Text="{Binding ISBN}" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <dxg:GridControl Grid.Row="3" Grid.Column="0" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
+                         >
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
+                        <dxmvvm:Interaction.Triggers>
+                            <dxmvvm:EventToCommand EventName="CellValueChanged" 
+                                               Command="{Binding UpdateCommand}"/>
+                        </dxmvvm:Interaction.Triggers>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn Width="150" FieldName="Name"      Header="书名"      />
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+
+            <dxg:GridControl Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Rents}" SelectedItem="{Binding SelectedRent}"
+                         >
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
+                        <dxmvvm:Interaction.Triggers>
+                            <dxmvvm:EventToCommand EventName="CellValueChanged" 
+                                               Command="{Binding UpdateCommand}"/>
+                        </dxmvvm:Interaction.Triggers>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn Width="150"  FieldName="PersonName"     Header="姓名"     />
+                    <dxg:GridColumn Width="150"  FieldName="BookName"       Header="书名"      />
+                    <dxg:GridColumn Width="150"  FieldName="From"           Header="借出日期"  />
+                    <dxg:GridColumn Width="150"  FieldName="To"             Header="归还日期"     />
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+        </Grid>
+    </dx:BackgroundPanel>
+</UserControl>

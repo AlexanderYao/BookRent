@@ -13,22 +13,6 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <dxmvvm:Interaction.Behaviors>
-        <dx:DialogService DialogWindowStartupLocation="CenterOwner">
-            <dx:DialogService.ViewTemplate>
-                <DataTemplate>
-                    <local:BookDialog/>
-                </DataTemplate>
-            </dx:DialogService.ViewTemplate>
-            <dx:DialogService.DialogStyle>
-                <Style TargetType="dx:DXDialogWindow">
-                    <!--<Setter Property="Width" Value="300"/>
-                    <Setter Property="Height" Value="300"/>-->
-                    <Setter Property="SizeToContent" Value="WidthAndHeight"/>
-                </Style>
-            </dx:DialogService.DialogStyle>
-        </dx:DialogService>
-    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -37,7 +21,7 @@
 
         <TabControl Grid.Row="0">
             <TabItem Header="借阅管理">
-                
+                <local:RentManage />
             </TabItem>
             <TabItem Header="图书入库管理">
                 <local:BookManage />

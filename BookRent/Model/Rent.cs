@@ -12,10 +12,10 @@ namespace BookRent
     [Serializable]
     public class Rent
     {
-        public long ID { get; set; }
-        public string UserName { get; set; }
+        public long Id { get; set; }
+        public Person Person { get; set; }
+        public Book Book { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-        public Book Book { get; set; }
     }
 }

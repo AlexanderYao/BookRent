@@ -10,39 +10,39 @@ using System.Windows.Input;
 
 namespace BookRent
 {
-    public class BookManageVm : MyViewModelBase
+    public class RentManageVm : MyViewModelBase
     {
-        private IRepository<Book> _bookRepo;
-        protected BookManageVm()
+        private IRepository<Rent> _repo;
+        protected RentManageVm()
         {
-            _bookRepo = new BookRepository();
-            Books = new ObservableCollection<Book>();
+            _repo = new RentRepository();
+            Rents = new ObservableCollection<Rent>();
         }
 
-        public static BookManageVm Create()
+        public static RentManageVm Create()
         {
-            return ViewModelSource.Create(() => new BookManageVm());
+            return ViewModelSource.Create(() => new RentManageVm());
         }
 
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<Rent> Rents { get; set; }
 
-        public virtual Book SelectedBook { get; set; }
+        public virtual Rent SelectedRent { get; set; }
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
         public void Query()
         {
-            var books = _bookRepo.Query();
-            Books.Clear();
-            foreach (var item in books)
+            var rents = _repo.Query();
+            Rents.Clear();
+            foreach (var item in rents)
             {
-                Books.Add(item);
+                Rents.Add(item);
             }
         }
 
         public void Add()
         {
-            var book = new Book
+            var rent = new Rent
             {
                 ISBN = string.Empty,
                 Name = string.Empty,
@@ -50,7 +50,7 @@ namespace BookRent
                 Price = 0d
             };
 
-            var result = _bookRepo.Add(book);
+            var result = _repo.Add(rent);
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
             if (result)
@@ -61,7 +61,7 @@ namespace BookRent
 
         public void Delete()
         {
-            if (null == SelectedBook)
+            if (null == SelectedRent)
             {
                 return;
             }
@@ -71,28 +71,28 @@ namespace BookRent
                 return;
             }
 
-            var result = _bookRepo.Delete(SelectedBook);
+            var result = _repo.Delete(SelectedRent);
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
-                Books.Remove(SelectedBook);
+                Rents.Remove(SelectedRent);
             }
         }
 
         public void Update()
         {
-            if (null == SelectedBook)
+            if (null == SelectedRent)
             {
                 return;
             }
 
-            var result = _bookRepo.Update(SelectedBook);
+            var result = _repo.Update(SelectedRent);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                var index = Books.IndexOf(SelectedBook);
-                Books[index] = SelectedBook;
+                var index = Rents.IndexOf(SelectedRent);
+                Rents[index] = SelectedRent;
             }
         }
     }

@@ -81,19 +81,17 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Util\CopyHelper.cs" />
+    <Compile Include="ViewModel\RentManageVm.cs" />
     <Compile Include="ViewModel\PersonManageVm.cs" />
     <Compile Include="ViewModel\BookManageVm.cs" />
-    <Compile Include="View\BookDialog.xaml.cs">
-      <DependentUpon>BookDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Data\BookRepository.cs" />
     <Compile Include="Util\IniFile.cs" />
     <Compile Include="Model\Rent.cs" />
     <Compile Include="Data\SqliteHelper.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Page Include="View\BookDialog.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\RentManage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\PersonManage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -112,6 +110,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\MainVm.cs" />
+    <Compile Include="View\RentManage.xaml.cs">
+      <DependentUpon>RentManage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PersonManage.xaml.cs">
       <DependentUpon>PersonManage.xaml</DependentUpon>
     </Compile>
