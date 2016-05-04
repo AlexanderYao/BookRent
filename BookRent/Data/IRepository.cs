@@ -9,7 +9,7 @@ namespace BookRent
     public interface IRepository<T>
     {
         IList<T> Query();
-        bool Add(T item);
+        long Add(T item);
         bool Delete(T item);
         bool Update(T item);
     }

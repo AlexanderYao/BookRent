@@ -22,19 +22,21 @@ namespace BookRent
             var reader = _helper.ExecuteReader("select rowid, ISBN, Name, InDate, Price from books", null);
             while (reader.Read())
             {
-                result.Add(new Book
+                var item = new Book
                 {
                     Id = reader.GetInt64(0),
-                    ISBN = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
-                    Name = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
-                    InDate = reader.IsDBNull(3) ? DateTime.MinValue : reader.GetDateTime(3),
-                    Price = reader.IsDBNull(4) ? double.MinValue : reader.GetDouble(4)
-                });
+                    ISBN = reader.GetString(1),
+                    Name = reader.GetString(2),
+                    InDate = reader.GetDateTime(3),
+                    Price = reader.GetDouble(4)
+                };
+                result.Add(item);
+                Cache.Set<Book>(item.Id, item);
             }
             return result;
         }
 
-        public bool Add(Book book)
+        public long Add(Book book)
         {
             var sql = @"insert into Books(ISBN, Name, InDate, Price) values (@ISBN, @Name, @InDate, @Price)";
             var paras = new SQLiteParameter[] { 
@@ -43,7 +45,10 @@ namespace BookRent
                 new SQLiteParameter("@InDate", book.InDate),
                 new SQLiteParameter("@Price", book.Price),
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var rowid = _helper.ExecuteInsert(sql, paras);
+            book.Id = rowid;
+            Cache.Set<Book>(rowid, book);
+            return rowid;
         }
 
         public bool Delete(Book book)
@@ -52,7 +57,9 @@ namespace BookRent
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", book.Id)
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var result = _helper.ExecuteNonQuery(sql, paras) == 1;
+            Cache.Remove<Book>(book.Id);
+            return result;
         }
 
         public bool Update(Book book)
@@ -65,7 +72,9 @@ namespace BookRent
                 new SQLiteParameter("@InDate", book.InDate),
                 new SQLiteParameter("@Price", book.Price),
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var result = _helper.ExecuteNonQuery(sql, paras) == 1;
+            Cache.Set<Book>(book.Id, book);
+            return result;
         }
     }
 }

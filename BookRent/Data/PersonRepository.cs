@@ -22,7 +22,7 @@ namespace BookRent
             var reader = _helper.ExecuteReader("select rowid, Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo from persons", null);
             while (reader.Read())
             {
-                result.Add(new Person
+                var item = new Person
                 {
                     Id = reader.GetInt64(0),
                     Name = reader.GetString(1),
@@ -32,12 +32,14 @@ namespace BookRent
                     Fee = reader.GetDouble(5),
                     Deposit = reader.GetDouble(6),
                     PhoneNo = reader.GetString(7)
-                });
+                };
+                result.Add(item);
+                Cache.Set<Person>(item.Id, item);
             }
             return result;
         }
 
-        public bool Add(Person person)
+        public long Add(Person person)
         {
             var sql = @"insert into Persons(Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo) values (@Name, @Sex, @StartDate, @EndDate, @Fee, @Deposit, @PhoneNo)";
             var paras = new SQLiteParameter[] { 
@@ -49,7 +51,10 @@ namespace BookRent
                 new SQLiteParameter("@Deposit", person.Deposit),
                 new SQLiteParameter("@PhoneNo", person.PhoneNo)
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var rowid = _helper.ExecuteInsert(sql, paras);
+            person.Id = rowid;
+            Cache.Set<Person>(rowid, person);
+            return rowid;
         }
 
         public bool Delete(Person person)
@@ -58,7 +63,9 @@ namespace BookRent
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", person.Id)
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var result = _helper.ExecuteNonQuery(sql, paras) == 1;
+            Cache.Remove<Person>(person.Id);
+            return result;
         }
 
         public bool Update(Person person)
@@ -74,7 +81,9 @@ namespace BookRent
                 new SQLiteParameter("@Deposit", person.Deposit),
                 new SQLiteParameter("@PhoneNo", person.PhoneNo)
             };
-            return _helper.ExecuteNonQuery(sql, paras) == 1;
+            var result = _helper.ExecuteNonQuery(sql, paras) == 1;
+            Cache.Set<Person>(person.Id, person);
+            return result;
         }
     }
 }

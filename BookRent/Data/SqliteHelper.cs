@@ -19,7 +19,7 @@ namespace BookRent
         /// <param name="dbPath">SQLite数据库文件路径</param>
         public SqliteHelper(string dbPath = null)
         {
-            if(string.IsNullOrEmpty(dbPath))
+            if (string.IsNullOrEmpty(dbPath))
             {
                 dbPath = ConfigurationManager.AppSettings["DefaultDbPath"];
             }
@@ -42,6 +42,34 @@ namespace BookRent
                     command.CommandText = "DROP TABLE Demo";
                     command.ExecuteNonQuery();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 执行insert操作，并返回插入行的rowid
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public long ExecuteInsert(string sql, SQLiteParameter[] parameters)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                using (DbTransaction transaction = connection.BeginTransaction())
+                {
+                    using (SQLiteCommand command = new SQLiteCommand(connection))
+                    {
+                        command.CommandText = sql;
+                        if (parameters != null)
+                        {
+                            command.Parameters.AddRange(parameters);
+                        }
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+                return connection.LastInsertRowId;
             }
         }
 

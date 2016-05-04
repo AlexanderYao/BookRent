@@ -73,8 +73,8 @@
                 <dxg:GridControl.Columns>
                     <dxg:GridColumn Width="150"  FieldName="PersonName"     Header="姓名"     />
                     <dxg:GridColumn Width="150"  FieldName="BookName"       Header="书名"      />
-                    <dxg:GridColumn Width="150"  FieldName="From"           Header="借出日期"  />
-                    <dxg:GridColumn Width="150"  FieldName="To"             Header="归还日期"     />
+                    <dxg:GridColumn Width="150"  FieldName="StartDate"      Header="借出日期"  />
+                    <dxg:GridColumn Width="150"  FieldName="EndDate"        Header="归还日期"     />
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
         </Grid>

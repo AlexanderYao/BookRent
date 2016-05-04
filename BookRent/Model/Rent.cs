@@ -15,7 +15,7 @@ namespace BookRent
         public long Id { get; set; }
         public Person Person { get; set; }
         public Book Book { get; set; }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

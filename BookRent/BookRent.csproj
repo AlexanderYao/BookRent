@@ -75,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Cache.cs" />
+    <Compile Include="Data\RentRepository.cs" />
     <Compile Include="Data\PersonRepository.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Messages.cs" />

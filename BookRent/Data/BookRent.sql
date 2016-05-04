@@ -16,8 +16,8 @@ create table Persons (
 );
 
 create table Rents (
-	PersonId int,
-	BookId int,
+	PersonId long,
+	BookId long,
 	StartDate date,
 	EndDate date
 );

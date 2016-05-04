@@ -44,18 +44,20 @@ namespace BookRent
         {
             var rent = new Rent
             {
-                ISBN = string.Empty,
-                Name = string.Empty,
-                InDate = DateTime.Today,
-                Price = 0d
+                Person = new Person { Id = 1 },
+                Book = new Book { Id = 1 },
+                StartDate = DateTime.Today,
+                EndDate = DateTime.MaxValue
             };
 
-            var result = _repo.Add(rent);
+            var rowid = _repo.Add(rent);
+            var result = rowid > 0;
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                Query();
+                rent.Id = rowid;
+                Rents.Add(rent);
             }
         }
 

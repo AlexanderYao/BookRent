@@ -50,12 +50,13 @@ namespace BookRent
                 Price = 0d
             };
 
-            var result = _bookRepo.Add(book);
+            long rowid = _bookRepo.Add(book);
+            bool result = rowid > 0;
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                Query();
+                Books.Add(book);
             }
         }
 

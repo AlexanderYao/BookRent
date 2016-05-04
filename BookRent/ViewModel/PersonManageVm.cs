@@ -61,12 +61,13 @@ namespace BookRent
                 PhoneNo = string.Empty
             };
 
-            var result = _personRepo.Add(person);
+            var rowid = _personRepo.Add(person);
+            var result = rowid > 0;
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                Query();
+                Persons.Add(person);
             }
         }
 
