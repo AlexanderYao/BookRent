@@ -18,21 +18,32 @@ namespace BookRent
 
         public IList<Book> Query()
         {
-            var result = new List<Book>();
-            var reader = _helper.ExecuteReader("select rowid, ISBN, Name, InDate, Price from books", null);
-            while (reader.Read())
+            if (Cache.HasSetList<Book>())
             {
-                var item = new Book
+                var list = Cache.GetList<Book>();
+                if (null != list && list.Count > 0)
                 {
-                    Id = reader.GetInt64(0),
-                    ISBN = reader.GetString(1),
-                    Name = reader.GetString(2),
-                    InDate = reader.GetDateTime(3),
-                    Price = reader.GetDouble(4)
-                };
-                result.Add(item);
-                Cache.Set<Book>(item.Id, item);
+                    return list;
+                }
             }
+
+            var result = new List<Book>();
+            using (var reader = _helper.ExecuteReader("select rowid, ISBN, Name, InDate, Price from books", null))
+            {
+                while (reader.Read())
+                {
+                    var item = new Book
+                    {
+                        Id = reader.GetInt64(0),
+                        ISBN = reader.GetString(1),
+                        Name = reader.GetString(2),
+                        InDate = reader.GetDateTime(3),
+                        Price = reader.GetDouble(4)
+                    };
+                    result.Add(item);
+                }
+            }
+            Cache.SetList<Book>(result);
             return result;
         }
 
@@ -47,7 +58,7 @@ namespace BookRent
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             book.Id = rowid;
-            Cache.Set<Book>(rowid, book);
+            Cache.Set<Book>(book);
             return rowid;
         }
 
@@ -73,7 +84,7 @@ namespace BookRent
                 new SQLiteParameter("@Price", book.Price),
             };
             var result = _helper.ExecuteNonQuery(sql, paras) == 1;
-            Cache.Set<Book>(book.Id, book);
+            Cache.Set<Book>(book);
             return result;
         }
     }

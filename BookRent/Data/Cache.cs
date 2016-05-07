@@ -8,9 +8,42 @@ namespace BookRent
 {
     public class Cache
     {
-        private static Dictionary<long, Book> Books = new Dictionary<long, Book>();
-        private static Dictionary<long, Person> Persons = new Dictionary<long, Person>();
         private static Dictionary<Type, Dictionary<long, object>> dic = new Dictionary<Type, Dictionary<long, object>>();
+        private static Dictionary<Type, bool> dicBool = new Dictionary<Type, bool>();
+
+        public static bool HasSetList<T>()
+        {
+            var key = typeof(T);
+            return dicBool.ContainsKey(key) && dicBool[key];
+        }
+
+        public static void SetList<T>(IList<T> list) where T : IIdentity
+        {
+            foreach (var item in list)
+            {
+                Set<T>(item);
+            }
+            dicBool[typeof(T)] = true;
+        }
+
+        public static IList<T> GetList<T>()
+        {
+            var key = typeof(T);
+            if (!dic.ContainsKey(key))
+            {
+                return null;
+            }
+            else
+            {
+                var result = new List<T>();
+                var tmp = dic[key].Values;
+                foreach (var item in tmp)
+                {
+                    result.Add((T)item);
+                }
+                return result;
+            }
+        }
 
         public static T Get<T>(long id)
         {
@@ -28,7 +61,7 @@ namespace BookRent
             }
         }
 
-        public static void Set<T>(long id, T t)
+        public static void Set<T>(T t) where T : IIdentity
         {
             var key = typeof(T);
 
@@ -37,6 +70,7 @@ namespace BookRent
                 dic[key] = new Dictionary<long, object>();
             }
 
+            var id = (t as IIdentity).Id;
             dic[key][id] = t;
         }
 
@@ -55,37 +89,5 @@ namespace BookRent
                 if (dic[key].Count == 0) dic.Remove(key);
             }
         }
-
-        //public static Book GetBook(long id)
-        //{
-        //    if (Books.ContainsKey(id)) return Books[id];
-        //    else return null;
-        //}
-
-        //public static void SetBook(long id, Book item)
-        //{
-        //    Books[id] = item;
-        //}
-
-        //public static void RemoveBook(long id)
-        //{
-        //    Books.Remove(id);
-        //}
-
-        //public static Person GetPerson(long id)
-        //{
-        //    if (Persons.ContainsKey(id)) return Persons[id];
-        //    else return null;
-        //}
-
-        //public static void SetPerson(long id, Person item)
-        //{
-        //    Persons[id] = item;
-        //}
-
-        //public static void RemovePerson(long id)
-        //{
-        //    Persons.Remove(id);
-        //}
     }
 }

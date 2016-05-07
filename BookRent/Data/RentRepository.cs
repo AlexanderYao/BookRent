@@ -19,17 +19,19 @@ namespace BookRent
         public IList<Rent> Query()
         {
             var result = new List<Rent>();
-            var reader = _helper.ExecuteReader("select rowid, PersonId, BookId, StartDate, EndDate from Rents", null);
-            while (reader.Read())
+            using (var reader = _helper.ExecuteReader("select rowid, PersonId, BookId, StartDate, EndDate from Rents", null))
             {
-                result.Add(new Rent
+                while (reader.Read())
                 {
-                    Id = reader.GetInt64(0),
-                    Person = Cache.Get<Person>(reader.GetInt64(1)),
-                    Book = Cache.Get<Book>(reader.GetInt64(2)),
-                    StartDate = reader.GetDateTime(3),
-                    EndDate = reader.GetDateTime(4)
-                });
+                    result.Add(new Rent
+                    {
+                        Id = reader.GetInt64(0),
+                        Person = Cache.Get<Person>(reader.GetInt64(1)),
+                        Book = Cache.Get<Book>(reader.GetInt64(2)),
+                        StartDate = reader.GetDateTime(3),
+                        EndDate = reader.GetDateTime(4)
+                    });
+                }
             }
             return result;
         }

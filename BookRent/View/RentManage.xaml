@@ -30,8 +30,10 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Label Content="姓名："/>
-                <dxe:TextEdit Text="{Binding PersonName}" Width="200" VerticalAlignment="Center"
-                              NullText="可输入拼音首字母"/>
+                <dxe:ComboBoxEdit NullText="可输入拼音首字母" Width="200" VerticalAlignment="Center"
+                                  ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
+                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True"
+                                  />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
@@ -50,8 +52,7 @@
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
                         <dxmvvm:Interaction.Triggers>
-                            <dxmvvm:EventToCommand EventName="CellValueChanged" 
-                                               Command="{Binding UpdateCommand}"/>
+                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
                         </dxmvvm:Interaction.Triggers>
                     </dxg:TableView>
                 </dxg:GridControl.View>
@@ -60,13 +61,12 @@
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
 
-            <dxg:GridControl Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Rents}" SelectedItem="{Binding SelectedRent}"
+            <dxg:GridControl Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Rents}" SelectedItem="{Binding CurrentRent}"
                          >
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
                         <dxmvvm:Interaction.Triggers>
-                            <dxmvvm:EventToCommand EventName="CellValueChanged" 
-                                               Command="{Binding UpdateCommand}"/>
+                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
                         </dxmvvm:Interaction.Triggers>
                     </dxg:TableView>
                 </dxg:GridControl.View>

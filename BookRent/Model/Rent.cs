@@ -10,7 +10,7 @@ namespace BookRent
     /// 借阅
     /// </summary>
     [Serializable]
-    public class Rent
+    public class Rent : IIdentity
     {
         public long Id { get; set; }
         public Person Person { get; set; }

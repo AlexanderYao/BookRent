@@ -18,24 +18,35 @@ namespace BookRent
 
         public IList<Person> Query()
         {
-            var result = new List<Person>();
-            var reader = _helper.ExecuteReader("select rowid, Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo from persons", null);
-            while (reader.Read())
+            if(Cache.HasSetList<Person>())
             {
-                var item = new Person
+                var list = Cache.GetList<Person>();
+                if(null != list && list.Count > 0)
                 {
-                    Id = reader.GetInt64(0),
-                    Name = reader.GetString(1),
-                    Sex = (Sex)reader.GetInt32(2),
-                    StartDate = reader.GetDateTime(3),
-                    EndDate = reader.GetDateTime(4),
-                    Fee = reader.GetDouble(5),
-                    Deposit = reader.GetDouble(6),
-                    PhoneNo = reader.GetString(7)
-                };
-                result.Add(item);
-                Cache.Set<Person>(item.Id, item);
+                    return list;
+                }
             }
+
+            var result = new List<Person>();
+            using (var reader = _helper.ExecuteReader("select rowid, Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo from persons", null))
+            {
+                while (reader.Read())
+                {
+                    var item = new Person
+                    {
+                        Id = reader.GetInt64(0),
+                        Name = reader.GetString(1),
+                        Sex = (Sex)reader.GetInt32(2),
+                        StartDate = reader.GetDateTime(3),
+                        EndDate = reader.GetDateTime(4),
+                        Fee = reader.GetDouble(5),
+                        Deposit = reader.GetDouble(6),
+                        PhoneNo = reader.GetString(7)
+                    };
+                    result.Add(item);
+                }
+            }
+            Cache.SetList<Person>(result);
             return result;
         }
 
@@ -53,7 +64,7 @@ namespace BookRent
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             person.Id = rowid;
-            Cache.Set<Person>(rowid, person);
+            Cache.Set<Person>(person);
             return rowid;
         }
 
@@ -82,7 +93,7 @@ namespace BookRent
                 new SQLiteParameter("@PhoneNo", person.PhoneNo)
             };
             var result = _helper.ExecuteNonQuery(sql, paras) == 1;
-            Cache.Set<Person>(person.Id, person);
+            Cache.Set<Person>(person);
             return result;
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BookRent
 {
     [Serializable]
-    public class Book
+    public class Book : IIdentity
     {
         public long Id { get; set; }
         public string ISBN { get; set; }

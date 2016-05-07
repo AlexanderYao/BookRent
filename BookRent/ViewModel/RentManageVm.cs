@@ -13,10 +13,18 @@ namespace BookRent
     public class RentManageVm : MyViewModelBase
     {
         private IRepository<Rent> _repo;
+        private IRepository<Person> _repoPerson;
+        private IRepository<Book> _repoBook;
+
         protected RentManageVm()
         {
             _repo = new RentRepository();
+            _repoPerson = new PersonRepository();
+            _repoBook = new BookRepository();
+
             Rents = new ObservableCollection<Rent>();
+            Persons = new List<Person>(_repoPerson.Query());
+            Books = new List<Book>(_repoBook.Query());
         }
 
         public static RentManageVm Create()
@@ -24,9 +32,13 @@ namespace BookRent
             return ViewModelSource.Create(() => new RentManageVm());
         }
 
-        public ObservableCollection<Rent> Rents { get; set; }
+        public List<Person> Persons { get; private set; }
+        public List<Book> Books { get; private set; }
+        public ObservableCollection<Rent> Rents { get; private set; }
 
-        public virtual Rent SelectedRent { get; set; }
+        public virtual Person CurrentPerson { get; set; }
+        public virtual Book CurrentBook { get; set; }
+        public virtual Rent CurrentRent { get; set; }
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
@@ -63,7 +75,7 @@ namespace BookRent
 
         public void Delete()
         {
-            if (null == SelectedRent)
+            if (null == CurrentRent)
             {
                 return;
             }
@@ -73,28 +85,28 @@ namespace BookRent
                 return;
             }
 
-            var result = _repo.Delete(SelectedRent);
+            var result = _repo.Delete(CurrentRent);
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
-                Rents.Remove(SelectedRent);
+                Rents.Remove(CurrentRent);
             }
         }
 
         public void Update()
         {
-            if (null == SelectedRent)
+            if (null == CurrentRent)
             {
                 return;
             }
 
-            var result = _repo.Update(SelectedRent);
+            var result = _repo.Update(CurrentRent);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                var index = Rents.IndexOf(SelectedRent);
-                Rents[index] = SelectedRent;
+                var index = Rents.IndexOf(CurrentRent);
+                Rents[index] = CurrentRent;
             }
         }
     }
