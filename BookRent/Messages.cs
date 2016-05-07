@@ -6,13 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
-    //class StatusMsg
-    //{
-    //    public StatusMsg(string status)
-    //    {
-    //        this.Status = status;
-    //    }
+    class PersonChangedMsg { }
 
-    //    public string Status { get; set; }
-    //}
+    class BookChangedMsg { }
 }

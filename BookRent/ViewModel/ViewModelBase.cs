@@ -22,5 +22,10 @@ namespace BookRent
                 Messenger.Default.Send(value);
             }
         }
+
+        public virtual void SendMsg<T>(T t)
+        {
+            Messenger.Default.Send<T>(t);
+        }
     }
 }

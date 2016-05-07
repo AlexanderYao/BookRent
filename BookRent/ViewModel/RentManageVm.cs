@@ -23,8 +23,11 @@ namespace BookRent
             _repoBook = new BookRepository();
 
             Rents = new ObservableCollection<Rent>();
-            Persons = new List<Person>(_repoPerson.Query());
-            Books = new List<Book>(_repoBook.Query());
+            //Persons = new List<Person>(_repoPerson.Query());
+            //Books = new List<Book>(_repoBook.Query());
+
+            Messenger.Default.Register<PersonChangedMsg>(this, OnPersonChanged);
+            Messenger.Default.Register<BookChangedMsg>(this, OnBookChanged);
         }
 
         public static RentManageVm Create()
@@ -34,16 +37,21 @@ namespace BookRent
 
         public List<Person> Persons { get; private set; }
         public List<Book> Books { get; private set; }
+        public ObservableCollection<Book> ToBeRentBooks { get; private set; }
         public ObservableCollection<Rent> Rents { get; private set; }
 
         public virtual Person CurrentPerson { get; set; }
         public virtual Book CurrentBook { get; set; }
+        public virtual Book ToBeRentBook { get; set; }
         public virtual Rent CurrentRent { get; set; }
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
         public void Query()
         {
+            Persons = new List<Person>(_repoPerson.Query());
+            Books = new List<Book>(_repoBook.Query());
+
             var rents = _repo.Query();
             Rents.Clear();
             foreach (var item in rents)
@@ -108,6 +116,16 @@ namespace BookRent
                 var index = Rents.IndexOf(CurrentRent);
                 Rents[index] = CurrentRent;
             }
+        }
+
+        private void OnPersonChanged(PersonChangedMsg msg)
+        {
+            Persons = new List<Person>(_repoPerson.Query());
+        }
+
+        private void OnBookChanged(BookChangedMsg msg)
+        {
+            Books = new List<Book>(_repoBook.Query());
         }
     }
 }

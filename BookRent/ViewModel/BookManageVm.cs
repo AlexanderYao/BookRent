@@ -57,6 +57,7 @@ namespace BookRent
             if (result)
             {
                 Books.Add(book);
+                SendMsg(new BookChangedMsg());
             }
         }
 
@@ -77,6 +78,7 @@ namespace BookRent
             if (result)
             {
                 Books.Remove(SelectedBook);
+                SendMsg(new BookChangedMsg());
             }
         }
 
@@ -94,6 +96,7 @@ namespace BookRent
             {
                 var index = Books.IndexOf(SelectedBook);
                 Books[index] = SelectedBook;
+                SendMsg(new BookChangedMsg());
             }
         }
     }

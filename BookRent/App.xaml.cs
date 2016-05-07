@@ -41,6 +41,7 @@ namespace BookRent
 
             LogError(e.Exception);
             e.Handled = true;
+            Application.Current.Shutdown();
         }
 
         private void LogError(Exception ex)
