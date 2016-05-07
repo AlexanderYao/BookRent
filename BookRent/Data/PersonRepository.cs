@@ -50,6 +50,11 @@ namespace BookRent
             return result;
         }
 
+        public IList<Person> Query(Func<Person, bool> condition)
+        {
+            return Query().Where(condition).ToList();
+        }
+
         public long Add(Person person)
         {
             var sql = @"insert into Persons(Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo) values (@Name, @Sex, @StartDate, @EndDate, @Fee, @Deposit, @PhoneNo)";

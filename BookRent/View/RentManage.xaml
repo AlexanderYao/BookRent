@@ -5,8 +5,11 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-             xmlns:local="clr-namespace:BookRent"
+             xmlns:local="clr-namespace:BookRent" 
              >
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" Modifiers="Control" Command="{Binding ConfirmRentCommand}"/>
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary  Source="../Style.xaml"/>
     </UserControl.Resources>
@@ -37,26 +40,41 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="书名："/>
-                <dxe:ComboBoxEdit NullText="可输入拼音首字母" Width="200" VerticalAlignment="Center"
+                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" Width="200" VerticalAlignment="Center"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
-                                  DisplayMember="Name" ValueMember="Id"
-                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True"/>
+                                  DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
+                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
+                    <dxe:ComboBoxEdit.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
+                    </dxe:ComboBoxEdit.InputBindings>
+                </dxe:ComboBoxEdit>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2">
                 <Label Content="ISBN: "/>
-                <dxe:ComboBoxEdit NullText="可输入ISBN" Width="200" VerticalAlignment="Center"
+                <dxe:ComboBoxEdit NullText="可输入ISBN，回车" Width="200" VerticalAlignment="Center"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
-                                  DisplayMember="ISBN" ValueMember="Id"
-                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True"/>
+                                  DisplayMember="ISBN" ValueMember="Id" ToolTip="Enter"
+                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
+                    <dxe:ComboBoxEdit.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
+                    </dxe:ComboBoxEdit.InputBindings>
+                </dxe:ComboBoxEdit>
             </StackPanel>
 
-            <dxg:GridControl Grid.Row="3" Grid.Column="0" MaxHeight="1000"
+            <Button Grid.Row="3" Grid.Column="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Content="确认借出" Command="{Binding ConfirmRentCommand}" 
+                    ToolTip="Ctrl+Enter">
+            </Button>
+            <dxg:GridControl Grid.Row="3" Grid.Column="0" MaxHeight="1000" ToolTip="双击选中项，取消"
                              ItemsSource="{Binding ToBeRentBooks}" 
                              SelectedItem="{Binding ToBeRentBook}"
                              >
+                <dxg:GridControl.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DelBookCommand}"/>
+                </dxg:GridControl.InputBindings>
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" >
                         <dxmvvm:Interaction.Triggers>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
                         </dxmvvm:Interaction.Triggers>
@@ -67,27 +85,27 @@
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                 <Button Content="查询" Command="{Binding QueryCommand}" />
-                <Button Content="添加" Command="{Binding AddCommand}"/>
-                <Button Content="删除" Command="{Binding DeleteCommand}"/>
+                <!--<Button Content="添加" Command="{Binding AddCommand}"/>
+                <Button Content="删除" Command="{Binding DeleteCommand}"/>-->
             </StackPanel>
 
-            <dxg:GridControl Grid.Row="3" Grid.Column="1" MaxHeight="1000"
+            <dxg:GridControl Grid.Row="1" Grid.Column="1" MaxHeight="1000" Grid.RowSpan="3"
                              ItemsSource="{Binding Rents}" SelectedItem="{Binding CurrentRent}"
                              >
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" >
                         <dxmvvm:Interaction.Triggers>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
                         </dxmvvm:Interaction.Triggers>
                     </dxg:TableView>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="150"  FieldName="PersonName"     Header="姓名"     />
-                    <dxg:GridColumn Width="150"  FieldName="BookName"       Header="书名"      />
+                    <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"     />
+                    <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"      />
                     <dxg:GridColumn Width="150"  FieldName="StartDate"      Header="借出日期"  />
-                    <dxg:GridColumn Width="150"  FieldName="EndDate"        Header="归还日期"     />
+                    <dxg:GridColumn Width="150"  FieldName="EndDate"        Header="归还日期"  ReadOnly="False" />
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
         </Grid>

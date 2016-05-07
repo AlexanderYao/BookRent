@@ -25,6 +25,7 @@ namespace BookRent
             Rents = new ObservableCollection<Rent>();
             Persons = new ObservableCollection<Person>(_repoPerson.Query());
             Books = new ObservableCollection<Book>(_repoBook.Query());
+            ToBeRentBooks = new ObservableCollection<Book>();
 
             Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
             Messenger.Default.Register<ItemChangedMsg<Book>>(this, OnBookChanged);
@@ -47,6 +48,90 @@ namespace BookRent
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }
 
+        public void AddBook()
+        {
+            if (null == CurrentBook || ToBeRentBooks.Contains(CurrentBook))
+            {
+                return;
+            }
+
+            if (_repo.Query(e => e.Book == CurrentBook && e.EndDate == DateTime.MinValue).Count > 0)
+            {
+                MessageBoxService.Show("这本书已经被借走了", "提示");
+                return;
+            }
+
+            ToBeRentBooks.Add(CurrentBook);
+        }
+
+        public void DelBook()
+        {
+            if (null == ToBeRentBook || !ToBeRentBooks.Contains(ToBeRentBook))
+            {
+                return;
+            }
+
+            ToBeRentBooks.Remove(ToBeRentBook);
+        }
+
+        public void ConfirmRent()
+        {
+            if (null == CurrentPerson)
+            {
+                MessageBoxService.Show("请选择借书的人", "提示");
+                return;
+            }
+
+            if (ToBeRentBooks.Count == 0)
+            {
+                MessageBoxService.Show("请选择要借的书", "提示");
+                return;
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine(string.Format("[{0}]将借出以下书籍：", CurrentPerson.Name));
+            foreach (var item in ToBeRentBooks)
+            {
+                sb.AppendLine(string.Format("《{0}》", item.Name));
+            }
+            sb.AppendLine("是否确认？");
+
+            if (MessageBoxService.Show(sb.ToString(), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            Rent();
+        }
+
+        private void Rent()
+        {
+            bool result = true;
+            foreach (var item in ToBeRentBooks)
+            {
+                var rent = new Rent
+                {
+                    Person = CurrentPerson,
+                    Book = item,
+                    StartDate = DateTime.Now,
+                };
+
+                var rowid = _repo.Add(rent);
+                result &= rowid > 0;
+                if (result)
+                {
+                    rent.Id = rowid;
+                    Rents.Insert(0, rent);
+                }
+            }
+
+            if (result)
+            {
+                Status = string.Format("借出{0}！", result ? "成功" : "失败");
+                ToBeRentBooks.Clear();
+            }
+        }
+
         public void Query()
         {
             var rents = _repo.Query();
@@ -57,46 +142,46 @@ namespace BookRent
             }
         }
 
-        public void Add()
-        {
-            var rent = new Rent
-            {
-                Person = new Person { Id = 1 },
-                Book = new Book { Id = 1 },
-                StartDate = DateTime.Today,
-                EndDate = DateTime.MaxValue
-            };
+        //public void Add()
+        //{
+        //    var rent = new Rent
+        //    {
+        //        Person = new Person { Id = 1 },
+        //        Book = new Book { Id = 1 },
+        //        StartDate = DateTime.Today,
+        //        EndDate = DateTime.MaxValue
+        //    };
 
-            var rowid = _repo.Add(rent);
-            var result = rowid > 0;
-            Status = string.Format("新增{0}！", result ? "成功" : "失败");
+        //    var rowid = _repo.Add(rent);
+        //    var result = rowid > 0;
+        //    Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
-            if (result)
-            {
-                rent.Id = rowid;
-                Rents.Add(rent);
-            }
-        }
+        //    if (result)
+        //    {
+        //        rent.Id = rowid;
+        //        Rents.Add(rent);
+        //    }
+        //}
 
-        public void Delete()
-        {
-            if (null == CurrentRent)
-            {
-                return;
-            }
+        //public void Delete()
+        //{
+        //    if (null == CurrentRent)
+        //    {
+        //        return;
+        //    }
 
-            if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
-            {
-                return;
-            }
+        //    if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
+        //    {
+        //        return;
+        //    }
 
-            var result = _repo.Delete(CurrentRent);
-            Status = string.Format("删除{0}！", result ? "成功" : "失败");
-            if (result)
-            {
-                Rents.Remove(CurrentRent);
-            }
-        }
+        //    var result = _repo.Delete(CurrentRent);
+        //    Status = string.Format("删除{0}！", result ? "成功" : "失败");
+        //    if (result)
+        //    {
+        //        Rents.Remove(CurrentRent);
+        //    }
+        //}
 
         public void Update()
         {
