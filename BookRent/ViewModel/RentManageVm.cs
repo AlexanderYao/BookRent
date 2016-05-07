@@ -23,11 +23,11 @@ namespace BookRent
             _repoBook = new BookRepository();
 
             Rents = new ObservableCollection<Rent>();
-            //Persons = new List<Person>(_repoPerson.Query());
-            //Books = new List<Book>(_repoBook.Query());
+            Persons = new ObservableCollection<Person>(_repoPerson.Query());
+            Books = new ObservableCollection<Book>(_repoBook.Query());
 
-            Messenger.Default.Register<PersonChangedMsg>(this, OnPersonChanged);
-            Messenger.Default.Register<BookChangedMsg>(this, OnBookChanged);
+            Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
+            Messenger.Default.Register<ItemChangedMsg<Book>>(this, OnBookChanged);
         }
 
         public static RentManageVm Create()
@@ -35,8 +35,8 @@ namespace BookRent
             return ViewModelSource.Create(() => new RentManageVm());
         }
 
-        public List<Person> Persons { get; private set; }
-        public List<Book> Books { get; private set; }
+        public ObservableCollection<Person> Persons { get; private set; }
+        public ObservableCollection<Book> Books { get; private set; }
         public ObservableCollection<Book> ToBeRentBooks { get; private set; }
         public ObservableCollection<Rent> Rents { get; private set; }
 
@@ -49,9 +49,6 @@ namespace BookRent
 
         public void Query()
         {
-            Persons = new List<Person>(_repoPerson.Query());
-            Books = new List<Book>(_repoBook.Query());
-
             var rents = _repo.Query();
             Rents.Clear();
             foreach (var item in rents)
@@ -118,14 +115,33 @@ namespace BookRent
             }
         }
 
-        private void OnPersonChanged(PersonChangedMsg msg)
+        private void OnPersonChanged(ItemChangedMsg<Person> msg)
         {
-            Persons = new List<Person>(_repoPerson.Query());
+            OnMsg(Persons, msg);
         }
 
-        private void OnBookChanged(BookChangedMsg msg)
+        private void OnBookChanged(ItemChangedMsg<Book> msg)
         {
-            Books = new List<Book>(_repoBook.Query());
+            OnMsg(Books, msg);
+        }
+
+        private void OnMsg<T>(ObservableCollection<T> collection, ItemChangedMsg<T> msg)
+        {
+            switch (msg.Action)
+            {
+                case ActionMode.Add:
+                    collection.Add(msg.Item);
+                    break;
+                case ActionMode.Delete:
+                    collection.Remove(msg.Item);
+                    break;
+                case ActionMode.Update:
+                    var index = collection.IndexOf(msg.Item);
+                    collection[index] = msg.Item;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

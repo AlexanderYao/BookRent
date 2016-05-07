@@ -68,7 +68,7 @@ namespace BookRent
             if (result)
             {
                 Persons.Add(person);
-                SendMsg(new PersonChangedMsg());
+                SendMsg(new ItemChangedMsg<Person>(ActionMode.Add, person));
             }
         }
 
@@ -89,7 +89,7 @@ namespace BookRent
             if (result)
             {
                 Persons.Remove(SelectedPerson);
-                SendMsg(new PersonChangedMsg());
+                SendMsg(new ItemChangedMsg<Person>(ActionMode.Delete, SelectedPerson));
             }
         }
 
@@ -107,7 +107,7 @@ namespace BookRent
             {
                 var index = Persons.IndexOf(SelectedPerson);
                 Persons[index] = SelectedPerson;
-                SendMsg(new PersonChangedMsg());
+                SendMsg(new ItemChangedMsg<Person>(ActionMode.Update, SelectedPerson));
             }
         }
     }
