@@ -55,9 +55,10 @@ namespace BookRent
                 return;
             }
 
-            if (_repo.Query(e => e.Book == CurrentBook && e.EndDate == DateTime.MinValue).Count > 0)
+            var whoRent = _repo.Query(e => e.Book == CurrentBook && e.EndDate == DateTime.MinValue);
+            if (whoRent.Count > 0)
             {
-                MessageBoxService.Show("这本书已经被借走了", "提示");
+                MessageBoxService.Show(string.Format("这本书已经被[{0}]借走了", whoRent[0].Person.Name), "提示");
                 return;
             }
 

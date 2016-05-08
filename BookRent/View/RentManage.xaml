@@ -33,7 +33,8 @@
                 <Label Content="姓名："/>
                 <dxe:ComboBoxEdit NullText="可输入拼音首字母" Width="200" VerticalAlignment="Center"
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
-                                  DisplayMember="Name" ValueMember="Id"
+                                  DisplayMember="Name" ValueMember="Id" 
+                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
                                   AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True"
                                   />
             </StackPanel>
@@ -43,6 +44,7 @@
                 <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" Width="200" VerticalAlignment="Center"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
+                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
                                   AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
                     <dxe:ComboBoxEdit.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
@@ -55,6 +57,7 @@
                 <dxe:ComboBoxEdit NullText="可输入ISBN，回车" Width="200" VerticalAlignment="Center"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="ISBN" ValueMember="Id" ToolTip="Enter"
+                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
                                   AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
                     <dxe:ComboBoxEdit.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
@@ -95,17 +98,17 @@
                              ItemsSource="{Binding Rents}" SelectedItem="{Binding CurrentRent}"
                              >
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" >
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True">
                         <dxmvvm:Interaction.Triggers>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
                         </dxmvvm:Interaction.Triggers>
                     </dxg:TableView>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"     />
-                    <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"      />
-                    <dxg:GridColumn Width="150"  FieldName="StartDate"      Header="借出日期"  />
-                    <dxg:GridColumn Width="150"  FieldName="EndDate"        Header="归还日期"  ReadOnly="False" />
+                    <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"     ReadOnly="True" />
+                    <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"     ReadOnly="True" />
+                    <dxg:GridColumn Width="150"  FieldName="StartDate"       Header="借出日期" ReadOnly="True" />
+                    <dxg:GridColumn Width="150"  FieldName="EndDate"         Header="归还日期" EditSettings="{StaticResource dateSetting}"/>
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
         </Grid>
