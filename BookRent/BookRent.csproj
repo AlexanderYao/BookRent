@@ -87,6 +87,7 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Util\CopyHelper.cs" />
+    <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="ViewModel\RentManageVm.cs" />
     <Compile Include="ViewModel\PersonManageVm.cs" />
     <Compile Include="ViewModel\BookManageVm.cs" />
