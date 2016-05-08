@@ -23,6 +23,7 @@ namespace BookRent
             _repoBook = new BookRepository();
 
             Rents = new ObservableCollection<Rent>();
+            CurrentRents = new ObservableCollection<Rent>();
             Persons = new ObservableCollection<Person>(_repoPerson.Query());
             Books = new ObservableCollection<Book>(_repoBook.Query());
             ToBeRentBooks = new ObservableCollection<Book>();
@@ -40,6 +41,7 @@ namespace BookRent
         public ObservableCollection<Book> Books { get; private set; }
         public ObservableCollection<Book> ToBeRentBooks { get; private set; }
         public ObservableCollection<Rent> Rents { get; private set; }
+        public ObservableCollection<Rent> CurrentRents { get; private set; }
 
         public virtual Person CurrentPerson { get; set; }
         public virtual Book CurrentBook { get; set; }
@@ -135,12 +137,17 @@ namespace BookRent
 
         public void Query()
         {
-            var rents = _repo.Query();
+            var rents = _repo.Query(e => e.EndDate == DateTime.MinValue);
             Rents.Clear();
             foreach (var item in rents)
             {
                 Rents.Add(item);
             }
+        }
+
+        public void Return()
+        {
+
         }
 
         //public void Add()

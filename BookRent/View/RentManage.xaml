@@ -9,6 +9,7 @@
              >
     <UserControl.InputBindings>
         <KeyBinding Key="Enter" Modifiers="Control" Command="{Binding ConfirmRentCommand}"/>
+        <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryCommand}"/>
     </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary  Source="../Style.xaml"/>
@@ -89,14 +90,17 @@
             </dxg:GridControl>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                <Button Content="查询" Command="{Binding QueryCommand}" />
+                <Button ToolTip="Ctrl+Q" Content="查询未还" Command="{Binding QueryCommand}" />
+                <Button Content="快速归还" Command="{Binding ReturnCommand}" />
                 <!--<Button Content="添加" Command="{Binding AddCommand}"/>
                 <Button Content="删除" Command="{Binding DeleteCommand}"/>-->
             </StackPanel>
 
             <dxg:GridControl Grid.Row="1" Grid.Column="1" MaxHeight="1000" Grid.RowSpan="3"
-                             ItemsSource="{Binding Rents}" SelectedItem="{Binding CurrentRent}"
-                             >
+                             ItemsSource="{Binding Rents}" 
+                             SelectedItem="{Binding CurrentRent}"
+                             SelectedItems="{Binding CurrentRents}"
+                             SelectionMode="Cell">
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="True">
                         <dxmvvm:Interaction.Triggers>

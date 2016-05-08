@@ -1,14 +1,17 @@
 ﻿<UserControl x:Class="BookRent.PersonManage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:BookRent"
-             mc:Ignorable="d">
+             >
+    <UserControl.InputBindings>
+        <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryCommand}"/>
+        <KeyBinding Key="I" Modifiers="Control" Command="{Binding AddCommand}"/>
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding DeleteCommand}"/>
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary  Source="../Style.xaml"/>
     </UserControl.Resources>
@@ -22,13 +25,13 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Content="查询" Command="{Binding QueryCommand}" />
-            <Button Content="添加" Command="{Binding AddCommand}"/>
-            <Button Content="删除" Command="{Binding DeleteCommand}"/>
+            <Button ToolTip="Ctrl+Q" Content="查询" Command="{Binding QueryCommand}" />
+            <Button ToolTip="Ctrl+I" Content="添加" Command="{Binding AddCommand}"/>
+            <Button ToolTip="Ctrl+D" Content="删除" Command="{Binding DeleteCommand}"/>
         </StackPanel>
 
         <dxg:GridControl Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}"
-                         >
+                         SelectionMode="Cell">
             <dxg:GridControl.View>
                 <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
                     <dxmvvm:Interaction.Triggers>
