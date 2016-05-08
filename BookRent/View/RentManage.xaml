@@ -12,12 +12,12 @@
         <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryCommand}"/>
         <KeyBinding Key="R" Modifiers="Control" Command="{Binding ReturnCommand}"/>
     </UserControl.InputBindings>
-    <UserControl.Resources>
-        <ResourceDictionary  Source="../Style.xaml"/>
-    </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService/>
     </dxmvvm:Interaction.Behaviors>
+    <dxmvvm:Interaction.Triggers>
+        <dxmvvm:EventToCommand Event="Loaded" Command="{Binding InitCommand}"/>
+    </dxmvvm:Interaction.Triggers>
     <dx:BackgroundPanel>
         <Grid>
             <Grid.RowDefinitions>
@@ -33,21 +33,19 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Label Content="姓名："/>
-                <dxe:ComboBoxEdit NullText="可输入拼音首字母" Width="200" VerticalAlignment="Center"
+                <dxe:ComboBoxEdit NullText="{x:Null}" 
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
                                   DisplayMember="Name" ValueMember="Id" 
-                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
-                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True"
+                                  EditTemplate="{StaticResource ImeOffEditTemplate}"
                                   />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="书名："/>
-                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" Width="200" VerticalAlignment="Center"
+                <dxe:ComboBoxEdit NullText="可选择书名，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
-                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
-                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
+                                  EditTemplate="{StaticResource ImeOffEditTemplate}">
                     <dxe:ComboBoxEdit.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
                     </dxe:ComboBoxEdit.InputBindings>
@@ -56,11 +54,10 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="2">
                 <Label Content="ISBN: "/>
-                <dxe:ComboBoxEdit NullText="可输入ISBN，回车" Width="200" VerticalAlignment="Center"
+                <dxe:ComboBoxEdit NullText="可输入ISBN，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="ISBN" ValueMember="Id" ToolTip="Enter"
-                                  AllowNullInput="True" NullValueButtonPlacement="Popup"
-                                  AutoComplete="True" ImmediatePopup="True" IncrementalFiltering="True">
+                                  EditTemplate="{StaticResource ImeOffEditTemplate}">
                     <dxe:ComboBoxEdit.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
                     </dxe:ComboBoxEdit.InputBindings>

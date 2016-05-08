@@ -11,9 +11,6 @@
         <KeyBinding Key="I" Modifiers="Control" Command="{Binding AddCommand}"/>
         <KeyBinding Key="D" Modifiers="Control" Command="{Binding DeleteCommand}"/>
     </UserControl.InputBindings>
-    <UserControl.Resources>
-        <ResourceDictionary  Source="../Style.xaml"/>
-    </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService/>
     </dxmvvm:Interaction.Behaviors>

@@ -22,10 +22,10 @@ namespace BookRent
             _repoPerson = new PersonRepository();
             _repoBook = new BookRepository();
 
+            Persons = new ObservableCollection<Person>();
+            Books = new ObservableCollection<Book>();
             Rents = new ObservableCollection<Rent>();
             CurrentRents = new ObservableCollection<Rent>();
-            Persons = new ObservableCollection<Person>(_repoPerson.Query());
-            Books = new ObservableCollection<Book>(_repoBook.Query());
             ToBeRentBooks = new ObservableCollection<Book>();
 
             Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
@@ -47,6 +47,27 @@ namespace BookRent
         public virtual Book CurrentBook { get; set; }
         public virtual Book ToBeRentBook { get; set; }
         public virtual Rent CurrentRent { get; set; }
+
+        public void Init()
+        {
+            var persons = _repoPerson.Query();
+            if (null != persons && persons.Count > 0)
+            {
+                foreach (var item in persons)
+                {
+                    Persons.Add(item);
+                }
+            }
+
+            var books = _repoBook.Query();
+            if (null != books && books.Count > 0)
+            {
+                foreach (var item in books)
+                {
+                    Books.Add(item);
+                }
+            }
+        }
 
         public void AddBook()
         {

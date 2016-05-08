@@ -6,13 +6,6 @@
         xmlns:local="clr-namespace:BookRent"
         Title="图书借阅管理" Closed="win_Closed" Icon="../Resources/rent.png" 
         >
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -38,7 +31,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="{Binding Status}" Grid.Column="0" Margin="5,0,0,0"/>
-            <ProgressBar Value="50" Width="200" Grid.Column="1"/>
+            <!--<ProgressBar Value="50" Width="200" Grid.Column="1"/>-->
         </Grid>
     </Grid>
 </dx:DXWindow>
