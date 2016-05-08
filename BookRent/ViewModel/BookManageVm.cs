@@ -28,8 +28,6 @@ namespace BookRent
 
         public virtual Book SelectedBook { get; set; }
 
-        public virtual IMessageBoxService MessageBoxService { get { return null; } }
-
         public void Query()
         {
             var books = _bookRepo.Query();
@@ -38,6 +36,7 @@ namespace BookRent
             {
                 Books.Add(item);
             }
+            Status = string.Format("查询到{0}条记录", books.Count);
         }
 
         public void Add()
@@ -46,7 +45,7 @@ namespace BookRent
             {
                 ISBN = string.Empty,
                 Name = string.Empty,
-                InDate = DateTime.Today,
+                InDate = DateTime.Now,
                 Price = 0d
             };
 

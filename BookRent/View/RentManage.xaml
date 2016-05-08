@@ -10,6 +10,7 @@
     <UserControl.InputBindings>
         <KeyBinding Key="Enter" Modifiers="Control" Command="{Binding ConfirmRentCommand}"/>
         <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryCommand}"/>
+        <KeyBinding Key="R" Modifiers="Control" Command="{Binding ReturnCommand}"/>
     </UserControl.InputBindings>
     <UserControl.Resources>
         <ResourceDictionary  Source="../Style.xaml"/>
@@ -91,7 +92,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                 <Button ToolTip="Ctrl+Q" Content="查询未还" Command="{Binding QueryCommand}" />
-                <Button Content="快速归还" Command="{Binding ReturnCommand}" />
+                <Button ToolTip="选中多行，快速归还，Ctrl+R" Content="快速归还" Command="{Binding ReturnCommand}" />
                 <!--<Button Content="添加" Command="{Binding AddCommand}"/>
                 <Button Content="删除" Command="{Binding DeleteCommand}"/>-->
             </StackPanel>

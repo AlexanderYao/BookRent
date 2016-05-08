@@ -48,8 +48,6 @@ namespace BookRent
         public virtual Book ToBeRentBook { get; set; }
         public virtual Rent CurrentRent { get; set; }
 
-        public virtual IMessageBoxService MessageBoxService { get { return null; } }
-
         public void AddBook()
         {
             if (null == CurrentBook || ToBeRentBooks.Contains(CurrentBook))
@@ -143,53 +141,36 @@ namespace BookRent
             {
                 Rents.Add(item);
             }
+            Status = string.Format("查询到{0}条未归还的记录", rents.Count);
         }
 
         public void Return()
         {
+            if (CurrentRents.Count == 0)
+            {
+                MessageBoxService.Show("请选择要归还的记录", "提示");
+                return;
+            }
 
+            var result = true;
+            foreach (var item in CurrentRents)
+            {
+                item.EndDate = DateTime.Now;
+                var tmp = _repo.Update(item);
+                if (tmp)
+                {
+                    var index = Rents.IndexOf(item);
+                    Rents[index] = item;
+                }
+
+                result &= tmp;
+            }
+
+            if (result)
+            {
+                Status = string.Format("归还{0}！", result ? "成功" : "失败");
+            }
         }
-
-        //public void Add()
-        //{
-        //    var rent = new Rent
-        //    {
-        //        Person = new Person { Id = 1 },
-        //        Book = new Book { Id = 1 },
-        //        StartDate = DateTime.Today,
-        //        EndDate = DateTime.MaxValue
-        //    };
-
-        //    var rowid = _repo.Add(rent);
-        //    var result = rowid > 0;
-        //    Status = string.Format("新增{0}！", result ? "成功" : "失败");
-
-        //    if (result)
-        //    {
-        //        rent.Id = rowid;
-        //        Rents.Add(rent);
-        //    }
-        //}
-
-        //public void Delete()
-        //{
-        //    if (null == CurrentRent)
-        //    {
-        //        return;
-        //    }
-
-        //    if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
-        //    {
-        //        return;
-        //    }
-
-        //    var result = _repo.Delete(CurrentRent);
-        //    Status = string.Format("删除{0}！", result ? "成功" : "失败");
-        //    if (result)
-        //    {
-        //        Rents.Remove(CurrentRent);
-        //    }
-        //}
 
         public void Update()
         {

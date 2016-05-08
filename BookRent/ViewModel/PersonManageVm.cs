@@ -36,8 +36,6 @@ namespace BookRent
             }
         }
 
-        public virtual IMessageBoxService MessageBoxService { get { return null; } }
-
         public void Query()
         {
             var persons = _personRepo.Query();
@@ -46,6 +44,7 @@ namespace BookRent
             {
                 Persons.Add(item);
             }
+            Status = string.Format("查询到{0}条记录", persons.Count);
         }
 
         public void Add()
@@ -54,8 +53,8 @@ namespace BookRent
             {
                 Name = string.Empty,
                 Sex = Sex.男,
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today.AddYears(1),
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddYears(1),
                 Fee = 0d,
                 Deposit = 0d,
                 PhoneNo = string.Empty

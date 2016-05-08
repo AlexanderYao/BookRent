@@ -27,5 +27,7 @@ namespace BookRent
         {
             Messenger.Default.Send<T>(t);
         }
+
+        public virtual IMessageBoxService MessageBoxService { get { return null; } }
     }
 }
