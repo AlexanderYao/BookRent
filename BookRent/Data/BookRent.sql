@@ -2,7 +2,8 @@
 	ISBN text,
 	Name text,
 	InDate date,
-	Price numeric
+	Price numeric,
+	Pinyin text
 );
 
 create table Persons (
@@ -24,6 +25,7 @@ create table Rents (
 
 /*add column*/
 alter table books add InDate date;
+/*新增列之后，必须补全数据，因为Query()里没对null做判断，程序默认插入的是string.Empty，而手工插入的是null*/
 update books set Indate = PubDate;
 
 /*drop column: sqlite does not support drop columns directly*/

@@ -54,6 +54,7 @@
         <Setter Property="NullValueButtonPlacement" Value="Popup"/>
         <Setter Property="ImmediatePopup" Value="True"/>
         <Setter Property="IncrementalFiltering" Value="True"/>
+        <Setter Property="FilterCondition" Value="Contains"/>
         <Setter Property="FontSize" Value="15"/>
     </Style>
 

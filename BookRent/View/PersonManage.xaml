@@ -39,6 +39,7 @@
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Width="100"  FieldName="Name"      Header="名字"      />
+                <dxg:GridColumn Width="80"   FieldName="Pinyin"    Header="拼音首字母"      />
                 <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      >
                     <dxg:GridColumn.EditSettings>
                         <dxe:ComboBoxEditSettings ItemsSource="{Binding Sexes}"/>

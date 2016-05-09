@@ -32,6 +32,7 @@ namespace BookRent
         /// </summary>
         public double Deposit { get; set; }
         public string PhoneNo { get; set; }
+        public string Pinyin { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -47,6 +48,11 @@ namespace BookRent
         public override int GetHashCode()
         {
             return null == Name ? Id.GetHashCode() : Name.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Pinyin, Name);
         }
     }
 

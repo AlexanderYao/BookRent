@@ -57,7 +57,8 @@ namespace BookRent
                 EndDate = DateTime.Now.AddYears(1),
                 Fee = 0d,
                 Deposit = 0d,
-                PhoneNo = string.Empty
+                PhoneNo = string.Empty,
+                Pinyin = string.Empty,
             };
 
             var rowid = _personRepo.Add(person);

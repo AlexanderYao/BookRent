@@ -33,16 +33,15 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Label Content="姓名："/>
-                <dxe:ComboBoxEdit NullText="{x:Null}" 
+                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" 
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
-                                  DisplayMember="Name" ValueMember="Id" 
                                   EditTemplate="{StaticResource ImeOffEditTemplate}"
                                   />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="书名："/>
-                <dxe:ComboBoxEdit NullText="可选择书名，回车"
+                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}">
