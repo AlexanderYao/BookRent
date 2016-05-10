@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\rent.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v14.1">
       <HintPath>..\Lib\DevExpress.Data.v14.1.dll</HintPath>
@@ -180,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\BookRent.sql" />
+    <Resource Include="Resources\rent.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
