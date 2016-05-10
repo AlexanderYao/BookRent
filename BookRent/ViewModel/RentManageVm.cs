@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -27,6 +28,8 @@ namespace BookRent
             Rents = new ObservableCollection<Rent>();
             CurrentRents = new ObservableCollection<Rent>();
             ToBeRentBooks = new ObservableCollection<Book>();
+
+            Task.Run(() => Init());
 
             Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
             Messenger.Default.Register<ItemChangedMsg<Book>>(this, OnBookChanged);

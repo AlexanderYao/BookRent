@@ -15,9 +15,6 @@
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService/>
     </dxmvvm:Interaction.Behaviors>
-    <dxmvvm:Interaction.Triggers>
-        <dxmvvm:EventToCommand Event="Loaded" Command="{Binding InitCommand}"/>
-    </dxmvvm:Interaction.Triggers>
     <dx:BackgroundPanel>
         <Grid>
             <Grid.RowDefinitions>
