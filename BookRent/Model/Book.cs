@@ -17,6 +17,7 @@ namespace BookRent
         /// </summary>
         public DateTime InDate { get; set; }
         public double Price { get; set; }
+        public string Pinyin { get; set; }
         /// <summary>
         /// 入库方式
         /// </summary>
@@ -36,6 +37,11 @@ namespace BookRent
         public override int GetHashCode()
         {
             return null == ISBN ? base.GetHashCode() : ISBN.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Pinyin, Name);
         }
     }
 

@@ -13,7 +13,8 @@ create table Persons (
 	EndDate date,
 	Fee numeric,
 	Deposit numeric,
-	PhoneNo text
+	PhoneNo text,
+	Pinyin text
 );
 
 create table Rents (

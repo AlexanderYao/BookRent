@@ -28,7 +28,7 @@ namespace BookRent
             }
 
             var result = new List<Book>();
-            using (var reader = _helper.ExecuteReader("select rowid, ISBN, Name, InDate, Price from books", null))
+            using (var reader = _helper.ExecuteReader("select rowid, ISBN, Name, InDate, Price, Pinyin from books", null))
             {
                 while (reader.Read())
                 {
@@ -38,7 +38,8 @@ namespace BookRent
                         ISBN = reader.GetString(1),
                         Name = reader.GetString(2),
                         InDate = reader.GetDateTime(3),
-                        Price = reader.GetDouble(4)
+                        Price = reader.GetDouble(4),
+                        Pinyin = reader.GetString(5),
                     };
                     result.Add(item);
                 }
@@ -54,12 +55,13 @@ namespace BookRent
 
         public long Add(Book book)
         {
-            var sql = @"insert into Books(ISBN, Name, InDate, Price) values (@ISBN, @Name, @InDate, @Price)";
+            var sql = @"insert into Books(ISBN, Name, InDate, Price, Pinyin) values (@ISBN, @Name, @InDate, @Price, @Pinyin)";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@ISBN", book.ISBN),
                 new SQLiteParameter("@Name", book.Name),
                 new SQLiteParameter("@InDate", book.InDate),
                 new SQLiteParameter("@Price", book.Price),
+                new SQLiteParameter("@Pinyin", book.Pinyin),
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             book.Id = rowid;
@@ -80,13 +82,14 @@ namespace BookRent
 
         public bool Update(Book book)
         {
-            var sql = @"update Books set ISBN = @ISBN, Name = @Name, InDate = @InDate, Price = @Price where rowid = @id";
+            var sql = @"update Books set ISBN = @ISBN, Name = @Name, InDate = @InDate, Price = @Price, Pinyin = @Pinyin where rowid = @id";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", book.Id),
                 new SQLiteParameter("@ISBN", book.ISBN),
                 new SQLiteParameter("@Name", book.Name),
                 new SQLiteParameter("@InDate", book.InDate),
                 new SQLiteParameter("@Price", book.Price),
+                new SQLiteParameter("@Pinyin", book.Pinyin),
             };
             var result = _helper.ExecuteNonQuery(sql, paras) == 1;
             Cache.Set<Book>(book);

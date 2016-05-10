@@ -67,7 +67,7 @@ namespace BookRent
                 new SQLiteParameter("@Fee", person.Fee),
                 new SQLiteParameter("@Deposit", person.Deposit),
                 new SQLiteParameter("@PhoneNo", person.PhoneNo),
-                new SQLiteParameter("@Pinyin", person.Pinyin)
+                new SQLiteParameter("@Pinyin", person.Pinyin),
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             person.Id = rowid;

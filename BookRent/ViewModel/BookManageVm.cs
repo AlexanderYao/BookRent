@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
+using DevExpress.Xpf.Grid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,7 +47,8 @@ namespace BookRent
                 ISBN = string.Empty,
                 Name = string.Empty,
                 InDate = DateTime.Now,
-                Price = 0d
+                Price = 0d,
+                Pinyin = string.Empty,
             };
 
             long rowid = _bookRepo.Add(book);
@@ -81,11 +83,16 @@ namespace BookRent
             }
         }
 
-        public void Update()
+        public void Update(CellValueChangedEventArgs e)
         {
             if (null == SelectedBook)
             {
                 return;
+            }
+
+            if (e.Column.FieldName == "Name" && !string.IsNullOrWhiteSpace(SelectedBook.Name))
+            {
+                SelectedBook.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedBook.Name);
             }
 
             var result = _bookRepo.Update(SelectedBook);
