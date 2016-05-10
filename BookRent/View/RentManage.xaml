@@ -33,12 +33,12 @@
                 <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" 
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}"
-                                  />
+                                  KeyDown="ComboBoxEdit_KeyDown"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="书名："/>
-                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车"
+                <dxe:ComboBoxEdit x:Name="bookCbe" NullText="可输入拼音首字母，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
                                   DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}">

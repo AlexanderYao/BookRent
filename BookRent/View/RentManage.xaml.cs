@@ -22,5 +22,13 @@ namespace BookRent
             InitializeComponent();
             this.DataContext = RentManageVm.Create();
         }
+
+        private void ComboBoxEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                bookCbe.Focus();
+            }
+        }
     }
 }
