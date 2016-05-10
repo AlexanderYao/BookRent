@@ -30,16 +30,15 @@
         <dxg:GridControl Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}"
                          SelectionMode="Cell">
             <dxg:GridControl.View>
-                <dxg:TableView ShowGroupPanel="False" AllowEditing="True" >
+                <dxg:TableView ShowGroupPanel="False" AllowEditing="True">
                     <dxmvvm:Interaction.Triggers>
-                        <dxmvvm:EventToCommand EventName="CellValueChanged" 
-                                               Command="{Binding UpdateCommand}"/>
+                        <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}" PassEventArgsToCommand="True"/>
                     </dxmvvm:Interaction.Triggers>
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
                 <dxg:GridColumn Width="100"  FieldName="Name"      Header="名字"      />
-                <dxg:GridColumn Width="80"   FieldName="Pinyin"    Header="拼音首字母"      />
+                <dxg:GridColumn Width="90"   FieldName="Pinyin"    Header="拼音首字母"     />
                 <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      >
                     <dxg:GridColumn.EditSettings>
                         <dxe:ComboBoxEditSettings ItemsSource="{Binding Sexes}"/>

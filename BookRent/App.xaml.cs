@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -36,17 +37,15 @@ namespace BookRent
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            //ILog log = BookRentApp.Current.GetService<ILog>();
-            //log.Error(e.Exception);
-
             LogError(e.Exception);
+            DXMessageBox.Show("抱歉哦，遇到问题需要关闭。请联系管理员！", "提示");
             e.Handled = true;
             Application.Current.Shutdown();
         }
 
         private void LogError(Exception ex)
         {
-            MessageBox.Show(ex.ToString());
+            Logger.Error(ex);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
+using DevExpress.Xpf.Grid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -93,11 +94,16 @@ namespace BookRent
             }
         }
 
-        public void Update()
+        public void Update(CellValueChangedEventArgs e)
         {
             if (null == SelectedPerson)
             {
                 return;
+            }
+
+            if (e.Column.FieldName == "Name" && !string.IsNullOrWhiteSpace(SelectedPerson.Name))
+            {
+                SelectedPerson.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedPerson.Name);
             }
 
             var result = _personRepo.Update(SelectedPerson);

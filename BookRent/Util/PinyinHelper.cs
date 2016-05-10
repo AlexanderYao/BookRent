@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 namespace BookRent
 {
     /// <summary>
-    /// 博客园-SpellCodeHelper
+    /// 博客园-SpellCodeHelper，不支持多音字
     /// http://www.cnblogs.com/kingboy2008/archive/2011/08/02/2124742.html
     /// </summary>
     public static class PinyinHelper
     {
+        /// <summary>
+        /// 对特殊字处理有误，比如"邬"=?
+        /// </summary>
+        /// <param name="unicodeString"></param>
+        /// <returns></returns>
         public static string GetChineseSpellCode(string unicodeString)
         {
             int i = 0;
@@ -216,7 +221,7 @@ namespace BookRent
         #endregion 拼音编码
 
         /// <summary>  
-        /// 从字符串中获取汉字拼音首字母，不是汉字则原样输出  
+        /// 从字符串中获取汉字拼音首字母，不是汉字则原样输出，比如"Alex"=alex
         /// </summary>  
         /// <param name="transName"></param>  
         /// <returns></returns>  
@@ -307,7 +312,7 @@ namespace BookRent
         }
 
         /// <summary>  
-        /// 把汉字转换成拼音(全拼)  
+        /// 把汉字转换成拼音(全拼)，对特殊字处理有误，比如"邬"=Zuo
         /// </summary>  
         /// <param name="transName">汉字字符串</param>  
         /// <returns>转换后的拼音(全拼)字符串</returns>  

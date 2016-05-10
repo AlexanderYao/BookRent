@@ -57,6 +57,9 @@
       <HintPath>..\Lib\DevExpress.Xpf.Grid.v14.1.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -90,6 +93,7 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Util\CopyHelper.cs" />
+    <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="ViewModel\RentManageVm.cs" />
     <Compile Include="ViewModel\PersonManageVm.cs" />
@@ -157,6 +161,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Data\BookRent.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
