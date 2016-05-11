@@ -24,16 +24,4 @@ namespace BookRent
         public ActionMode Action { get; set; }
         public T Item { get; set; }
     }
-
-    class PersonChangedMsg
-    {
-        public NotifyCollectionChangedAction ChangeAction { get; set; }
-        public Person ChangedItem { get; set; }
-    }
-
-    class BookChangedMsg
-    {
-        public NotifyCollectionChangedAction ChangeAction { get; set; }
-        public Book ChangedItem { get; set; }
-    }
 }

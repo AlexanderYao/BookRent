@@ -58,7 +58,7 @@ namespace BookRent
             if (result)
             {
                 Books.Add(book);
-                SendMsg(new BookChangedMsg());
+                SendMsg(new ItemChangedMsg<Book>(ActionMode.Add, book));
             }
         }
 
@@ -78,8 +78,8 @@ namespace BookRent
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
+                SendMsg(new ItemChangedMsg<Book>(ActionMode.Delete, SelectedBook));
                 Books.Remove(SelectedBook);
-                SendMsg(new BookChangedMsg());
             }
         }
 
@@ -102,7 +102,7 @@ namespace BookRent
             {
                 var index = Books.IndexOf(SelectedBook);
                 Books[index] = SelectedBook;
-                SendMsg(new BookChangedMsg());
+                SendMsg(new ItemChangedMsg<Book>(ActionMode.Update, SelectedBook));
             }
         }
     }

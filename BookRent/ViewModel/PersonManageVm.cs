@@ -89,8 +89,8 @@ namespace BookRent
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
-                Persons.Remove(SelectedPerson);
                 SendMsg(new ItemChangedMsg<Person>(ActionMode.Delete, SelectedPerson));
+                Persons.Remove(SelectedPerson);
             }
         }
 
