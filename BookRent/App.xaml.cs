@@ -11,7 +11,7 @@ using System.Windows.Threading;
 namespace BookRent
 {
     public partial class App : Application
-    {
+    { 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -46,6 +46,11 @@ namespace BookRent
         private void LogError(Exception ex)
         {
             Logger.Error(ex);
+        }
+
+        private void OnStartup_UpdateThemeName(object sender, StartupEventArgs e)
+        {
+            //DevExpress.Xpf.Core.ApplicationThemeHelper.UpdateApplicationThemeName();
         }
     }
 }

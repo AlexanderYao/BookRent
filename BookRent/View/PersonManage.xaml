@@ -30,7 +30,7 @@
         <dxg:GridControl Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}"
                          SelectionMode="Cell">
             <dxg:GridControl.View>
-                <dxg:TableView ShowGroupPanel="False" AllowEditing="True">
+                <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True">
                     <dxmvvm:Interaction.Triggers>
                         <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}" PassEventArgsToCommand="True"/>
                     </dxmvvm:Interaction.Triggers>
