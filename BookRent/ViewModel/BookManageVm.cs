@@ -18,6 +18,8 @@ namespace BookRent
         {
             _bookRepo = new BookRepository();
             Books = new ObservableCollection<Book>();
+
+            Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Rep, OnIsbnReply);
         }
 
         public static BookManageVm Create()
@@ -95,15 +97,41 @@ namespace BookRent
                 SelectedBook.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedBook.Name);
             }
 
-            var result = _bookRepo.Update(SelectedBook);
+            if (e.Column.FieldName == "ISBN" && !string.IsNullOrWhiteSpace(SelectedBook.ISBN))
+            {
+                Messenger.Default.Send<IsbnMsg>(new IsbnMsg(SelectedBook), IsbnAction.Req);
+            }
+
+            Save(SelectedBook);
+        }
+
+        private void Save(Book book)
+        {
+            var result = _bookRepo.Update(book);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)
             {
-                var index = Books.IndexOf(SelectedBook);
-                Books[index] = SelectedBook;
-                SendMsg(new ItemChangedMsg<Book>(ActionMode.Update, SelectedBook));
+                var index = Books.IndexOf(book);
+                Books[index] = book;
+                SendMsg(new ItemChangedMsg<Book>(ActionMode.Update, book));
             }
+        }
+
+        private void OnIsbnReply(IsbnMsg msg)
+        {
+            var book = msg.Book;
+            var target = Books.FirstOrDefault(e => e.ISBN == book.ISBN);
+
+            if (null == target)
+            {
+                return;
+            }
+
+            target.Name = book.Name;
+            target.Price = book.Price;
+            target.Pinyin = PinyinHelper.GetFirstPYLetter(target.Name);
+            Save(target);
         }
     }
 }

@@ -50,4 +50,10 @@ namespace BookRent
         手工 = 0,
         自动 = 1
     }
+
+    public enum IsbnAction
+    {
+        Req = 0,
+        Rep = 1
+    }
 }

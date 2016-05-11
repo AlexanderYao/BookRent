@@ -24,4 +24,13 @@ namespace BookRent
         public ActionMode Action { get; set; }
         public T Item { get; set; }
     }
+
+    class IsbnMsg
+    {
+        public IsbnMsg(Book book)
+        {
+            this.Book = book;
+        }
+        public Book Book { get; set; }
+    }
 }

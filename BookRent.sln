@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookRent", "BookRent\BookRent.csproj", "{A8B28F27-C3A5-4209-B9C5-21237EEE04A5}"
 EndProject
@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{A5F1B1ED-ECD
 		Lib\DevExpress.Xpf.Grid.v14.1.Core.dll = Lib\DevExpress.Xpf.Grid.v14.1.Core.dll
 		Lib\DevExpress.Xpf.Grid.v14.1.dll = Lib\DevExpress.Xpf.Grid.v14.1.dll
 		Lib\log4net.dll = Lib\log4net.dll
+		Lib\Newtonsoft.Json.dll = Lib\Newtonsoft.Json.dll
 		Lib\System.Data.SQLite.dll = Lib\System.Data.SQLite.dll
 	EndProjectSection
 EndProject

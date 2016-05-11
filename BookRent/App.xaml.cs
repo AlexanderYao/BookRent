@@ -11,11 +11,16 @@ using System.Windows.Threading;
 namespace BookRent
 {
     public partial class App : Application
-    { 
+    {
+        private PluginManager _pluginManager;
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            base.OnStartup(e);            
+            this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            this.Exit += App_Exit;
+            _pluginManager = new PluginManager();
+            _pluginManager.Init();
 
             var main = new MainWindow();
             Set(main, "Width");
@@ -40,7 +45,13 @@ namespace BookRent
             LogError(e.Exception);
             DXMessageBox.Show("抱歉哦，遇到问题需要关闭。请联系管理员！", "提示");
             e.Handled = true;
-            Application.Current.Shutdown();
+            Shutdown();
+            //Application.Current.Shutdown();
+        }
+
+        private void App_Exit(object sender, ExitEventArgs e)
+        {
+            _pluginManager.Close();
         }
 
         private void LogError(Exception ex)
