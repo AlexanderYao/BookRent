@@ -18,6 +18,7 @@ namespace BookRent
         {
             _personRepo = new PersonRepository();
             Persons = new ObservableCollection<Person>();
+            SelectedPersons = new ObservableCollection<Person>();
         }
 
         public static PersonManageVm Create()
@@ -26,6 +27,8 @@ namespace BookRent
         }
 
         public ObservableCollection<Person> Persons { get; set; }
+
+        public ObservableCollection<Person> SelectedPersons { get; set; }
 
         public virtual Person SelectedPerson { get; set; }
 
@@ -75,23 +78,29 @@ namespace BookRent
 
         public void Delete()
         {
-            if (null == SelectedPerson)
+            if (SelectedPersons.Count == 0)
             {
                 return;
             }
 
-            if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBoxService.Show(string.Format("确定要删除{0}吗？", SelectedPersons.ToString(e => e.Name)), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
 
-            var result = _personRepo.Delete(SelectedPerson);
-            Status = string.Format("删除{0}！", result ? "成功" : "失败");
-            if (result)
+            int count = 0;
+            foreach (var item in SelectedPersons.ToArray())
             {
-                SendMsg(new ItemChangedMsg<Person>(ActionMode.Delete, SelectedPerson));
-                Persons.Remove(SelectedPerson);
+                var result = _personRepo.Delete(item);
+
+                if (result)
+                {
+                    count++;
+                    SendMsg(new ItemChangedMsg<Person>(ActionMode.Delete, item));
+                    Persons.Remove(item);
+                }
             }
+            Status = string.Format("删除{0}人！", count);
         }
 
         public void Update(CellValueChangedEventArgs e)

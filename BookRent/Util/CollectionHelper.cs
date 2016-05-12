@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 
 namespace BookRent
@@ -27,6 +28,22 @@ namespace BookRent
                 list.Insert(index, t);
             };
             Application.Current.Dispatcher.BeginInvoke(action, item);
+        }
+
+        public static string ToString<T>(this IList<T> list, Func<T, string> func)
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            for (int i = 0; i < list.Count; i++)
+            {
+                sb.Append(func(list[i]));
+                if (i != list.Count - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

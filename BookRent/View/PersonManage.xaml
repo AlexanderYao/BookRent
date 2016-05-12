@@ -27,8 +27,11 @@
             <Button ToolTip="Ctrl+D" Content="删除" Command="{Binding DeleteCommand}"/>
         </StackPanel>
 
-        <dxg:GridControl Grid.Row="1" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}"
-                         SelectionMode="Cell">
+        <dxg:GridControl Grid.Row="1" SelectionMode="Cell"
+                         ItemsSource="{Binding Persons}" 
+                         SelectedItem="{Binding SelectedPerson}"
+                         SelectedItems="{Binding SelectedPersons}"
+                         >
             <dxg:GridControl.View>
                 <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True">
                     <dxmvvm:Interaction.Triggers>
