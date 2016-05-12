@@ -5,6 +5,7 @@ Simple book rent app, self used
 
 #### TODO
 - 使用Office2010风格的框架
+- 提醒有哪些人 借的 哪些书 到期了
 
 #### Done
 - 支持拼音首字母，检索书名和人名
