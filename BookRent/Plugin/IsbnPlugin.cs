@@ -93,6 +93,8 @@ namespace BookRent
         private double GetPrice(string dPrice)
         {
             int index = dPrice.IndexOf('元');
+            index = (index < 0) ? dPrice.Length : index;
+
             string num = dPrice.Substring(0, index);
             double result;
             bool canParse = double.TryParse(num, out result);

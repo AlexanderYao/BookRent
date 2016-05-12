@@ -107,6 +107,7 @@
     <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Plugin\IsbnPlugin.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
+    <Compile Include="Util\CollectionHelper.cs" />
     <Compile Include="Util\CopyHelper.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\PinyinHelper.cs" />

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BookRent
 {
@@ -23,9 +24,17 @@ namespace BookRent
             }
         }
 
-        public virtual void SendMsg<T>(T t)
+        public virtual void SendMsg<T>(T t, bool isAsync = false)
         {
-            Messenger.Default.Send<T>(t);
+            if (!isAsync)
+            {
+                Messenger.Default.Send<T>(t);
+            }
+            else
+            {
+                Action<T> action = Messenger.Default.Send<T>;
+                Application.Current.Dispatcher.BeginInvoke(action, t);
+            }
         }
 
         public virtual IMessageBoxService MessageBoxService { get { return null; } }

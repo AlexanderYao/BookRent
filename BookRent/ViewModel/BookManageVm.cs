@@ -2,20 +2,19 @@
 using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Grid;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Input;
 
 namespace BookRent
 {
     public class BookManageVm : MyViewModelBase
     {
         private IRepository<Book> _bookRepo;
+        private object _synRoot;
         protected BookManageVm()
         {
+            _synRoot = new object();
             _bookRepo = new BookRepository();
             Books = new ObservableCollection<Book>();
 
@@ -112,8 +111,12 @@ namespace BookRent
 
             if (result)
             {
-                var index = Books.IndexOf(book);
-                Books[index] = book;
+                lock (_synRoot)
+                {
+                    var index = Books.IndexOf(book);
+                    Books[index] = book;
+                }
+                
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Update, book));
             }
         }
@@ -131,7 +134,7 @@ namespace BookRent
             target.Name = book.Name;
             target.Price = book.Price;
             target.Pinyin = PinyinHelper.GetFirstPYLetter(target.Name);
-            Save(target);
+            Application.Current.Dispatcher.BeginInvoke((Action<Book>)Save, target);
         }
     }
 }
