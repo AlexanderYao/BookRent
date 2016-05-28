@@ -29,7 +29,7 @@ namespace BookRent
             CurrentRents = new ObservableCollection<Rent>();
             ToBeRentBooks = new ObservableCollection<Book>();
 
-            Task.Run(() => Init());
+            new Task(Init).Start();
 
             Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
             Messenger.Default.Register<ItemChangedMsg<Book>>(this, OnBookChanged);

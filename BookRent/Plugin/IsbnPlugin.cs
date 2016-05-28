@@ -53,7 +53,7 @@ namespace BookRent
 
             var book = _queue.Dequeue();
             string jsonStr = string.Empty;
-            HttpWebRequest req = WebRequest.CreateHttp(string.Format(_apiFormat, book.ISBN));
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(string.Format(_apiFormat, book.ISBN));
             using (HttpWebResponse response = (HttpWebResponse)req.GetResponse())
             {
                 if (response.StatusCode == HttpStatusCode.OK)
