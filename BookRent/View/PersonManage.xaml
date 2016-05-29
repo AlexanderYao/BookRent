@@ -40,6 +40,7 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
+                <dxg:GridColumn Width="50"  FieldName="Id"        Header="序号"     AllowEditing="False" />
                 <dxg:GridColumn Width="100"  FieldName="Name"      Header="名字"      />
                 <dxg:GridColumn Width="90"   FieldName="Pinyin"    Header="拼音首字母"     />
                 <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      >

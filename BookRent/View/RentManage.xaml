@@ -21,6 +21,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -29,6 +30,15 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Label Content="序号："/>
+                <dxe:ComboBoxEdit NullText="可输入会员序号，回车" 
+                                  ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
+                                  DisplayMember="Id" ValueMember="Id"
+                                  EditTemplate="{StaticResource ImeOffEditTemplate}"
+                                  KeyDown="ComboBoxEdit_KeyDown"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="姓名："/>
                 <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" 
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
@@ -36,7 +46,7 @@
                                   KeyDown="ComboBoxEdit_KeyDown"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Grid.Row="2">
                 <Label Content="书名："/>
                 <dxe:ComboBoxEdit x:Name="bookCbe" NullText="可输入拼音首字母，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
@@ -48,7 +58,7 @@
                 </dxe:ComboBoxEdit>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Grid.Row="3">
                 <Label Content="ISBN: "/>
                 <dxe:ComboBoxEdit NullText="可输入ISBN，回车"
                                   ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
@@ -60,11 +70,11 @@
                 </dxe:ComboBoxEdit>
             </StackPanel>
 
-            <Button Grid.Row="3" Grid.Column="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top"
+            <Button Grid.Row="4" Grid.Column="0" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top"
                     Content="确认借出" Command="{Binding ConfirmRentCommand}" 
                     ToolTip="Ctrl+Enter">
             </Button>
-            <dxg:GridControl Grid.Row="3" Grid.Column="0" MaxHeight="1000" ToolTip="双击选中项，取消"
+            <dxg:GridControl Grid.Row="4" Grid.Column="0" MaxHeight="1000" ToolTip="双击选中项，取消"
                              ItemsSource="{Binding ToBeRentBooks}" 
                              SelectedItem="{Binding ToBeRentBook}"
                              >
@@ -90,7 +100,7 @@
                 <Button Content="删除" Command="{Binding DeleteCommand}"/>-->
             </StackPanel>
 
-            <dxg:GridControl Grid.Row="1" Grid.Column="1" MaxHeight="1000" Grid.RowSpan="3"
+            <dxg:GridControl Grid.Row="1" Grid.Column="1" MaxHeight="1000" Grid.RowSpan="4"
                              ItemsSource="{Binding Rents}" 
                              SelectedItem="{Binding CurrentRent}"
                              SelectedItems="{Binding CurrentRents}"
