@@ -102,19 +102,20 @@
                              ItemsSource="{Binding Rents}" 
                              SelectedItem="{Binding CurrentRent}"
                              SelectedItems="{Binding CurrentRents}"
-                             SelectionMode="Cell" 
+                             SelectionMode="MultipleRow" 
                              FilterString="{Binding Filter, Mode=TwoWay}">
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True">
-                        <dxmvvm:Interaction.Triggers>
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True" EditorShowMode="MouseDown"
+                                   ShowCheckBoxSelectorColumn="True">
+                        <!--<dxmvvm:Interaction.Triggers>
                             <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
-                        </dxmvvm:Interaction.Triggers>
+                        </dxmvvm:Interaction.Triggers>-->
                     </dxg:TableView>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"     ReadOnly="True" />
-                    <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"     ReadOnly="True" />
-                    <dxg:GridColumn Width="150"  FieldName="StartDate"       Header="借出日期" ReadOnly="True" />
+                    <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"      />
+                    <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"      />
+                    <dxg:GridColumn Width="150"  FieldName="StartDate"       Header="借出日期"  />
                     <dxg:GridColumn Width="150"  FieldName="EndDate"         Header="归还日期" EditSettings="{StaticResource dateSetting}"/>
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
