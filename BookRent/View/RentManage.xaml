@@ -96,15 +96,14 @@
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                 <Button ToolTip="Ctrl+Q" Content="查询未还" Command="{Binding QueryCommand}" />
                 <Button ToolTip="选中多行，快速归还，Ctrl+R" Content="快速归还" Command="{Binding ReturnCommand}" />
-                <!--<Button Content="添加" Command="{Binding AddCommand}"/>
-                <Button Content="删除" Command="{Binding DeleteCommand}"/>-->
             </StackPanel>
 
             <dxg:GridControl Grid.Row="1" Grid.Column="1" MaxHeight="1000" Grid.RowSpan="4"
                              ItemsSource="{Binding Rents}" 
                              SelectedItem="{Binding CurrentRent}"
                              SelectedItems="{Binding CurrentRents}"
-                             SelectionMode="Cell">
+                             SelectionMode="Cell" 
+                             FilterString="{Binding Filter, Mode=TwoWay}">
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True">
                         <dxmvvm:Interaction.Triggers>
