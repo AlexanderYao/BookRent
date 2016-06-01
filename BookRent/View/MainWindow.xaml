@@ -4,8 +4,14 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns:local="clr-namespace:BookRent"
-        Title="图书借阅管理" Closed="win_Closed" Icon="../Resources/rent.png" 
+        Title="{Binding AppName}" Closed="win_Closed" Icon="/BookRent;component/Resources/rent.png" 
         >
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:NotificationService UseWin8NotificationsIfAvailable="False"
+                                    PredefinedNotificationTemplate="ShortHeaderAndTwoTextFields" 
+                                    PredefinedNotificationDuration="Default" 
+                                    Sound="Notification_IM"/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

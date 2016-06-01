@@ -33,4 +33,13 @@ namespace BookRent
         }
         public Book Book { get; set; }
     }
+
+    class NotifyMsg
+    {
+        public NotifyMsg(string msg)
+        {
+            this.Msg = msg;
+        }
+        public string Msg { get; set; }
+    }
 }

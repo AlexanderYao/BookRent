@@ -1,4 +1,5 @@
-﻿using DevExpress.Xpf.Core;
+﻿using DevExpress.Data;
+using DevExpress.Xpf.Core;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,6 +19,7 @@ namespace BookRent
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            //ShellHelper.TryCreateShortcut(ConfigurationManager.AppSettings["AppId"], ConfigurationManager.AppSettings["AppName"]);
 
             base.OnStartup(e);
 

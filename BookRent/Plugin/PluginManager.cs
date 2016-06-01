@@ -14,7 +14,8 @@ namespace BookRent
         {
             _list = new List<IPlugin> { 
                 new AutoBackupPlugin(), 
-                new IsbnPlugin() 
+                new IsbnPlugin(),
+                new NotifyPlugin(),
             };
         }
 

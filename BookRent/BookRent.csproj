@@ -105,6 +105,7 @@
     <Compile Include="Model\Book.cs" />
     <Compile Include="Plugin\AutoBackupPlugin.cs" />
     <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\NotifyPlugin.cs" />
     <Compile Include="Plugin\IsbnPlugin.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Util\CollectionHelper.cs" />
