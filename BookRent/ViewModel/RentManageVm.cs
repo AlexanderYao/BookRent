@@ -50,7 +50,6 @@ namespace BookRent
         public virtual Book CurrentBook { get; set; }
         public virtual Book ToBeRentBook { get; set; }
         public virtual Rent CurrentRent { get; set; }
-        public virtual string Filter { get; set; }
 
         public void Init()
         {
@@ -158,7 +157,25 @@ namespace BookRent
             }
         }
 
-        public void Query()
+        public void QueryRent()
+        {
+            if (null == CurrentPerson)
+            {
+                Status = string.Format("请选择会员，再查询相应的借阅记录");
+                return;
+            }
+
+            var rents = _repo.Query(e => e.Person == CurrentPerson && e.EndDate == DateTime.MinValue);
+            Rents.Clear();
+            foreach (var item in rents)
+            {
+                Rents.Add(item);
+            }
+
+            Status = string.Format("{0}: 未归还{1}本", CurrentPerson.Name, rents.Count);
+        }
+
+        public void QueryAll()
         {
             if (null == CurrentPerson)
             {
@@ -173,7 +190,6 @@ namespace BookRent
                 Rents.Add(item);
             }
 
-            Filter = string.Format("EndDate Is Not Null");
             Status = string.Format("{0}: 未归还{1}本，总共借阅过{2}次",
                 CurrentPerson.Name,
                 rents.Where(e => e.EndDate == DateTime.MinValue).Count(),

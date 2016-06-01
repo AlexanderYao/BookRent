@@ -9,7 +9,8 @@
              >
     <UserControl.InputBindings>
         <KeyBinding Key="Enter" Modifiers="Control" Command="{Binding ConfirmRentCommand}"/>
-        <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryCommand}"/>
+        <KeyBinding Key="Q" Modifiers="Control" Command="{Binding QueryRentCommand}"/>
+        <KeyBinding Key="Q" Modifiers="Control+Shift" Command="{Binding QueryAllCommand}"/>
         <KeyBinding Key="R" Modifiers="Control" Command="{Binding ReturnCommand}"/>
     </UserControl.InputBindings>
     <dxmvvm:Interaction.Behaviors>
@@ -94,7 +95,8 @@
             </dxg:GridControl>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                <Button ToolTip="Ctrl+Q" Content="查询未还" Command="{Binding QueryCommand}" />
+                <Button ToolTip="Ctrl+Q" Content="查询未还" Command="{Binding QueryRentCommand}" />
+                <Button ToolTip="Ctrl+Shift+Q" Content="查询所有" Command="{Binding QueryAllCommand}" />
                 <Button ToolTip="选中多行，快速归还，Ctrl+R" Content="快速归还" Command="{Binding ReturnCommand}" />
             </StackPanel>
 
@@ -102,15 +104,10 @@
                              ItemsSource="{Binding Rents}" 
                              SelectedItem="{Binding CurrentRent}"
                              SelectedItems="{Binding CurrentRents}"
-                             SelectionMode="MultipleRow" 
-                             FilterString="{Binding Filter, Mode=TwoWay}">
+                             SelectionMode="MultipleRow" >
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True" EditorShowMode="MouseDown"
-                                   ShowCheckBoxSelectorColumn="True">
-                        <!--<dxmvvm:Interaction.Triggers>
-                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
-                        </dxmvvm:Interaction.Triggers>-->
-                    </dxg:TableView>
+                                   ShowCheckBoxSelectorColumn="True"/>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
                     <dxg:GridColumn Width="150"  FieldName="Person.Name"     Header="姓名"      />
