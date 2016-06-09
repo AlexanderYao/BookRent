@@ -18,6 +18,8 @@ namespace BookRent
         private string _apiFormat;
         private Queue<Book> _queue;
 
+        public bool IsOn { get; set; }
+
         public void Init()
         {
             _queue = new Queue<Book>();

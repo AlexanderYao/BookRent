@@ -58,8 +58,8 @@ namespace BookRent
 
         private void Notify(string msg)
         {
-            //new BitmapImage(new Uri(@"/BookRent;component/Resources/rent.png", UriKind.Relative))
-            var notify = NotifyService.CreatePredefinedNotification("到期提醒", null, msg, null);
+            //var img = new BitmapImage(new Uri(@"/BookRent;component/Resources/rent.png", UriKind.Relative));
+            var notify = NotifyService.CreatePredefinedNotification("到期提醒", null, msg);
             notify.ShowAsync();
         }
     }

@@ -13,6 +13,8 @@ namespace BookRent
     {
         private Timer _timer;
 
+        public bool IsOn { get; set; }
+
         public string BackupDir { get; set; }
 
         public void Init()

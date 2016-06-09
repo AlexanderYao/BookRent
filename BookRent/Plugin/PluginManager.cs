@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,25 +15,35 @@ namespace BookRent
         {
             _list = new List<IPlugin> { 
                 new AutoBackupPlugin(), 
-                new IsbnPlugin(),
                 new NotifyPlugin(),
+                new IsbnPlugin(),
             };
         }
 
         public void Init()
         {
-            foreach (var item in _list)
-            {
-                item.Init();
+            _list.ForEach(SetIsOn);
+            _list.Where(e => e.IsOn == true).Foreach(e => e.Init());
+        }
+
+        private void SetIsOn(IPlugin item)
+        {
+            var key = item.GetType().Name;
+            var str = ConfigurationManager.AppSettings[key];
+            bool result;
+            bool isSuccess = bool.TryParse(str, out result);
+
+            if (!isSuccess)
+            { // 默认不启用
+                result = false;
             }
+
+            item.IsOn = result;
         }
 
         public void Close()
         {
-            foreach (var item in _list)
-            {
-                item.Close();
-            }
+            _list.Where(e => e.IsOn == true).Foreach(e => e.Init());
         }
     }
 }

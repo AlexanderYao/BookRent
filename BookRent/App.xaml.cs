@@ -19,7 +19,6 @@ namespace BookRent
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
-            //ShellHelper.TryCreateShortcut(ConfigurationManager.AppSettings["AppId"], ConfigurationManager.AppSettings["AppName"]);
 
             base.OnStartup(e);
 

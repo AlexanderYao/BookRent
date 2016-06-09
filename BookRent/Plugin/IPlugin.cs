@@ -8,6 +8,7 @@ namespace BookRent
 {
     interface IPlugin
     {
+        bool IsOn { get; set; }
         void Init();
         void Close();
     }

@@ -19,6 +19,8 @@ namespace BookRent
         private Queue<string> _queue;
         private IRepository<Rent> _repo;
 
+        public bool IsOn { get; set; }
+
         public void Init()
         {
             _queue = new Queue<string>();
@@ -35,7 +37,7 @@ namespace BookRent
             TimeSpan result;
             canParse = TimeSpan.TryParse(str, out result);
             if (!canParse)
-            { // 默认启动时通知，以后每1小时通知1次
+            { // 默认启动10秒时通知，以后每0.5小时通知1次
                 result = TimeSpan.FromHours(1d);
             }
 
@@ -65,7 +67,6 @@ namespace BookRent
 
             foreach (var item in statistic)
             {
-                //Messenger.Default.Send(new NotifyMsg("{0}有{1}本书未还"));
                 Messenger.Default.Send(new NotifyMsg(string.Format("{0}有{1}本书未还", item.Person.Name, item.Count)));
             }
         }
