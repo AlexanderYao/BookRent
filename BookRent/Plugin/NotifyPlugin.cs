@@ -38,7 +38,7 @@ namespace BookRent
             canParse = TimeSpan.TryParse(str, out result);
             if (!canParse)
             { // 默认启动10秒时通知，以后每0.5小时通知1次
-                result = TimeSpan.FromHours(1d);
+                result = TimeSpan.FromHours(0.5d);
             }
 
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(10d), result);
