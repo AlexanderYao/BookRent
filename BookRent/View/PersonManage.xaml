@@ -40,12 +40,12 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Width="50"  FieldName="Id"        Header="序号"     AllowEditing="False" />
+                <dxg:GridColumn Width="50"   FieldName="Id"        Header="序号"     AllowEditing="False" />
                 <dxg:GridColumn Width="100"  FieldName="Name"      Header="名字"      />
                 <dxg:GridColumn Width="90"   FieldName="Pinyin"    Header="拼音首字母"     />
-                <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"      >
+                <dxg:GridColumn Width="50"   FieldName="Sex"       Header="性别"     x:Name="colSex">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:ComboBoxEditSettings ItemsSource="{Binding Sexes}"/>
+                        <dxe:ComboBoxEditSettings ItemsSource="{Binding Sexes}" MaxWidth="{Binding Width,ElementName=colSex}" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Width="150"  FieldName="StartDate" Header="开始日期"      />
