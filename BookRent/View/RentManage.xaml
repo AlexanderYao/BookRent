@@ -36,7 +36,11 @@
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
                                   DisplayMember="Id" ValueMember="Id"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}"
-                                  KeyDown="ComboBoxEdit_KeyDown"/>
+                                  KeyDown="ComboBoxEdit_KeyDown">
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand EventName="SelectedIndexChanged" Command="{Binding ClearCommand}"/>
+                    </dxmvvm:Interaction.Triggers>
+                </dxe:ComboBoxEdit>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
@@ -44,7 +48,11 @@
                 <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" 
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}"
-                                  KeyDown="ComboBoxEdit_KeyDown"/>
+                                  KeyDown="ComboBoxEdit_KeyDown">
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand EventName="SelectedIndexChanged" Command="{Binding ClearCommand}"/>
+                    </dxmvvm:Interaction.Triggers>
+                </dxe:ComboBoxEdit>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="2">

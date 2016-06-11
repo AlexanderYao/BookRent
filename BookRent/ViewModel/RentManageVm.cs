@@ -72,6 +72,13 @@ namespace BookRent
             }
         }
 
+        public void Clear()
+        {
+            CurrentBook = null;
+            ToBeRentBooks.Clear();
+            QueryRent();
+        }
+
         public void AddBook()
         {
             if (null == CurrentBook || ToBeRentBooks.Contains(CurrentBook))
