@@ -91,11 +91,7 @@
                     <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DelBookCommand}"/>
                 </dxg:GridControl.InputBindings>
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True">
-                        <dxmvvm:Interaction.Triggers>
-                            <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}"/>
-                        </dxmvvm:Interaction.Triggers>
-                    </dxg:TableView>
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True"/>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
                     <dxg:GridColumn Width="150" FieldName="Name"      Header="书名"      />

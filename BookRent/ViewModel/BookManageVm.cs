@@ -91,6 +91,14 @@ namespace BookRent
                 return;
             }
 
+            if (MessageBoxService.Show(
+                string.Format("确定要把[{0}]改成[{1}]吗？", e.OldValue, e.Value),
+                "提示",
+                MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
             if (e.Column.FieldName == "Name" && !string.IsNullOrWhiteSpace(SelectedBook.Name))
             {
                 SelectedBook.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedBook.Name);
