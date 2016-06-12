@@ -19,9 +19,13 @@ namespace BookRent
         public double Price { get; set; }
         public string Pinyin { get; set; }
         /// <summary>
-        /// 入库方式
+        /// 购买方式
         /// </summary>
-        //public InMode InMode { get; set; }
+        public string BuyFrom { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -45,15 +49,9 @@ namespace BookRent
         }
     }
 
-    public enum InMode
-    {
-        手工 = 0,
-        自动 = 1
-    }
-
     public enum IsbnAction
     {
-        Req = 0,
-        Rep = 1
+        Request = 0,
+        Response = 1
     }
 }

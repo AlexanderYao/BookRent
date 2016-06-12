@@ -3,7 +3,9 @@
 	Name text,
 	InDate date,
 	Price numeric,
-	Pinyin text
+	Pinyin text,
+	BuyFrom text,
+	Remark text
 );
 
 create table Persons (

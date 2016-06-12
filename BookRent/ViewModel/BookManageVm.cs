@@ -18,7 +18,7 @@ namespace BookRent
             _bookRepo = new BookRepository();
             Books = new ObservableCollection<Book>();
 
-            Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Rep, OnIsbnReply);
+            Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Response, OnIsbnReply);
         }
 
         public static BookManageVm Create()
@@ -50,6 +50,8 @@ namespace BookRent
                 InDate = DateTime.Now,
                 Price = 0d,
                 Pinyin = string.Empty,
+                BuyFrom = string.Empty,
+                Remark = string.Empty,
             };
 
             long rowid = _bookRepo.Add(book);
@@ -106,7 +108,7 @@ namespace BookRent
 
             if (e.Column.FieldName == "ISBN" && !string.IsNullOrWhiteSpace(SelectedBook.ISBN))
             {
-                Messenger.Default.Send<IsbnMsg>(new IsbnMsg(SelectedBook), IsbnAction.Req);
+                Messenger.Default.Send<IsbnMsg>(new IsbnMsg(SelectedBook), IsbnAction.Request);
             }
 
             Save(SelectedBook);

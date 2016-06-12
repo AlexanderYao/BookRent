@@ -35,7 +35,7 @@ namespace BookRent
             }
 
             _timer = new Timer(DoWork, null, result, result);
-            Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Req, OnIsbnRequest);
+            Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Request, OnIsbnRequest);
         }
 
         public void Close()
@@ -74,7 +74,7 @@ namespace BookRent
 
             var dBook = JsonConvert.DeserializeObject<DoubanBook>(jsonStr);
             var result = new Book { ISBN = book.ISBN, Name = dBook.title, Price = GetPrice(dBook.price) };
-            Messenger.Default.Send(new IsbnMsg(result), IsbnAction.Rep);
+            Messenger.Default.Send(new IsbnMsg(result), IsbnAction.Response);
         }
 
         private void OnIsbnRequest(IsbnMsg msg)
