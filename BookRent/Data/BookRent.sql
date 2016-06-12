@@ -1,4 +1,5 @@
-﻿drop table Rents;
+﻿/*删除所有表，并新建，所有key从1开始*/
+drop table Rents;
 drop table Books;
 drop table Persons;
 
@@ -33,13 +34,13 @@ create table Rents (
 	Count int
 );
 
-/*add column*/
+/*新增列*/
 alter table books add InDate date;
 /*新增列之后，必须补全数据，因为Query()里没对null做判断，程序默认插入的是string.Empty，而手工插入的是null*/
 update Books set Indate = PubDate;
 update Rents set EndDate = date('now');
 
-/*drop column: sqlite does not support drop columns directly*/
+/*删除列: sqlite默认不支持删除列，所以只能建临时表、拷贝数据、再重命名 sqlite does not support drop columns directly*/
 create table tmp (
 	ISBN text,
 	Name text,
