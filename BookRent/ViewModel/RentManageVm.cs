@@ -27,12 +27,13 @@ namespace BookRent
             Books = new ObservableCollection<Book>();
             Rents = new ObservableCollection<Rent>();
             CurrentRents = new ObservableCollection<Rent>();
-            ToBeRentBooks = new ObservableCollection<Book>();
+            ToBeRents = new ObservableCollection<Rent>();
 
             new Task(Init).Start();
 
             Messenger.Default.Register<ItemChangedMsg<Person>>(this, OnPersonChanged);
             Messenger.Default.Register<ItemChangedMsg<Book>>(this, OnBookChanged);
+            Messenger.Default.Register<UpdateCountMsg>(this, OnUpdateCount);
         }
 
         public static RentManageVm Create()
@@ -42,13 +43,13 @@ namespace BookRent
 
         public ObservableCollection<Person> Persons { get; private set; }
         public ObservableCollection<Book> Books { get; private set; }
-        public ObservableCollection<Book> ToBeRentBooks { get; private set; }
+        public ObservableCollection<Rent> ToBeRents { get; private set; }
         public ObservableCollection<Rent> Rents { get; private set; }
         public ObservableCollection<Rent> CurrentRents { get; private set; }
 
         public virtual Person CurrentPerson { get; set; }
         public virtual Book CurrentBook { get; set; }
-        public virtual Book ToBeRentBook { get; set; }
+        public virtual Rent ToBeRent { get; set; }
         public virtual Rent CurrentRent { get; set; }
 
         public void Init()
@@ -75,35 +76,53 @@ namespace BookRent
         public void Clear()
         {
             CurrentBook = null;
-            ToBeRentBooks.Clear();
+            ToBeRents.Clear();
             QueryRent();
         }
 
-        public void AddBook()
+        public void AddRent()
         {
-            if (null == CurrentBook || ToBeRentBooks.Contains(CurrentBook))
+            if (null == CurrentPerson)
+            {
+                MessageBoxService.Show("请选择借书的人", "提示");
+                return;
+            }
+
+            if (null == CurrentBook)
+            {
+                MessageBoxService.Show("请选择要借的书", "提示");
+                return;
+            }
+
+            if (null != ToBeRents.FirstOrDefault(e => e.Book == CurrentBook))
             {
                 return;
             }
 
-            var whoRent = _repo.Query(e => e.Book == CurrentBook && e.EndDate == DateTime.MinValue);
-            if (whoRent.Count > 0)
+            if (CurrentBook.AvailableCount <= 0)
             {
-                MessageBoxService.Show(string.Format("这本书已经被[{0}]借走了", whoRent[0].Person.Name), "提示");
+                MessageBoxService.Show("这本书已经被借空了", "提示");
                 return;
             }
 
-            ToBeRentBooks.Add(CurrentBook);
+            var rent = new Rent
+            {
+                Person = CurrentPerson,
+                Book = CurrentBook,
+                StartDate = DateTime.Now,
+                Count = 1,
+            };
+            ToBeRents.Add(rent);
         }
 
-        public void DelBook()
+        public void DelRent()
         {
-            if (null == ToBeRentBook || !ToBeRentBooks.Contains(ToBeRentBook))
+            if (null == ToBeRent || !ToBeRents.Contains(ToBeRent))
             {
                 return;
             }
 
-            ToBeRentBooks.Remove(ToBeRentBook);
+            ToBeRents.Remove(ToBeRent);
         }
 
         public void ConfirmRent()
@@ -114,17 +133,24 @@ namespace BookRent
                 return;
             }
 
-            if (ToBeRentBooks.Count == 0)
+            if (ToBeRents.Count == 0)
             {
                 MessageBoxService.Show("请选择要借的书", "提示");
                 return;
             }
 
+            var tmp = ToBeRents.FirstOrDefault(e => e.Count > e.Book.AvailableCount);
+            if (null != tmp)
+            {
+                MessageBoxService.Show(string.Format("[{0}]的数量超出了现有数量", tmp.Book.Name), "提示");
+                return;
+            }
+
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("[{0}]将借出以下书籍：", CurrentPerson.Name));
-            foreach (var item in ToBeRentBooks)
+            foreach (var item in ToBeRents)
             {
-                sb.AppendLine(string.Format("《{0}》", item.Name));
+                sb.AppendLine(string.Format("《{0}》 {1}本", item.Book.Name, item.Count));
             }
             sb.AppendLine("是否确认？");
 
@@ -139,28 +165,27 @@ namespace BookRent
         private void Rent()
         {
             bool result = true;
-            foreach (var item in ToBeRentBooks)
+            foreach (var item in ToBeRents)
             {
-                var rent = new Rent
-                {
-                    Person = CurrentPerson,
-                    Book = item,
-                    StartDate = DateTime.Now,
-                };
+                item.StartDate = DateTime.Now;
+                var rowid = _repo.Add(item);
 
-                var rowid = _repo.Add(rent);
+                item.Book.AvailableCount -= item.Count;
+                _repoBook.Update(item.Book);
+                SendMsg(new UpdateCountMsg(item.Book));
+
                 result &= rowid > 0;
                 if (result)
                 {
-                    rent.Id = rowid;
-                    Rents.Insert(0, rent);
+                    item.Id = rowid;
+                    Rents.Insert(0, item);
                 }
             }
 
             if (result)
             {
                 Status = string.Format("借出{0}！", result ? "成功" : "失败");
-                ToBeRentBooks.Clear();
+                ToBeRents.Clear();
             }
         }
 
@@ -211,17 +236,34 @@ namespace BookRent
                 return;
             }
 
+            var sb = new StringBuilder();
+            sb.AppendLine(string.Format("[{0}]将归还以下书籍：", CurrentPerson.Name));
+            foreach (var item in CurrentRents)
+            {
+                sb.AppendLine(string.Format("《{0}》 {1}本", item.Book.Name, item.Count));
+            }
+            sb.AppendLine("是否确认？");
+
+            if (MessageBoxService.Show(sb.ToString(), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
             var result = true;
             foreach (var item in CurrentRents)
             {
                 item.EndDate = DateTime.Now;
                 var tmp = _repo.Update(item);
+
+                item.Book.AvailableCount += item.Count;
+                _repoBook.Update(item.Book);
+                SendMsg(new UpdateCountMsg(item.Book));
+
                 if (tmp)
                 {
                     var index = Rents.IndexOf(item);
                     Rents[index] = item;
                 }
-
                 result &= tmp;
             }
 
@@ -275,6 +317,12 @@ namespace BookRent
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void OnUpdateCount(UpdateCountMsg msg)
+        {
+            var index = Books.IndexOf(msg.Book);
+            Books[index] = msg.Book;
         }
     }
 }

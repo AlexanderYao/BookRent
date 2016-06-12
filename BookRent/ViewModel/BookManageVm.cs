@@ -19,6 +19,7 @@ namespace BookRent
             Books = new ObservableCollection<Book>();
 
             Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Response, OnIsbnReply);
+            Messenger.Default.Register<UpdateCountMsg>(this, OnUpdateCount);
         }
 
         public static BookManageVm Create()
@@ -52,6 +53,8 @@ namespace BookRent
                 Pinyin = string.Empty,
                 BuyFrom = string.Empty,
                 Remark = string.Empty,
+                TotalCount = 1,
+                AvailableCount = 1,
             };
 
             long rowid = _bookRepo.Add(book);
@@ -94,11 +97,26 @@ namespace BookRent
             }
 
             if (MessageBoxService.Show(
-                string.Format("确定要把[{0}]改成[{1}]吗？", e.OldValue, e.Value),
+                string.Format("确定要把[{0}]从[{1}]改成[{2}]吗？", e.Column.Header, e.OldValue, e.Value),
                 "提示",
                 MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
+            }
+
+            if (e.Column.FieldName == "TotalCount")
+            {
+                int old = (int)e.OldValue;
+                int newValue = (int)e.Value;
+                int change = newValue - old;
+
+                if ((SelectedBook.AvailableCount + change) < 0)
+                {
+                    MessageBoxService.Show("总数量不应小于已借出的数量！", "提示", MessageBoxButton.OK);
+                    return;
+                }
+
+                SelectedBook.AvailableCount += change;
             }
 
             if (e.Column.FieldName == "Name" && !string.IsNullOrWhiteSpace(SelectedBook.Name))
@@ -126,7 +144,7 @@ namespace BookRent
                     var index = Books.IndexOf(book);
                     Books[index] = book;
                 }
-                
+
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Update, book));
             }
         }
@@ -145,6 +163,12 @@ namespace BookRent
             target.Price = book.Price;
             target.Pinyin = PinyinHelper.GetFirstPYLetter(target.Name);
             Application.Current.Dispatcher.BeginInvoke((Action<Book>)Save, target);
+        }
+
+        private void OnUpdateCount(UpdateCountMsg msg)
+        {
+            var index = Books.IndexOf(msg.Book);
+            Books[index] = msg.Book;
         }
     }
 }

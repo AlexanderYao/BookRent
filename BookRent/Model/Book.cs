@@ -26,6 +26,31 @@ namespace BookRent
         /// 备注
         /// </summary>
         public string Remark { get; set; }
+        /// <summary>
+        /// 总数量
+        /// </summary>
+        public int TotalCount { get; set; }
+
+        private int availableCount;
+        /// <summary>
+        /// 现有数量
+        /// </summary>
+        public int AvailableCount
+        {
+            get
+            {
+                return availableCount;
+            }
+            set
+            {
+                if (value < 0 || value > TotalCount)
+                {
+                    throw new ArgumentOutOfRangeException("AvailableCount");
+                }
+
+                availableCount = value;
+            }
+        }
 
         public override bool Equals(object obj)
         {

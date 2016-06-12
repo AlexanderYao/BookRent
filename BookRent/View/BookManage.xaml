@@ -36,13 +36,15 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Width="150"  FieldName="ISBN"      Header="ISBN"     />
-                <dxg:GridColumn Width="150"  FieldName="Name"      Header="书名"      />
-                <dxg:GridColumn Width="90"   FieldName="Pinyin"    Header="拼音首字母"     />
-                <dxg:GridColumn Width="150"  FieldName="InDate"    Header="入库日期"  />
-                <dxg:GridColumn Width="80"   FieldName="Price"     Header="价格"     />
-                <dxg:GridColumn Width="80"   FieldName="BuyFrom"   Header="购买方式"     />
-                <dxg:GridColumn Width="80"   FieldName="Remark"    Header="备注"     />
+                <dxg:GridColumn Width="150"  FieldName="ISBN"               Header="ISBN"     />
+                <dxg:GridColumn Width="150"  FieldName="Name"               Header="书名"      />
+                <dxg:GridColumn Width="70"   FieldName="TotalCount"         Header="总数量"      />
+                <dxg:GridColumn Width="70"   FieldName="AvailableCount"     Header="现有数量"     AllowEditing="False" />
+                <dxg:GridColumn Width="90"   FieldName="Pinyin"             Header="拼音首字母"     />
+                <dxg:GridColumn Width="150"  FieldName="InDate"             Header="入库日期"  />
+                <dxg:GridColumn Width="80"   FieldName="Price"              Header="价格"     />
+                <dxg:GridColumn Width="80"   FieldName="BuyFrom"            Header="购买方式"     />
+                <dxg:GridColumn Width="80"   FieldName="Remark"             Header="备注"     />
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

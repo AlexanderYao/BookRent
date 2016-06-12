@@ -17,6 +17,10 @@ namespace BookRent
         public Book Book { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        /// <summary>
+        /// 借出数量
+        /// </summary>
+        public int Count { get; set; }
 
         public override bool Equals(object obj)
         {

@@ -5,7 +5,9 @@
 	Price numeric,
 	Pinyin text,
 	BuyFrom text,
-	Remark text
+	Remark text,
+	TotalCount int,
+	AvailableCount int
 );
 
 create table Persons (
@@ -23,13 +25,15 @@ create table Rents (
 	PersonId long,
 	BookId long,
 	StartDate date,
-	EndDate date
+	EndDate date,
+	Count int
 );
 
 /*add column*/
 alter table books add InDate date;
 /*新增列之后，必须补全数据，因为Query()里没对null做判断，程序默认插入的是string.Empty，而手工插入的是null*/
-update books set Indate = PubDate;
+update Books set Indate = PubDate;
+update Rents set EndDate = date('now');
 
 /*drop column: sqlite does not support drop columns directly*/
 create table tmp (

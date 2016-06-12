@@ -19,7 +19,8 @@ namespace BookRent
         public IList<Rent> Query()
         {
             var result = new List<Rent>();
-            using (var reader = _helper.ExecuteReader("select rowid, PersonId, BookId, StartDate, EndDate from Rents", null))
+            using (var reader = _helper.ExecuteReader(
+@"select rowid, PersonId, BookId, StartDate, EndDate, Count from Rents", null))
             {
                 while (reader.Read())
                 {
@@ -29,7 +30,8 @@ namespace BookRent
                         Person = Cache.Get<Person>(reader.GetInt64(1)),
                         Book = Cache.Get<Book>(reader.GetInt64(2)),
                         StartDate = reader.GetDateTime(3),
-                        EndDate = reader.GetDateTime(4)
+                        EndDate = reader.GetDateTime(4),
+                        Count = reader.GetInt32(5),
                     });
                 }
             }
@@ -43,12 +45,14 @@ namespace BookRent
 
         public long Add(Rent rent)
         {
-            var sql = @"insert into Rents(PersonId, BookId, StartDate, EndDate) values (@PersonId, @BookId, @StartDate, @EndDate)";
+            var sql = @"insert into Rents(PersonId, BookId, StartDate, EndDate, Count) 
+values (@PersonId, @BookId, @StartDate, @EndDate, @Count)";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@PersonId", rent.Person.Id),
                 new SQLiteParameter("@BookId", rent.Book.Id),
                 new SQLiteParameter("@StartDate", rent.StartDate),
                 new SQLiteParameter("@EndDate", rent.EndDate),
+                new SQLiteParameter("@Count", rent.Count),
             };
             return _helper.ExecuteInsert(sql, paras);
         }
@@ -64,13 +68,15 @@ namespace BookRent
 
         public bool Update(Rent rent)
         {
-            var sql = @"update Rents set PersonId = @PersonId, BookId = @BookId, StartDate = @StartDate, EndDate = @EndDate where rowid = @id";
+            var sql = @"update Rents set PersonId = @PersonId, BookId = @BookId, 
+StartDate = @StartDate, EndDate = @EndDate, Count = @Count where rowid = @id";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", rent.Id),
                 new SQLiteParameter("@PersonId", rent.Person.Id),
                 new SQLiteParameter("@BookId", rent.Book.Id),
                 new SQLiteParameter("@StartDate", rent.StartDate),
                 new SQLiteParameter("@EndDate", rent.EndDate),
+                new SQLiteParameter("@Count", rent.Count),
             };
             return _helper.ExecuteNonQuery(sql, paras) == 1;
         }

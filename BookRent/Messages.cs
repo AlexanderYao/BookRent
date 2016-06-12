@@ -14,6 +14,15 @@ namespace BookRent
         Update = 2
     }
 
+    class UpdateCountMsg
+    {
+        public UpdateCountMsg(Book book)
+        {
+            this.Book = book;
+        }
+        public Book Book { get; set; }
+    }
+
     class ItemChangedMsg<T>
     {
         public ItemChangedMsg(ActionMode action, T item)

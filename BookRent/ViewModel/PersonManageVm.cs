@@ -111,7 +111,7 @@ namespace BookRent
             }
 
             if (MessageBoxService.Show(
-                string.Format("确定要把[{0}]改成[{1}]吗？", e.OldValue, e.Value),
+                string.Format("确定要把[{0}]从[{1}]改成[{2}]吗？", e.Column.Header, e.OldValue, e.Value),
                 "提示",
                 MessageBoxButton.YesNo) == MessageBoxResult.No)
             {

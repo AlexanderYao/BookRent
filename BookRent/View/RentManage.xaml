@@ -45,7 +45,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <Label Content="姓名："/>
-                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" 
+                <dxe:ComboBoxEdit NullText="可输入拼音首字母，回车" ToolTip="Enter"
                                   ItemsSource="{Binding Persons}" SelectedItem="{Binding CurrentPerson}"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}"
                                   KeyDown="ComboBoxEdit_KeyDown">
@@ -57,12 +57,11 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="2">
                 <Label Content="书名："/>
-                <dxe:ComboBoxEdit x:Name="bookCbe" NullText="可输入拼音首字母，回车"
-                                  ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"
-                                  DisplayMember="Name" ValueMember="Id" ToolTip="Enter"
+                <dxe:ComboBoxEdit x:Name="bookCbe" NullText="可输入拼音首字母，回车" ToolTip="Enter"
+                                  ItemsSource="{Binding Books}" SelectedItem="{Binding CurrentBook}"                                  
                                   EditTemplate="{StaticResource ImeOffEditTemplate}">
                     <dxe:ComboBoxEdit.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
+                        <KeyBinding Key="Enter" Command="{Binding AddRentCommand}"/>
                     </dxe:ComboBoxEdit.InputBindings>
                 </dxe:ComboBoxEdit>
             </StackPanel>
@@ -74,7 +73,7 @@
                                   DisplayMember="ISBN" ValueMember="Id" ToolTip="Enter"
                                   EditTemplate="{StaticResource ImeOffEditTemplate}">
                     <dxe:ComboBoxEdit.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding AddBookCommand}"/>
+                        <KeyBinding Key="Enter" Command="{Binding AddRentCommand}"/>
                     </dxe:ComboBoxEdit.InputBindings>
                 </dxe:ComboBoxEdit>
             </StackPanel>
@@ -84,17 +83,18 @@
                     ToolTip="Ctrl+Enter">
             </Button>
             <dxg:GridControl Grid.Row="4" Grid.Column="0" MaxHeight="1000" ToolTip="双击选中项，取消"
-                             ItemsSource="{Binding ToBeRentBooks}" 
-                             SelectedItem="{Binding ToBeRentBook}"
+                             ItemsSource="{Binding ToBeRents}" 
+                             SelectedItem="{Binding ToBeRent}"
                              >
                 <dxg:GridControl.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DelBookCommand}"/>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DelRentCommand}"/>
                 </dxg:GridControl.InputBindings>
                 <dxg:GridControl.View>
                     <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True"/>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
-                    <dxg:GridColumn Width="150" FieldName="Name"      Header="书名"      />
+                    <dxg:GridColumn Width="60"  FieldName="Count"     Header="数量"      AllowEditing="True"/>
+                    <dxg:GridColumn Width="150" FieldName="Book.Name" Header="书名"      />
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
 
@@ -118,6 +118,7 @@
                     <dxg:GridColumn Width="150"  FieldName="Book.Name"       Header="书名"      />
                     <dxg:GridColumn Width="150"  FieldName="StartDate"       Header="借出日期"  />
                     <dxg:GridColumn Width="150"  FieldName="EndDate"         Header="归还日期" EditSettings="{StaticResource dateSetting}"/>
+                    <dxg:GridColumn Width="60"   FieldName="Count"           Header="数量"  />
                 </dxg:GridControl.Columns>
             </dxg:GridControl>
         </Grid>
