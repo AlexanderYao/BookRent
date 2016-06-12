@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 写日志
+    /// </summary>
     public class Logger
     {
         private static ILog log;

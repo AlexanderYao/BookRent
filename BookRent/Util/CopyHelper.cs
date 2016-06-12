@@ -6,6 +6,9 @@ using System.Text;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 序列化、再反序列化，实现深拷贝(Deep Copy)
+    /// </summary>
     public static class CopyHelper
     {
         public static T Clone<T>(this T obj)

@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 插件：自动备份
+    /// </summary>
     class AutoBackupPlugin : IPlugin
     {
         private Timer _timer;
 
         public bool IsOn { get; set; }
 
+        /// <summary>
+        /// 备份目录
+        /// </summary>
         public string BackupDir { get; set; }
 
         public void Init()

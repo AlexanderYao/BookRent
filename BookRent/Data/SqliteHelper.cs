@@ -7,7 +7,7 @@ using System.Data.SQLite;
 namespace BookRent
 {
     /// <summary>
-    /// 说明：这是一个针对System.Data.SQLite的数据库常规操作封装的通用类。 
+    /// 针对System.Data.SQLite数据库常规操作的封装
     /// </summary>
     public class SqliteHelper
     {

@@ -31,7 +31,13 @@ namespace BookRent
         /// 押金
         /// </summary>
         public double Deposit { get; set; }
+        /// <summary>
+        /// 联系方式
+        /// </summary>
         public string PhoneNo { get; set; }
+        /// <summary>
+        /// 拼音首字母
+        /// </summary>
         public string Pinyin { get; set; }
 
         public override bool Equals(object obj)

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 插件：借阅到期提醒
+    /// </summary>
     class NotifyPlugin : IPlugin
     {
         private Timer _timer;
@@ -29,7 +32,7 @@ namespace BookRent
             var str = ConfigurationManager.AppSettings["ExpireDays"];
             bool canParse = Int32.TryParse(str, out _expireDays);
             if (!canParse)
-            { // 默认借阅30天
+            { // 默认借阅30天到期
                 _expireDays = 30;
             }
 

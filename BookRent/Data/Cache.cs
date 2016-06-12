@@ -6,18 +6,31 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
-    public class Cache
+    /// <summary>
+    /// 缓存，只应在Data\*Repository中使用，
+    /// </summary>
+    class Cache
     {
         private static Dictionary<Type, Dictionary<long, object>> dic = new Dictionary<Type, Dictionary<long, object>>();
         private static Dictionary<Type, bool> dicBool = new Dictionary<Type, bool>();
 
-        public static bool HasSetList<T>()
+        /// <summary>
+        /// 是否查询过整张表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal static bool HasSetList<T>()
         {
             var key = typeof(T);
             return dicBool.ContainsKey(key) && dicBool[key];
         }
 
-        public static void SetList<T>(IList<T> list) where T : IIdentity
+        /// <summary>
+        /// 将整张表放入缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        internal static void SetList<T>(IList<T> list) where T : IIdentity
         {
             foreach (var item in list)
             {
@@ -26,7 +39,12 @@ namespace BookRent
             dicBool[typeof(T)] = true;
         }
 
-        public static IList<T> GetList<T>()
+        /// <summary>
+        /// 读取整张表，若不存在返回空
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        internal static IList<T> GetList<T>()
         {
             var key = typeof(T);
             if (!dic.ContainsKey(key))
@@ -45,7 +63,13 @@ namespace BookRent
             }
         }
 
-        public static T Get<T>(long id)
+        /// <summary>
+        /// 根据类型T+主键id查找缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        internal static T Get<T>(long id)
         {
             var key = typeof(T);
 
@@ -61,7 +85,12 @@ namespace BookRent
             }
         }
 
-        public static void Set<T>(T t) where T : IIdentity
+        /// <summary>
+        /// 根据类型T+主键id设置缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        internal static void Set<T>(T t) where T : IIdentity
         {
             var key = typeof(T);
 
@@ -74,7 +103,12 @@ namespace BookRent
             dic[key][id] = t;
         }
 
-        public static void Remove<T>(long id)
+        /// <summary>
+        /// 根据类型T+主键id移除缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="id"></param>
+        internal static void Remove<T>(long id)
         {
             var key = typeof(T);
 

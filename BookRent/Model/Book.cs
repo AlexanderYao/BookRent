@@ -16,7 +16,13 @@ namespace BookRent
         /// 入库日期
         /// </summary>
         public DateTime InDate { get; set; }
+        /// <summary>
+        /// 价格
+        /// </summary>
         public double Price { get; set; }
+        /// <summary>
+        /// 拼音首字母
+        /// </summary>
         public string Pinyin { get; set; }
         /// <summary>
         /// 购买方式

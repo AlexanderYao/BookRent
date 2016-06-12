@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 插件：根据Isbn号去豆瓣查询书的基本信息
+    /// </summary>
     class IsbnPlugin : IPlugin
     {
         private Timer _timer;

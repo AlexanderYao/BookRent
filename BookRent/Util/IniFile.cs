@@ -5,6 +5,9 @@ using System.Text;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 读写.ini文件，放置用户相关的配置
+    /// </summary>
     class IniFile
     {
         private IniFile()

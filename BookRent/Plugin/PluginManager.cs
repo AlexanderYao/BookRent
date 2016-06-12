@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookRent
 {
+    /// <summary>
+    /// 初始化所有插件的加载+是否启用
+    /// </summary>
     class PluginManager
     {
         private List<IPlugin> _list;
