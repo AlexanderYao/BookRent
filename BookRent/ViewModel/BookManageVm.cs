@@ -10,12 +10,14 @@ namespace BookRent
 {
     public class BookManageVm : MyViewModelBase
     {
-        private IRepository<Book> _bookRepo;
+        private IRepository<Book> _repo;
+        private IRepository<Rent> _rentRepo;
         private object _synRoot;
         protected BookManageVm()
         {
             _synRoot = new object();
-            _bookRepo = new BookRepository();
+            _repo = new BookRepository();
+            _rentRepo = new RentRepository();
             Books = new ObservableCollection<Book>();
 
             Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Response, OnIsbnReply);
@@ -33,7 +35,7 @@ namespace BookRent
 
         public void Query()
         {
-            var books = _bookRepo.Query();
+            var books = _repo.Query();
             Books.Clear();
             foreach (var item in books)
             {
@@ -57,7 +59,7 @@ namespace BookRent
                 AvailableCount = 1,
             };
 
-            long rowid = _bookRepo.Add(book);
+            long rowid = _repo.Add(book);
             bool result = rowid > 0;
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
@@ -75,12 +77,18 @@ namespace BookRent
                 return;
             }
 
+            if (_rentRepo.Query(e => e.Book == SelectedBook && e.EndDate == DateTime.MinValue).Count > 0)
+            {
+                MessageBoxService.Show(string.Format("[{0}]存在未归还的记录，不允许删除", SelectedBook.Name), "提示");
+                return;
+            }
+
             if (MessageBoxService.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
 
-            var result = _bookRepo.Delete(SelectedBook);
+            var result = _repo.Delete(SelectedBook);
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
@@ -134,7 +142,7 @@ namespace BookRent
 
         private void Save(Book book)
         {
-            var result = _bookRepo.Update(book);
+            var result = _repo.Update(book);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)

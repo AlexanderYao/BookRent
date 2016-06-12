@@ -13,10 +13,14 @@ namespace BookRent
 {
     public class PersonManageVm : MyViewModelBase
     {
-        private IRepository<Person> _personRepo;
+        private IRepository<Person> _repo;
+        private IRepository<Rent> _rentRepo;
+
         protected PersonManageVm()
         {
-            _personRepo = new PersonRepository();
+            _repo = new PersonRepository();
+            _rentRepo = new RentRepository();
+
             Persons = new ObservableCollection<Person>();
             SelectedPersons = new ObservableCollection<Person>();
         }
@@ -42,7 +46,7 @@ namespace BookRent
 
         public void Query()
         {
-            var persons = _personRepo.Query();
+            var persons = _repo.Query();
             Persons.Clear();
             foreach (var item in persons)
             {
@@ -65,7 +69,7 @@ namespace BookRent
                 Pinyin = string.Empty,
             };
 
-            var rowid = _personRepo.Add(person);
+            var rowid = _repo.Add(person);
             var result = rowid > 0;
             Status = string.Format("新增{0}！", result ? "成功" : "失败");
 
@@ -83,6 +87,12 @@ namespace BookRent
                 return;
             }
 
+            if (_rentRepo.Query(e => e.Person == SelectedPerson && e.EndDate == DateTime.MinValue).Count > 0)
+            {
+                MessageBoxService.Show(string.Format("[{0}]存在未归还的记录，不允许删除", SelectedPerson.Name), "提示");
+                return;
+            }
+
             if (MessageBoxService.Show(string.Format("确定要删除{0}吗？", SelectedPersons.ToString(e => e.Name)), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
@@ -91,7 +101,7 @@ namespace BookRent
             int count = 0;
             foreach (var item in SelectedPersons.ToArray())
             {
-                var result = _personRepo.Delete(item);
+                var result = _repo.Delete(item);
 
                 if (result)
                 {
@@ -123,7 +133,7 @@ namespace BookRent
                 SelectedPerson.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedPerson.Name);
             }
 
-            var result = _personRepo.Update(SelectedPerson);
+            var result = _repo.Update(SelectedPerson);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
             if (result)
