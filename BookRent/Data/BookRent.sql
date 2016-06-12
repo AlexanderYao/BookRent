@@ -1,4 +1,8 @@
-﻿create table Books (
+﻿drop table Rents;
+drop table Books;
+drop table Persons;
+
+create table Books (
 	ISBN text,
 	Name text,
 	InDate date,
