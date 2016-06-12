@@ -193,7 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\BookRent.sql" />
-    <None Include="Data\sqlite3.exe" />
     <Resource Include="Resources\rent.ico" />
   </ItemGroup>
   <ItemGroup>
