@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -19,6 +20,7 @@ namespace BookRent
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
 
             base.OnStartup(e);
 
