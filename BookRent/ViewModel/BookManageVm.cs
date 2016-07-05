@@ -41,7 +41,8 @@ namespace BookRent
             {
                 Books.Add(item);
             }
-            Status = string.Format("查询到{0}条记录", books.Count);
+            Status = string.Format("已入库图书{0}种，总入库数量{1}本", 
+                books.Count, books.Sum(e => e.TotalCount));
         }
 
         public void Add()
