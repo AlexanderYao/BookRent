@@ -57,6 +57,8 @@ namespace BookRent
                 Remark = string.Empty,
                 TotalCount = 1,
                 AvailableCount = 1,
+                Publisher = string.Empty,
+                Author = string.Empty,
             };
 
             long rowid = _repo.Add(book);
@@ -74,6 +76,7 @@ namespace BookRent
         {
             if (null == SelectedBook)
             {
+                Status = "请选中要删除的记录";
                 return;
             }
 
@@ -94,6 +97,11 @@ namespace BookRent
             {
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Delete, SelectedBook));
                 Books.Remove(SelectedBook);
+
+                if (Books.Count > 0)
+                {
+                    SelectedBook = Books[0];
+                }
             }
         }
 

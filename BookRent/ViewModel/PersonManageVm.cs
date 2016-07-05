@@ -84,6 +84,7 @@ namespace BookRent
         {
             if (SelectedPersons.Count == 0)
             {
+                Status = "请选中要删除的记录";
                 return;
             }
 

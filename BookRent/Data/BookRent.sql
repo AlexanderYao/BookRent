@@ -12,7 +12,9 @@ create table Books (
 	BuyFrom text,
 	Remark text,
 	TotalCount int,
-	AvailableCount int
+	AvailableCount int,
+	Publisher text,
+	Author text
 );
 
 create table Persons (

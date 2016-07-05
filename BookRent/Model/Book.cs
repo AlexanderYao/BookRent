@@ -32,6 +32,15 @@ namespace BookRent
         /// </summary>
         public string Remark { get; set; }
         /// <summary>
+        /// 出版社
+        /// </summary>
+        public string Publisher { get; set; }
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public string Author { get; set; }
+
+        /// <summary>
         /// 总数量
         /// </summary>
         public int TotalCount { get; set; }

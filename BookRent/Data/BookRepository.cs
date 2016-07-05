@@ -29,8 +29,9 @@ namespace BookRent
 
             var result = new List<Book>();
             using (var reader = _helper.ExecuteReader(
-@"select rowid, ISBN, Name, InDate, Price, Pinyin, BuyFrom, Remark, TotalCount, AvailableCount 
-from books", null))
+@"select rowid, ISBN, Name, InDate, Price, Pinyin, BuyFrom, Remark, 
+         TotalCount, AvailableCount, Publisher, Author
+    from books", null))
             {
                 while (reader.Read())
                 {
@@ -46,6 +47,8 @@ from books", null))
                         Remark = reader.GetString(7),
                         TotalCount = reader.GetInt32(8),
                         AvailableCount = reader.GetInt32(9),
+                        Publisher = reader.GetString(10),
+                        Author = reader.GetString(11),
                     };
                     result.Add(item);
                 }
@@ -61,8 +64,11 @@ from books", null))
 
         public long Add(Book book)
         {
-            var sql = @"insert into Books(ISBN, Name, InDate, Price, Pinyin, BuyFrom, Remark, TotalCount, AvailableCount) 
-values (@ISBN, @Name, @InDate, @Price, @Pinyin, @BuyFrom, @Remark, @TotalCount, @AvailableCount)";
+            var sql = 
+@"insert into Books(ISBN, Name, InDate, Price, Pinyin, BuyFrom, Remark, 
+         TotalCount, AvailableCount, Publisher, Author) 
+values (@ISBN, @Name, @InDate, @Price, @Pinyin, @BuyFrom, @Remark, 
+        @TotalCount, @AvailableCount, @Publisher, @Author)";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@ISBN", book.ISBN),
                 new SQLiteParameter("@Name", book.Name),
@@ -73,6 +79,8 @@ values (@ISBN, @Name, @InDate, @Price, @Pinyin, @BuyFrom, @Remark, @TotalCount, 
                 new SQLiteParameter("@Remark", book.Remark),
                 new SQLiteParameter("@TotalCount", book.TotalCount),
                 new SQLiteParameter("@AvailableCount", book.AvailableCount),
+                new SQLiteParameter("@Publisher", book.Publisher),
+                new SQLiteParameter("@Author", book.Author),
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             book.Id = rowid;
@@ -93,9 +101,12 @@ values (@ISBN, @Name, @InDate, @Price, @Pinyin, @BuyFrom, @Remark, @TotalCount, 
 
         public bool Update(Book book)
         {
-            var sql = @"update Books set ISBN = @ISBN, Name = @Name, InDate = @InDate, 
-Price = @Price, Pinyin = @Pinyin, BuyFrom = @BuyFrom, Remark = @Remark, 
-TotalCount = @TotalCount, AvailableCount = @AvailableCount where rowid = @id";
+            var sql =
+@"update Books set ISBN = @ISBN, Name = @Name, InDate = @InDate, 
+         Price = @Price, Pinyin = @Pinyin, BuyFrom = @BuyFrom, Remark = @Remark, 
+         TotalCount = @TotalCount, AvailableCount = @AvailableCount,
+         Publisher = @Publisher, Author = @Author
+   where rowid = @id";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", book.Id),
                 new SQLiteParameter("@ISBN", book.ISBN),
@@ -107,6 +118,8 @@ TotalCount = @TotalCount, AvailableCount = @AvailableCount where rowid = @id";
                 new SQLiteParameter("@Remark", book.Remark),
                 new SQLiteParameter("@TotalCount", book.TotalCount),
                 new SQLiteParameter("@AvailableCount", book.AvailableCount),
+                new SQLiteParameter("@Publisher", book.Publisher),
+                new SQLiteParameter("@Author", book.Author),
             };
             var result = _helper.ExecuteNonQuery(sql, paras) == 1;
             Cache.Set<Book>(book);

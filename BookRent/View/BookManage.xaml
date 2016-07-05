@@ -44,6 +44,8 @@
                 <dxg:GridColumn Width="150"  FieldName="InDate"             Header="入库日期"  />
                 <dxg:GridColumn Width="80"   FieldName="Price"              Header="价格"     />
                 <dxg:GridColumn Width="80"   FieldName="BuyFrom"            Header="购买方式"     />
+                <dxg:GridColumn Width="80"   FieldName="Publisher"          Header="出版社"     />
+                <dxg:GridColumn Width="80"   FieldName="Author"             Header="作者"     />
                 <dxg:GridColumn Width="80"   FieldName="Remark"             Header="备注"     />
             </dxg:GridControl.Columns>
         </dxg:GridControl>
