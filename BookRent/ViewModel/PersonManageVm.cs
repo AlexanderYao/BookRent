@@ -23,12 +23,15 @@ namespace BookRent
 
             Persons = new ObservableCollection<Person>();
             SelectedPersons = new ObservableCollection<Person>();
+            Fees = new List<double> { 200d, 400d, 500d };
         }
 
         public static PersonManageVm Create()
         {
             return ViewModelSource.Create(() => new PersonManageVm());
         }
+
+        public List<double> Fees { get; set; }
 
         public ObservableCollection<Person> Persons { get; set; }
 
