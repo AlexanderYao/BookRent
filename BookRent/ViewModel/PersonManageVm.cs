@@ -137,6 +137,11 @@ namespace BookRent
                 SelectedPerson.Pinyin = PinyinHelper.GetFirstPYLetter(SelectedPerson.Name);
             }
 
+            if (e.Column.FieldName == "StartDate")
+            {
+                SelectedPerson.EndDate = SelectedPerson.StartDate.AddYears(1);
+            }
+
             var result = _repo.Update(SelectedPerson);
             Status = string.Format("更新{0}！", result ? "成功" : "失败");
 
