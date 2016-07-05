@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.POCO;
 using DevExpress.Xpf.Grid;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace BookRent
             _repo = new BookRepository();
             _rentRepo = new RentRepository();
             Books = new ObservableCollection<Book>();
+            BuyFroms = new List<string> { "淘宝", "当当", "捐赠" };
 
             Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Response, OnIsbnReply);
             Messenger.Default.Register<UpdateCountMsg>(this, OnUpdateCount);
@@ -28,6 +30,8 @@ namespace BookRent
         {
             return ViewModelSource.Create(() => new BookManageVm());
         }
+
+        public List<string> BuyFroms { get; set; }
 
         public ObservableCollection<Book> Books { get; set; }
 
@@ -41,7 +45,7 @@ namespace BookRent
             {
                 Books.Add(item);
             }
-            Status = string.Format("已入库图书{0}种，总入库数量{1}本", 
+            Status = string.Format("已入库图书{0}种，总入库数量{1}本",
                 books.Count, books.Sum(e => e.TotalCount));
         }
 
