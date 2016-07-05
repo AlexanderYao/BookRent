@@ -3,6 +3,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +17,23 @@ namespace BookRent
         private IRepository<Rent> _repo;
         private IRepository<Person> _repoPerson;
         private IRepository<Book> _repoBook;
+        private int _rentCount;
+        private int _canRentCount;
 
         protected RentManageVm()
         {
             _repo = new RentRepository();
             _repoPerson = new PersonRepository();
             _repoBook = new BookRepository();
+
+            var str = ConfigurationManager.AppSettings["CanRentCount"];
+            bool canParse = Int32.TryParse(str, out _canRentCount);
+            if (!canParse)
+            { // 默认每人只能借10本
+                _canRentCount = 10;
+            }
+
+            _rentCount = 0;
 
             Persons = new ObservableCollection<Person>();
             Books = new ObservableCollection<Book>();
@@ -146,6 +158,14 @@ namespace BookRent
                 return;
             }
 
+            var toRentCount = ToBeRents.Sum(e => e.Count);
+            if (toRentCount + _rentCount > _canRentCount)
+            {
+                MessageBoxService.Show(string.Format("已借出{0}本 + 将借{1}本 > {2}本，每个人在借数量不超过{2}本",
+                    _rentCount, toRentCount, _canRentCount), "提示");
+                return;
+            }
+
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("[{0}]将借出以下书籍：", CurrentPerson.Name));
             foreach (var item in ToBeRents)
@@ -203,8 +223,9 @@ namespace BookRent
             {
                 Rents.Add(item);
             }
+            _rentCount = rents.Sum(e => e.Count);
 
-            Status = string.Format("{0}: 未归还{1}本", CurrentPerson.Name, rents.Count);
+            Status = string.Format("{0}: 未归还{1}本", CurrentPerson.Name, _rentCount);
         }
 
         public void QueryAll()
@@ -221,10 +242,11 @@ namespace BookRent
             {
                 Rents.Add(item);
             }
+            _rentCount = rents.Where(e => e.EndDate == DateTime.MinValue).Sum(e => e.Count);
 
             Status = string.Format("{0}: 未归还{1}本，总共借阅过{2}次",
                 CurrentPerson.Name,
-                rents.Where(e => e.EndDate == DateTime.MinValue).Count(),
+                _rentCount,
                 rents.Count);
         }
 
