@@ -128,7 +128,7 @@ namespace BookRent
 
                 if ((SelectedBook.AvailableCount + change) < 0)
                 {
-                    MessageBoxService.Show("总数量不应小于已借出的数量！", "提示", MessageBoxButton.OK);
+                    MessageBoxService.Show("入库数量不应小于已借出的数量！", "提示", MessageBoxButton.OK);
                     return;
                 }
 

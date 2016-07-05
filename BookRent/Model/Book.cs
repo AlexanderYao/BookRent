@@ -41,7 +41,7 @@ namespace BookRent
         public string Author { get; set; }
 
         /// <summary>
-        /// 总数量
+        /// 入库数量
         /// </summary>
         public int TotalCount { get; set; }
 
