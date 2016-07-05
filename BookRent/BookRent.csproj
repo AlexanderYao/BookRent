@@ -101,6 +101,7 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Model\IIdentity.cs" />
+    <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Plugin\AutoBackupPlugin.cs" />

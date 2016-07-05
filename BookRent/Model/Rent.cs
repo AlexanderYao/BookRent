@@ -10,9 +10,8 @@ namespace BookRent
     /// 借阅
     /// </summary>
     [Serializable]
-    public class Rent : IIdentity
+    public class Rent : ModelBase
     {
-        public long Id { get; set; }
         public Person Person { get; set; }
         public Book Book { get; set; }
         /// <summary>
@@ -27,21 +26,5 @@ namespace BookRent
         /// 借出数量
         /// </summary>
         public int Count { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            var other = obj as Rent;
-            if (null == other)
-            {
-                return false;
-            }
-
-            return other.Id == this.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode();
-        }
     }
 }

@@ -10,9 +10,8 @@ namespace BookRent
     /// 会员
     /// </summary>
     [Serializable]
-    public class Person : IIdentity
+    public class Person : ModelBase
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public Sex Sex { get; set; }
         /// <summary>
@@ -39,22 +38,6 @@ namespace BookRent
         /// 拼音首字母
         /// </summary>
         public string Pinyin { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            var other = obj as Person;
-            if (null == other)
-            {
-                return false;
-            }
-
-            return other.Id == this.Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return null == Name ? Id.GetHashCode() : Name.GetHashCode();
-        }
 
         public override string ToString()
         {

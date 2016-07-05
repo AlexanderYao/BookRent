@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace BookRent
 {
     [Serializable]
-    public class Book : IIdentity
+    public class Book : ModelBase
     {
-        public long Id { get; set; }
         public string ISBN { get; set; }
         public string Name { get; set; }
         /// <summary>
@@ -56,23 +55,7 @@ namespace BookRent
 
                 availableCount = value;
             }
-        }
-
-        public override bool Equals(object obj)
-        {
-            var other = obj as Book;
-            if (null == other)
-            {
-                return false;
-            }
-
-            return other.ISBN == this.ISBN;
-        }
-
-        public override int GetHashCode()
-        {
-            return null == ISBN ? base.GetHashCode() : ISBN.GetHashCode();
-        }
+        }        
 
         public override string ToString()
         {
