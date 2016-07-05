@@ -76,7 +76,15 @@ namespace BookRent
             }
 
             var dBook = JsonConvert.DeserializeObject<DoubanBook>(jsonStr);
-            var result = new Book { ISBN = book.ISBN, Name = dBook.title, Price = GetPrice(dBook.price) };
+            var result = new Book
+            {
+                Id = book.Id,
+                ISBN = book.ISBN,
+                Name = dBook.title,
+                Price = GetPrice(dBook.price),
+                Author = GetAuthor(dBook.author),
+                Publisher = dBook.publisher,
+            };
             Messenger.Default.Send(new IsbnMsg(result), IsbnAction.Response);
         }
 
@@ -109,11 +117,18 @@ namespace BookRent
             }
             return result;
         }
+
+        private string GetAuthor(IEnumerable<string> authors)
+        {
+            return (null != authors && authors.Count() > 0) ? authors.First() : string.Empty;
+        }
     }
 
     class DoubanBook
     {
         public string title { get; set; }
         public string price { get; set; }
+        public List<string> author { get; set; }
+        public string publisher { get; set; }
     }
 }

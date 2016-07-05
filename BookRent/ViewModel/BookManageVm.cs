@@ -168,7 +168,7 @@ namespace BookRent
         private void OnIsbnReply(IsbnMsg msg)
         {
             var book = msg.Book;
-            var target = Books.FirstOrDefault(e => e.ISBN == book.ISBN);
+            var target = Books.FirstOrDefault(e => e.Id == book.Id);
 
             if (null == target)
             {
@@ -177,6 +177,8 @@ namespace BookRent
 
             target.Name = book.Name;
             target.Price = book.Price;
+            target.Author = book.Author;
+            target.Publisher = book.Publisher;
             target.Pinyin = PinyinHelper.GetFirstPYLetter(target.Name);
             Application.Current.Dispatcher.BeginInvoke((Action<Book>)Save, target);
         }
