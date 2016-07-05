@@ -33,7 +33,7 @@
                          SelectedItems="{Binding SelectedPersons}"
                          >
             <dxg:GridControl.View>
-                <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True">
+                <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="True" ShowAutoFilterRow="True" EditorShowMode="MouseDown">
                     <dxmvvm:Interaction.Triggers>
                         <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}" PassEventArgsToCommand="True"/>
                     </dxmvvm:Interaction.Triggers>
