@@ -95,6 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Config\Configs.cs" />
     <Compile Include="Data\Cache.cs" />
     <Compile Include="Data\RentRepository.cs" />
     <Compile Include="Data\PersonRepository.cs" />
