@@ -196,9 +196,6 @@
     <Resource Include="Resources\rent.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Data\BookRent.sql" />
     <Resource Include="Resources\rent.ico" />
   </ItemGroup>
