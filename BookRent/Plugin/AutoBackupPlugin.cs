@@ -25,13 +25,13 @@ namespace BookRent
 
         public void Init()
         {
-            BackupDir = IniFile.Instance.Read("BackupDir");
+            BackupDir = ConfigurationManager.AppSettings["BackupDir"];
             if (!Directory.Exists(BackupDir))
             { // 默认放C盘根目录
                 BackupDir = "C:\\";
             }
 
-            var str = IniFile.Instance.Read("BackupTime");
+            var str = ConfigurationManager.AppSettings["BackupTime"];
             TimeSpan result;
             bool canParse = TimeSpan.TryParse(str, out result);
 

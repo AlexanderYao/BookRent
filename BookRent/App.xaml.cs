@@ -73,10 +73,5 @@ namespace BookRent
         {
             _pluginManager.Close();
         }
-
-        private void OnStartup_UpdateThemeName(object sender, StartupEventArgs e)
-        {
-            //DevExpress.Xpf.Core.ApplicationThemeHelper.UpdateApplicationThemeName();
-        }
     }
 }
