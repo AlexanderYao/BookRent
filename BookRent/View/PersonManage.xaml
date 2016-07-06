@@ -34,7 +34,7 @@
                          >
             <dxg:GridControl.View>
                 <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="False" 
-                               ShowAutoFilterRow="True" EditorShowMode="MouseDown">
+                               ShowAutoFilterRow="True">
                     <dxmvvm:Interaction.Triggers>
                         <dxmvvm:EventToCommand EventName="CellValueChanged" Command="{Binding UpdateCommand}" PassEventArgsToCommand="True"/>
                     </dxmvvm:Interaction.Triggers>

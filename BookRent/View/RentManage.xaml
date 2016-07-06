@@ -110,7 +110,7 @@
                              SelectedItems="{Binding CurrentRents}"
                              SelectionMode="MultipleRow" >
                 <dxg:GridControl.View>
-                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True" EditorShowMode="MouseDown"
+                    <dxg:TableView ShowGroupPanel="False" AllowEditing="False" AutoWidth="True"
                                    ShowCheckBoxSelectorColumn="True" ShowAutoFilterRow="True"/>
                 </dxg:GridControl.View>
                 <dxg:GridControl.Columns>
