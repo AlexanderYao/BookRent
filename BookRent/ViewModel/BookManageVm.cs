@@ -58,7 +58,7 @@ namespace BookRent
                 InDate = DateTime.Now,
                 Price = 0d,
                 Pinyin = string.Empty,
-                BuyFrom = string.Empty,
+                BuyFrom = BuyFroms[0],
                 Remark = string.Empty,
                 TotalCount = 1,
                 AvailableCount = 1,

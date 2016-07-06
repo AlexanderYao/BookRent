@@ -55,7 +55,8 @@ namespace BookRent
             {
                 Persons.Add(item);
             }
-            Status = string.Format("查询到{0}条记录", persons.Count);
+            Status = string.Format("已登记会员{0}人，总会费{1}元",
+                Persons.Count, Persons.Sum(e => e.Fee));
         }
 
         public void Add()
@@ -66,7 +67,7 @@ namespace BookRent
                 Sex = Sex.男,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                Fee = 0d,
+                Fee = Fees[0],
                 Deposit = 0d,
                 PhoneNo = string.Empty,
                 Pinyin = string.Empty,
