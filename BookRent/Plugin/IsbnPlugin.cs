@@ -27,17 +27,10 @@ namespace BookRent
         {
             _queue = new Queue<Book>();
             _apiFormat = ConfigurationManager.AppSettings["DoubanApi"];
-            var str = ConfigurationManager.AppSettings["DoubanTimeout"];
 
-            TimeSpan result;
-            bool canParse = TimeSpan.TryParse(str, out result);
-
-            if (!canParse)
-            { // 默认30秒
-                result = TimeSpan.FromSeconds(30d);
-            }
-
+            TimeSpan result = ConfigUtil.Parse<TimeSpan>("DoubanTimeout", TimeSpan.FromSeconds(30d));
             _timer = new Timer(DoWork, null, result, result);
+
             Messenger.Default.Register<IsbnMsg>(this, IsbnAction.Request, OnIsbnRequest);
         }
 

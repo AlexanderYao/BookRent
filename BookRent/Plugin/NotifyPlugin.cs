@@ -29,21 +29,9 @@ namespace BookRent
             _queue = new Queue<string>();
             _repo = new RentRepository();
 
-            var str = ConfigurationManager.AppSettings["ExpireDays"];
-            bool canParse = Int32.TryParse(str, out _expireDays);
-            if (!canParse)
-            { // 默认借阅30天到期
-                _expireDays = 30;
-            }
+            _expireDays = ConfigUtil.Parse<Int32>("到期日", 30);
 
-            str = ConfigurationManager.AppSettings["ExpireNotifyInterval"];
-            TimeSpan result;
-            canParse = TimeSpan.TryParse(str, out result);
-            if (!canParse)
-            { // 默认启动10秒时通知，以后每0.5小时通知1次
-                result = TimeSpan.FromHours(0.5d);
-            }
-
+            TimeSpan result = ConfigUtil.Parse<TimeSpan>("到期间隔", TimeSpan.FromHours(0.5d));
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(10d), result);
         }
 

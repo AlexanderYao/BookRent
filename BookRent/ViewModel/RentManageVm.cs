@@ -26,13 +26,7 @@ namespace BookRent
             _repoPerson = new PersonRepository();
             _repoBook = new BookRepository();
 
-            var str = ConfigurationManager.AppSettings["CanRentCount"];
-            bool canParse = Int32.TryParse(str, out _canRentCount);
-            if (!canParse)
-            { // 默认每人只能借10本
-                _canRentCount = 10;
-            }
-
+            _canRentCount = ConfigUtil.Parse<Int32>("每人能借多少本", 10);
             _rentCount = 0;
 
             Persons = new ObservableCollection<Person>();

@@ -95,10 +95,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Config\AutoBackupPluginNode.cs" />
-    <Compile Include="Config\ConfigNode.cs" />
-    <Compile Include="Config\Configs.cs" />
-    <Compile Include="Config\PluginNode.cs" />
     <Compile Include="Data\Cache.cs" />
     <Compile Include="Data\RentRepository.cs" />
     <Compile Include="Data\PersonRepository.cs" />
@@ -114,6 +110,7 @@
     <Compile Include="Plugin\IsbnPlugin.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Util\CollectionHelper.cs" />
+    <Compile Include="Util\ConfigUtil.cs" />
     <Compile Include="Util\CopyHelper.cs" />
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\PinyinHelper.cs" />

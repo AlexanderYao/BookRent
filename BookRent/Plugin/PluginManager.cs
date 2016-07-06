@@ -32,15 +32,7 @@ namespace BookRent
         private void SetIsOn(IPlugin item)
         {
             var key = item.GetType().Name;
-            var str = ConfigurationManager.AppSettings[key];
-            bool result;
-            bool isSuccess = bool.TryParse(str, out result);
-
-            if (!isSuccess)
-            { // 默认不启用
-                result = false;
-            }
-
+            bool result = ConfigUtil.Parse<Boolean>(key, false);
             item.IsOn = result;
         }
 

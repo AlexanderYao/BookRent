@@ -18,28 +18,24 @@ namespace BookRent
 
         public bool IsOn { get; set; }
 
-        /// <summary>
-        /// 备份目录
-        /// </summary>
-        public string BackupDir { get; set; }
+        public string BackupDir
+        {
+            get
+            {
+                var str = ConfigurationManager.AppSettings["备份目录"];
+
+                if (!Directory.Exists(str))
+                { // 默认放C盘根目录
+                    str = "C:\\";
+                }
+
+                return str;
+            }
+        }
 
         public void Init()
         {
-            BackupDir = ConfigurationManager.AppSettings["BackupDir"];
-            if (!Directory.Exists(BackupDir))
-            { // 默认放C盘根目录
-                BackupDir = "C:\\";
-            }
-
-            var str = ConfigurationManager.AppSettings["BackupTime"];
-            TimeSpan result;
-            bool canParse = TimeSpan.TryParse(str, out result);
-
-            if (!canParse)
-            { // 默认取5分钟
-                result = TimeSpan.FromMinutes(5d);
-            }
-
+            TimeSpan result = ConfigUtil.Parse<TimeSpan>("备份间隔", TimeSpan.FromMinutes(5d));
             _timer = new Timer(DoWork, null, result, result);
         }
 
