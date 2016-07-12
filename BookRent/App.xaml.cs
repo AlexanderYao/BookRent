@@ -20,6 +20,7 @@ namespace BookRent
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
 
             base.OnStartup(e);
@@ -36,6 +37,23 @@ namespace BookRent
             main.Show();
         }
 
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            var aggregateEx = e.Exception.Flatten();
+
+            foreach (var ex in aggregateEx.InnerExceptions)
+            {
+                Logger.Error(ex);
+            }
+
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                DXMessageBox.Show("抱歉哦，遇到问题需要关闭。请联系管理员！", "提示");
+            }));
+
+            Shutdown();
+        }
+
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject as Exception;
@@ -49,6 +67,7 @@ namespace BookRent
             }
 
             DXMessageBox.Show("抱歉哦，遇到问题需要关闭。请联系管理员！", "提示");
+            Shutdown();
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

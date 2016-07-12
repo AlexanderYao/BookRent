@@ -18,10 +18,10 @@ namespace BookRent
 
         public IList<Person> Query()
         {
-            if(Cache.HasSetList<Person>())
+            if (Cache.HasSetList<Person>())
             {
                 var list = Cache.GetList<Person>();
-                if(null != list && list.Count > 0)
+                if (null != list && list.Count > 0)
                 {
                     return list;
                 }
@@ -35,14 +35,14 @@ namespace BookRent
                     var item = new Person
                     {
                         Id = reader.GetInt64(0),
-                        Name = reader.GetString(1),
+                        Name = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
                         Sex = (Sex)reader.GetInt32(2),
                         StartDate = reader.GetDateTime(3),
                         EndDate = reader.GetDateTime(4),
                         Fee = reader.GetDouble(5),
                         Deposit = reader.GetDouble(6),
-                        PhoneNo = reader.GetString(7),
-                        Pinyin = reader.GetString(8),
+                        PhoneNo = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
+                        Pinyin = reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
                     };
                     result.Add(item);
                 }

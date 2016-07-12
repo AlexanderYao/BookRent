@@ -38,17 +38,17 @@ namespace BookRent
                     var item = new Book
                     {
                         Id = reader.GetInt64(0),
-                        ISBN = reader.GetString(1),
-                        Name = reader.GetString(2),
+                        ISBN = reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                        Name = reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
                         InDate = reader.GetDateTime(3),
                         Price = reader.GetDouble(4),
-                        Pinyin = reader.GetString(5),
-                        BuyFrom = reader.GetString(6),
-                        Remark = reader.GetString(7),
+                        Pinyin = reader.IsDBNull(5) ? string.Empty : reader.GetString(5),
+                        BuyFrom = reader.IsDBNull(6) ? string.Empty : reader.GetString(6),
+                        Remark = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
                         TotalCount = reader.GetInt32(8),
                         AvailableCount = reader.GetInt32(9),
-                        Publisher = reader.GetString(10),
-                        Author = reader.GetString(11),
+                        Publisher = reader.IsDBNull(10) ? string.Empty : reader.GetString(10),
+                        Author = reader.IsDBNull(11) ? string.Empty : reader.GetString(11),
                     };
                     result.Add(item);
                 }
@@ -64,7 +64,7 @@ namespace BookRent
 
         public long Add(Book book)
         {
-            var sql = 
+            var sql =
 @"insert into Books(ISBN, Name, InDate, Price, Pinyin, BuyFrom, Remark, 
          TotalCount, AvailableCount, Publisher, Author) 
 values (@ISBN, @Name, @InDate, @Price, @Pinyin, @BuyFrom, @Remark, 
