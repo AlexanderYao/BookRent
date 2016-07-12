@@ -28,7 +28,9 @@ namespace BookRent
             }
 
             var result = new List<Person>();
-            using (var reader = _helper.ExecuteReader("select rowid, Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo, Pinyin from persons", null))
+            using (var reader = _helper.ExecuteReader(
+@"select rowid, Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo, Pinyin, Contacter, Remark
+    from persons", null))
             {
                 while (reader.Read())
                 {
@@ -43,6 +45,8 @@ namespace BookRent
                         Deposit = reader.GetDouble(6),
                         PhoneNo = reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
                         Pinyin = reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
+                        Contacter = reader.IsDBNull(9) ? string.Empty : reader.GetString(9),
+                        Remark = reader.IsDBNull(10) ? string.Empty : reader.GetString(10),
                     };
                     result.Add(item);
                 }
@@ -58,7 +62,9 @@ namespace BookRent
 
         public long Add(Person person)
         {
-            var sql = @"insert into Persons(Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo, Pinyin) values (@Name, @Sex, @StartDate, @EndDate, @Fee, @Deposit, @PhoneNo, @Pinyin)";
+            var sql =
+@"insert into Persons(Name, Sex, StartDate, EndDate, Fee, Deposit, PhoneNo, Pinyin, Contacter, Remark) 
+values (@Name, @Sex, @StartDate, @EndDate, @Fee, @Deposit, @PhoneNo, @Pinyin, @Contacter, @Remark)";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Name", person.Name),
                 new SQLiteParameter("@Sex", person.Sex),
@@ -68,6 +74,8 @@ namespace BookRent
                 new SQLiteParameter("@Deposit", person.Deposit),
                 new SQLiteParameter("@PhoneNo", person.PhoneNo),
                 new SQLiteParameter("@Pinyin", person.Pinyin),
+                new SQLiteParameter("@Contacter", person.Contacter),
+                new SQLiteParameter("@Remark", person.Remark),
             };
             var rowid = _helper.ExecuteInsert(sql, paras);
             person.Id = rowid;
@@ -88,7 +96,11 @@ namespace BookRent
 
         public bool Update(Person person)
         {
-            var sql = @"update Persons set Name = @Name, Sex = @Sex, StartDate = @StartDate, EndDate = @EndDate, Fee = @Fee, Deposit = @Deposit, PhoneNo = @PhoneNo, Pinyin = @Pinyin where rowid = @Id";
+            var sql =
+@"update Persons set Name = @Name, Sex = @Sex, StartDate = @StartDate, EndDate = @EndDate, 
+         Fee = @Fee, Deposit = @Deposit, PhoneNo = @PhoneNo, Pinyin = @Pinyin, Contacter = @Contacter,
+         Remark = @Remark,
+   where rowid = @Id";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", person.Id),
                 new SQLiteParameter("@Name", person.Name),
@@ -99,6 +111,8 @@ namespace BookRent
                 new SQLiteParameter("@Deposit", person.Deposit),
                 new SQLiteParameter("@PhoneNo", person.PhoneNo),
                 new SQLiteParameter("@Pinyin", person.Pinyin),
+                new SQLiteParameter("@Contacter", person.Contacter),
+                new SQLiteParameter("@Remark", person.Remark),
             };
             var result = _helper.ExecuteNonQuery(sql, paras) == 1;
             Cache.Set<Person>(person);

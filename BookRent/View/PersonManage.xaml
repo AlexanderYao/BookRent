@@ -58,6 +58,8 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Width="50"   FieldName="Deposit"   Header="押金"      />
                 <dxg:GridColumn Width="100"  FieldName="PhoneNo"   Header="联系方式"      />
+                <dxg:GridColumn Width="80"   FieldName="Contacter" Header="联系人"      />
+                <dxg:GridColumn Width="100"  FieldName="Remark"    Header="备注"      />
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

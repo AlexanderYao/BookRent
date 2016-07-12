@@ -38,6 +38,14 @@ namespace BookRent
         /// 拼音首字母
         /// </summary>
         public string Pinyin { get; set; }
+        /// <summary>
+        /// 联系人
+        /// </summary>
+        public string Contacter { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
 
         public override string ToString()
         {

@@ -71,6 +71,8 @@ namespace BookRent
                 Deposit = 0d,
                 PhoneNo = string.Empty,
                 Pinyin = string.Empty,
+                Contacter = string.Empty,
+                Remark = string.Empty,
             };
 
             var rowid = _repo.Add(person);

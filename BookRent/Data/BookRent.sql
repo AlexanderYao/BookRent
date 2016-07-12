@@ -25,7 +25,9 @@ create table Persons (
 	Fee numeric,
 	Deposit numeric,
 	PhoneNo text,
-	Pinyin text
+	Pinyin text,
+	Contacter text,
+	Remark text
 );
 
 create table Rents (
@@ -52,3 +54,5 @@ create table tmp (
 insert into tmp select ISBN, Name, PubDate, 0 from Books;
 alter table tmp rename to Books;
 
+/*查看是否有空值*/
+select rowid,* from books where Publisher is null;
