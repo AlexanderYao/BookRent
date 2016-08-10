@@ -28,7 +28,7 @@
         </StackPanel>
 
         <dxg:GridControl Grid.Row="1" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBook}"
-                         SelectionMode="Cell">
+                         SelectionMode="Cell" FilterString="{Binding Filter, Mode=TwoWay}">
             <dxg:GridControl.View>
                 <dxg:TableView ShowGroupPanel="False" AllowEditing="True" AutoWidth="False" 
                                ShowAutoFilterRow="True">

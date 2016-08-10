@@ -39,6 +39,8 @@ namespace BookRent
 
         public virtual Person SelectedPerson { get; set; }
 
+        public virtual string Filter { get; set; }
+
         public IEnumerable<Sex> Sexes
         {
             get
@@ -61,6 +63,8 @@ namespace BookRent
 
         public void Add()
         {
+            Filter = string.Empty;
+
             var person = new Person
             {
                 Name = string.Empty,
@@ -82,6 +86,7 @@ namespace BookRent
             if (result)
             {
                 Persons.Add(person);
+                SelectedPerson = Persons.Last();
                 SendMsg(new ItemChangedMsg<Person>(ActionMode.Add, person));
             }
         }
@@ -118,6 +123,11 @@ namespace BookRent
                 }
             }
             Status = string.Format("删除{0}人！", count);
+
+            if (count > 0 && Persons.Count > 0)
+            {
+                SelectedPerson = Persons.Last();
+            }
         }
 
         public void Update(CellValueChangedEventArgs e)

@@ -37,6 +37,8 @@ namespace BookRent
 
         public virtual Book SelectedBook { get; set; }
 
+        public virtual string Filter { get; set; }
+
         public void Query()
         {
             var books = _repo.Query();
@@ -51,6 +53,8 @@ namespace BookRent
 
         public void Add()
         {
+            Filter = string.Empty;
+
             var book = new Book
             {
                 ISBN = string.Empty,
@@ -73,6 +77,7 @@ namespace BookRent
             if (result)
             {
                 Books.Add(book);
+                SelectedBook = Books.Last();
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Add, book));
             }
         }
@@ -105,7 +110,7 @@ namespace BookRent
 
                 if (Books.Count > 0)
                 {
-                    SelectedBook = Books[0];
+                    SelectedBook = Books.Last();
                 }
             }
         }
