@@ -117,6 +117,28 @@ namespace BookRent
                 return;
             }
 
+            if (e.Column.FieldName == "Name" || e.Column.FieldName == "ISBN")
+            {
+                if (_repo.Query(o => o.Name == SelectedBook.Name && o.ISBN == SelectedBook.ISBN).Count > 1)
+                {
+                    if (MessageBoxService.Show(
+                        string.Format("存在重复的书名[{0}]+ISBN号[{1}]，确定仍然要录入吗？", SelectedBook.Name, SelectedBook.ISBN),
+                        "提示",
+                        MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    {
+                        if (e.Column.FieldName == "Name")
+                        {
+                            SelectedBook.Name = e.OldValue.ToString();
+                        }
+                        else
+                        {
+                            SelectedBook.ISBN = e.OldValue.ToString();
+                        }
+                        return;
+                    }
+                }
+            }
+
             if (ConfigUtil.ConfirmUpdate && MessageBoxService.Show(
                 string.Format("确定要把[{0}]从[{1}]改成[{2}]吗？", e.Column.Header, e.OldValue, e.Value),
                 "提示",
