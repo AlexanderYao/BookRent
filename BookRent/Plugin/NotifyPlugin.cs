@@ -31,7 +31,7 @@ namespace BookRent
 
             _expireDays = ConfigUtil.Parse<Int32>("到期日", 30);
 
-            TimeSpan result = ConfigUtil.Parse<TimeSpan>("到期间隔", TimeSpan.FromHours(0.5d));
+            TimeSpan result = ConfigUtil.Parse<TimeSpan>("到期提醒间隔", TimeSpan.FromHours(0.5d));
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(10d), result);
         }
 

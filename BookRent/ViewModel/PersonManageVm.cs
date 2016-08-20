@@ -85,6 +85,7 @@ namespace BookRent
 
             if (result)
             {
+                Logger.DebugFormat("新增Person，Id={0}, Name={1}", person.Id, person.Name);
                 Persons.Add(person);
                 SelectedPerson = Persons.Last();
                 SendMsg(new ItemChangedMsg<Person>(ActionMode.Add, person));
@@ -117,6 +118,7 @@ namespace BookRent
 
                 if (result)
                 {
+                    Logger.DebugFormat("删除Person，Id={0}, Name={1}", item.Id, item.Name);
                     count++;
                     SendMsg(new ItemChangedMsg<Person>(ActionMode.Delete, item));
                     Persons.Remove(item);
@@ -160,6 +162,8 @@ namespace BookRent
 
             if (result)
             {
+                Logger.DebugFormat("修改Person，Id={0}, Name={1}, {2}={3}->{4}",
+                    SelectedPerson.Id, SelectedPerson.Name, e.Column.FieldName, e.OldValue, e.Value);
                 var index = Persons.IndexOf(SelectedPerson);
                 Persons[index] = SelectedPerson;
                 SendMsg(new ItemChangedMsg<Person>(ActionMode.Update, SelectedPerson));

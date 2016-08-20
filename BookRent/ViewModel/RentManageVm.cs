@@ -166,6 +166,7 @@ namespace BookRent
             {
                 sb.AppendLine(string.Format("《{0}》 {1}本", item.Book.Name, item.Count));
             }
+            var log = sb.ToString();
             sb.AppendLine("是否确认？");
 
             if (MessageBoxService.Show(sb.ToString(), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
@@ -174,6 +175,7 @@ namespace BookRent
             }
 
             Rent();
+            Logger.DebugFormat("借出，{0}", log);
         }
 
         private void Rent()
@@ -258,6 +260,7 @@ namespace BookRent
             {
                 sb.AppendLine(string.Format("《{0}》 {1}本", item.Book.Name, item.Count));
             }
+            var log = sb.ToString();
             sb.AppendLine("是否确认？");
 
             if (MessageBoxService.Show(sb.ToString(), "提示", MessageBoxButton.YesNo) == MessageBoxResult.No)
@@ -285,6 +288,7 @@ namespace BookRent
 
             if (result)
             {
+                Logger.DebugFormat("归还，{0}", log);
                 Status = string.Format("归还{0}！", result ? "成功" : "失败");
             }
         }

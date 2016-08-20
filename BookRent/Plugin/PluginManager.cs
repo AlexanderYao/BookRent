@@ -38,7 +38,7 @@ namespace BookRent
 
         public void Close()
         {
-            _list.Where(e => e.IsOn == true).Foreach(e => e.Init());
+            _list.Where(e => e.IsOn == true).Foreach(e => e.Close());
         }
     }
 }

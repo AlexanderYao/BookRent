@@ -16,10 +16,13 @@ namespace BookRent
 
             try
             {
-                MethodInfo method = typeof(T).GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                MethodInfo method = typeof(T).GetMethod("Parse", BindingFlags.Static | BindingFlags.Public, null, new Type[] { typeof(string) }, null);
                 result = (T)method.Invoke(null, new object[] { str });
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
 
             return result;
         }

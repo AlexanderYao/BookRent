@@ -76,6 +76,7 @@ namespace BookRent
 
             if (result)
             {
+                Logger.DebugFormat("新增Book，Id={0}", book.Id);
                 Books.Add(book);
                 SelectedBook = Books.Last();
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Add, book));
@@ -105,6 +106,7 @@ namespace BookRent
             Status = string.Format("删除{0}！", result ? "成功" : "失败");
             if (result)
             {
+                Logger.DebugFormat("删除Book，Id={0}, ISBN={1}, Name={2}", SelectedBook.Id, SelectedBook.ISBN, SelectedBook.Name);
                 SendMsg(new ItemChangedMsg<Book>(ActionMode.Delete, SelectedBook));
                 Books.Remove(SelectedBook);
 
@@ -178,6 +180,8 @@ namespace BookRent
             }
 
             Save(SelectedBook);
+            Logger.DebugFormat("修改Book，Id={0}, ISBN={1}, Name={2}, {3}={4}->{5}",
+                SelectedBook.Id, SelectedBook.ISBN, SelectedBook.Name, e.Column.FieldName, e.OldValue, e.Value);
         }
 
         private void Save(Book book)
