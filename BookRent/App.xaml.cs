@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace BookRent
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            CheckIsAdmin();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
@@ -35,6 +37,24 @@ namespace BookRent
             Set(main, "Top");
             Set(main, "Left");
             main.Show();
+        }
+
+        private bool CheckIsAdmin()
+        {
+            bool isAdmin;
+            try
+            {
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(user);
+                isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                isAdmin = false;
+            }
+            Logger.DebugFormat("Is Admin: {0}", isAdmin ? "Yes" : "No");
+            return isAdmin;
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
