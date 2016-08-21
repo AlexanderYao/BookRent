@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,13 +24,29 @@ namespace BookRent
             get
             {
                 var str = ConfigurationManager.AppSettings["备份目录"];
-
-                if (!Directory.Exists(str))
-                { // 默认放C盘根目录
-                    str = "C:\\";
+                
+                if (!Directory.Exists(str) || !IsFolderWritable(str))
+                { // 默认放My Documents
+                    str = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 }
 
                 return str;
+            }
+        }
+
+        private bool IsFolderWritable(string str)
+        {
+            try
+            {
+                using (FileStream fs = File.Create(
+                    Path.Combine(str, Path.GetRandomFileName()),
+                    1, FileOptions.DeleteOnClose)) { }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return false;
             }
         }
 
