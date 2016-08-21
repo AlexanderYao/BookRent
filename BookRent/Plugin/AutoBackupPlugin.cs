@@ -19,18 +19,22 @@ namespace BookRent
 
         public bool IsOn { get; set; }
 
+        private string dir;
         public string BackupDir
         {
             get
             {
-                var str = ConfigurationManager.AppSettings["备份目录"];
-                
-                if (!Directory.Exists(str) || !IsFolderWritable(str))
-                { // 默认放My Documents
-                    str = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (string.IsNullOrEmpty(dir))
+                {
+                    dir = ConfigurationManager.AppSettings["备份目录"];
+
+                    if (!Directory.Exists(dir) || !IsFolderWritable(dir))
+                    { // 默认放My Documents
+                        dir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    }
                 }
 
-                return str;
+                return dir;
             }
         }
 
