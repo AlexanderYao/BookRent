@@ -99,7 +99,7 @@ values (@Name, @Sex, @StartDate, @EndDate, @Fee, @Deposit, @PhoneNo, @Pinyin, @C
             var sql =
 @"update Persons set Name = @Name, Sex = @Sex, StartDate = @StartDate, EndDate = @EndDate, 
          Fee = @Fee, Deposit = @Deposit, PhoneNo = @PhoneNo, Pinyin = @Pinyin, Contacter = @Contacter,
-         Remark = @Remark,
+         Remark = @Remark
    where rowid = @Id";
             var paras = new SQLiteParameter[] { 
                 new SQLiteParameter("@Id", person.Id),
