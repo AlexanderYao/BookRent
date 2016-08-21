@@ -45,7 +45,7 @@ namespace BookRent
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Debug(ex);
                 return false;
             }
         }
