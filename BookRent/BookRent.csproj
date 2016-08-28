@@ -95,6 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bootstrap\IBootstrapOutput.cs" />
     <Compile Include="Data\Cache.cs" />
     <Compile Include="Data\RentRepository.cs" />
     <Compile Include="Data\PersonRepository.cs" />
@@ -122,6 +123,9 @@
     <Compile Include="Model\Rent.cs" />
     <Compile Include="Data\SqliteHelper.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\RentManage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,6 +160,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SplashScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -180,6 +188,7 @@
     </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -197,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\BookRent.sql" />
+    <Resource Include="Resources\SplashScreen.png" />
     <Resource Include="Resources\rent.ico" />
   </ItemGroup>
   <ItemGroup>

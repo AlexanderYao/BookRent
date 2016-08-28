@@ -19,6 +19,7 @@ namespace BookRent
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            DXSplashScreen.Show<SplashScreen>();
             CheckIsAdmin();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             this.DispatcherUnhandledException += Current_DispatcherUnhandledException;
@@ -36,7 +37,9 @@ namespace BookRent
             Set(main, "Height");
             Set(main, "Top");
             Set(main, "Left");
+            main.Topmost = true;
             main.Show();
+            DXSplashScreen.Close();
         }
 
         private bool CheckIsAdmin()
