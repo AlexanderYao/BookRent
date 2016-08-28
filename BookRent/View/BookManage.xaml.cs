@@ -1,5 +1,4 @@
-﻿using DevExpress.Xpf.Grid;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace BookRent
 {

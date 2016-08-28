@@ -1,10 +1,5 @@
-﻿using DevExpress.Data;
-using DevExpress.Xpf.Core;
+﻿using DevExpress.Xpf.Core;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
