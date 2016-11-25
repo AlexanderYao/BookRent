@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>图书借阅系统</title>
+    <link rel="stylesheet" href="../ThirdParty/webix/webix.css" type="text/css" />
+    <script src="../ThirdParty/webix/webix_debug.js" type="text/javascript"></script>
+    <!--<script src="../ThirdParty/sockjs-min-0.3.4.js" type="text/javascript"></script>-->
+    
+    <script src="../Base/vertx-eventbus.js" type="text/javascript"></script>
+    <script src="../Base/local-eventbus.js" type="text/javascript"></script>
+    <script src="../Base/BaseCtrl.js" type="text/javascript"></script>
+    <script src="../Base/App.js" type="text/javascript"></script>
+    <script src="../Base/Route.js" type="text/javascript"></script>
+
+    <script src="../View/Book.js" type="text/javascript"></script>
+    <script src="../View/Person.js" type="text/javascript"></script>
+    <script src="../View/Rent.js" type="text/javascript"></script>
+
+    <script src="../Controller/BookCtrl.js" type="text/javascript"></script>
+    <script src="../Controller/PersonCtrl.js" type="text/javascript"></script>
+    <script src="../Controller/RentCtrl.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var adminToolbar = [
+        {
+            id: "UIToolbar.BookMgt",
+            value: "图书管理",
+            submenu: [
+                { id: "UIToolbar.QueryAllBook", value: "查看所有", href: "#book/all/query" },
+                { id: "UIToolbar.QueryBook", value: "查看单个", href: "#book/1/query" },
+                { id: "UIToolbar.AddBook", value: "新增", href: "#book/#/add?param=sth" },
+                { id: "UIToolbar.EditBook", value: "编辑", href: "#book/1/edit" },
+                { id: "UIToolbar.DelBook", value: "删除", href: "#book/1/del" },
+            ]
+        },
+        {
+            id: "UIToolbar.PersonMgt",
+            value: "会员管理",
+            submenu: [
+                { id: "UIToolbar.AddPerson", value: "新增", href: "#person/2/add" },
+                { id: "UIToolbar.DelPerson", value: "删除", href: "#person/2/del" },
+                { id: "UIToolbar.EditPerson", value: "编辑", href: "#person/2/edit" },
+            ]
+        },
+        {
+            id: "UIToolbar.RentMgt",
+            value: "借阅管理",
+            submenu: [
+                { id: "UIToolbar.AddRent", value: "借阅", href: "#rent/add" },
+                { id: "UIToolbar.DelRent", value: "归还", href: "#rent/del" },
+            ]
+        }
+    ];
+
+    var toolbar = {
+        view: "toolbar",
+        paddingY: 10,
+        hidden: false,
+        elements: [
+            {
+                view: "label",
+                width: 500,
+                template: "<span style='font-size: 18px'>图书借阅系统</span>&nbsp;&nbsp;" +
+                    "<span style='font-size:12px'>版本：1.0.0</span>&nbsp;&nbsp;"
+            },
+            {
+                view: "menu",
+                id: "UIToolbar.menu",
+                click: App.controllerFunc("RootCtrl", "routeMenu"),
+                data: adminToolbar
+            }
+
+        ]
+    };
+
+    var ui_book = { template: "book" };
+    var ui_person = { template: "person" };
+    var ui_rent = { template: "rent" };
+
+    var ui_scheme = {
+        view: "scrollview",
+        body: {
+            rows: [
+                toolbar,
+                {
+                    id: "view",
+                    //view: "tabview",
+                    //tabbar: { options: ["图书管理", "会员管理", "借阅管理"] },
+                    //animate: true,
+                    //cells: [
+                    //    {
+                    //        id: "图书管理", rows: [
+                    //              { view: "text", name: "value1", label: "value1" },
+                    //              {}
+                    //        ]
+                    //    },
+                    //    {
+                    //        id: "会员管理", rows: [
+                    //              { view: "text", name: "value2", label: "value2" },
+                    //              {}
+                    //        ]
+                    //    },
+                    //    {
+                    //        id: "借阅管理", rows: [
+                    //              { view: "text", name: "value3", label: "value3" },
+                    //              {}
+                    //        ]
+                    //    },
+                    //]
+                }
+            ]
+        }
+    };
+
+    webix.ready(function () {
+        webix.ui(ui_scheme);
+        App.setRootController(null);
+        App.addController(new BookCtrl("BookCtrl", $$("UIBook")));
+        App.addController(new PersonCtrl("PersonCtrl", $$("UIPerson")));
+        App.addController(new RentCtrl("RentCtrl", $$("UIRent")));
+
+        Router.add('book/:id/:action', 'UIBook', BookCtrl);
+        Router.add('person/:id/:action', 'UIPerson', PersonCtrl);
+        Router.add('rent/:type', 'UIRent', RentCtrl);
+        Router.listen();
+    });
+</script>
+</body>
+</html>
