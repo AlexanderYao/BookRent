@@ -85,7 +85,11 @@
                     id: "view",
                     view: "multiview",
                     //tabbar: { options: ["图书管理", "会员管理", "借阅管理"] },
-                    animate: true,
+                    animate: {
+                        type: "slide",
+                        subtype: "together",
+                        direction: "bottom"
+                    },
                     cells: [
                         { template: "默认页" },
                         //{

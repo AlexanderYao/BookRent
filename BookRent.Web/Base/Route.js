@@ -46,6 +46,8 @@
 
                 if (!$$(item.ui.id)) {
                     this.ele.addView(item.ui);
+                    item.ctrl = new item.controller(item.ui.id, $$(item.ui.id));
+                    if(item.ctrl.init) item.ctrl.init();
                 }
                 $$(item.ui.id).show(true);
 
