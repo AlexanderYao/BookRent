@@ -6,7 +6,7 @@
     <title>图书借阅系统</title>
     <link rel="stylesheet" href="../ThirdParty/webix/webix.css" type="text/css" />
     <script src="../ThirdParty/webix/webix_debug.js" type="text/javascript"></script>
-    <!--<script src="../ThirdParty/sockjs-min-0.3.4.js" type="text/javascript"></script>-->
+    <script src="../ThirdParty/sockjs-0.3.4.min.js" type="text/javascript"></script>
     
     <script src="../Base/vertx-eventbus.js" type="text/javascript"></script>
     <script src="../Base/local-eventbus.js" type="text/javascript"></script>
@@ -76,10 +76,6 @@
         ]
     };
 
-    var ui_book = { template: "book" };
-    var ui_person = { template: "person" };
-    var ui_rent = { template: "rent" };
-
     var ui_scheme = {
         view: "scrollview",
         body: {
@@ -87,29 +83,30 @@
                 toolbar,
                 {
                     id: "view",
-                    //view: "tabview",
+                    view: "multiview",
                     //tabbar: { options: ["图书管理", "会员管理", "借阅管理"] },
-                    //animate: true,
-                    //cells: [
-                    //    {
-                    //        id: "图书管理", rows: [
-                    //              { view: "text", name: "value1", label: "value1" },
-                    //              {}
-                    //        ]
-                    //    },
-                    //    {
-                    //        id: "会员管理", rows: [
-                    //              { view: "text", name: "value2", label: "value2" },
-                    //              {}
-                    //        ]
-                    //    },
-                    //    {
-                    //        id: "借阅管理", rows: [
-                    //              { view: "text", name: "value3", label: "value3" },
-                    //              {}
-                    //        ]
-                    //    },
-                    //]
+                    animate: true,
+                    cells: [
+                        { template: "默认页" },
+                        //{
+                        //    id: "图书管理", rows: [
+                        //          UIBook,
+                        //          //{}
+                        //    ]
+                        //},
+                        //{
+                        //    id: "会员管理", rows: [
+                        //          UIPerson,
+                        //          //{}
+                        //    ]
+                        //},
+                        //{
+                        //    id: "借阅管理", rows: [
+                        //          UIRent,
+                        //          //{}
+                        //    ]
+                        //},
+                    ]
                 }
             ]
         }
@@ -122,9 +119,10 @@
         App.addController(new PersonCtrl("PersonCtrl", $$("UIPerson")));
         App.addController(new RentCtrl("RentCtrl", $$("UIRent")));
 
-        Router.add('book/:id/:action', 'UIBook', BookCtrl);
-        Router.add('person/:id/:action', 'UIPerson', PersonCtrl);
-        Router.add('rent/:type', 'UIRent', RentCtrl);
+        //Router.add('book/:id', 'UIBookList', BookListCtrl);
+        Router.add('book/:id/:action', UIBook, BookCtrl);
+        Router.add('person/:id/:action', UIPerson, PersonCtrl);
+        Router.add('rent/:type', UIRent, RentCtrl);
         Router.listen();
     });
 </script>
