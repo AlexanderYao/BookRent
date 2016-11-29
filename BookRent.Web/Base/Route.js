@@ -42,12 +42,12 @@
                     }, null);
 
                 isFind = true;
-                console.log('route: ' + url + ', ' + item.ui.id + ', ' + params.toString());
+                console.log('route: ' + url + ', ' + item.ui.id + ', ' + (params ? params.toString() : ""));
 
                 if (!$$(item.ui.id)) {
                     this.ele.addView(item.ui);
                     item.ctrl = new item.controller(item.ui.id, $$(item.ui.id));
-                    if(item.ctrl.init) item.ctrl.init();
+                    if (item.ctrl.init) item.ctrl.init();
                 }
                 $$(item.ui.id).show(true);
 
