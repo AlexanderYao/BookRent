@@ -1,0 +1,46 @@
+<div>
+<div class="md-card">
+    <div class="md-card-toolbar">
+        <span class="md-card-toolbar-heading-text">图书列表</span>
+    </div>
+    <div class="md-card-content">
+        <table id="booklist_table" class="uk-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ISBN</th>
+                    <th>书名</th>
+                    <th>入库数量</th>
+                    <th>现有数量</th>
+                    <th>拼音首字母</th>
+                    <th>入库日期</th>
+                    <th>价格</th>
+                    <th>购买方式</th>
+                    <th>出版社</th>
+                    <th>作者</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="book in books">
+                    <td>
+                        <button v-on:click="edit(book.id)" class="md-btn md-btn-small">编辑</button>
+                        <button v-on:click="del(book.id)" class="md-btn md-btn-small">删除</button>
+                    </td>
+                    <td>{{book.isbn}}</td>
+                    <td>{{book.name}}</td>
+                    <td>{{book.totalCount}}</td>
+                    <td>{{book.availableCount}}</td>
+                    <td>{{book.pinyin}}</td>
+                    <td>{{book.inDate}}</td>
+                    <td>{{book.price}}</td>
+                    <td>{{book.buyFrom}}</td>
+                    <td>{{book.publisher}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.remark}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

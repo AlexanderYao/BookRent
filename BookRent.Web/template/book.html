@@ -1,0 +1,63 @@
+<div>
+<div class="md-card">
+    <div class="md-card-toolbar">
+        <span class="md-card-toolbar-heading-text">图书详情</span>
+        <div class="md-card-toolbar-actions">
+            <i v-on:click="save" class="md-icon material-icons">save</i>
+        </div>
+    </div>
+    <div class="md-card-content">
+        <div class="uk-grid uk-grid-width-medium-1-2" data-uk-grid-margin>
+            <div>
+                <label>ISBN</label>
+                <input v-model="isbn" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>书名</label>
+                <input v-model="name" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>入库数量</label>
+                <input v-model="totalCount" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>现有数量</label>
+                <input v-model="availableCount" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>拼音首字母</label>
+                <input v-model="pinyin" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>入库日期</label>
+                <input v-model="inDate" type="text" class="md-input label-fixed" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+            </div>
+            <div>
+                <label>价格</label>
+                <input v-model="price" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>购买方式</label>
+                <select v-model="buyFrom" class="md-input label-fixed">
+                    <option value="">请选择</option>
+                    <option value="0">淘宝</option>
+                    <option value="1">当当</option>
+                    <option value="2">捐赠</option>
+                </select>
+            </div>
+            <div>
+                <label>出版社</label>
+                <input v-model="publisher" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>作者</label>
+                <input v-model="author" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>备注</label>
+                <input v-model="remark" type="text" class="md-input label-fixed"/>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

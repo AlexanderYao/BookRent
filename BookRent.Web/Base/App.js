@@ -1,77 +1,142 @@
-var App = {
+var Router = require('./router');
+
+window.App = {
 
     eventBuses: {},
 
     rootCtrl: null,
 
-    controllers: {},
-
     cache: {},
 
-    routes: [],
+    routes: {},
+
+    router: new Router(),
 
     ele: null,
 
-    addRoute: function (path, ui, controller) {
-        var paramNames = [];
-        //可扩展对 '?param1=1&param2=2' 的识别
-        var regex = path.replace(/([:*])(\w+)/g, function (full, dots, name) {
-            paramNames.push(name);
-            return '([^\/]+)';
-        }) + '(?:\/|$)';
+    index: 0,
 
-        this.routes.push({
+    prefix: 'container-',
+
+    addRoute: function (path, ui, buildCtrl) {
+        this.router.addRoute(path);
+        this.routes[path] = {
             path: path,
             ui: ui,
-            controller: controller,
-            regex: new RegExp(regex),
-            paramNames: paramNames
-        });
+            buildCtrl: buildCtrl,
+
+            ctrl: null,
+            containerId: null
+        };
         return this;
     },
 
     removeRoute: function (path) {
-        if (this.routes[path]) delete this.routes[path];
-        return this;
+        this.router.delRoute(path);
     },
 
     route: function () {
-        this.ele = this.ele || $$('view');
+        this.ele = this.ele || $('#page_content_inner');
         if (!this.ele) return;
 
         var url = location.hash.slice(1) || '/';
-        var isFind = false;
-        for (var i = 0; i < this.routes.length; i++) {
-            var item = this.routes[i];
-            var match = url.match(item.regex);
-            if (match) {
-                var params = match.slice(1, match.length)
-                    .reduce(function (params, value, index) {
-                        if (params === null) {
-                            params = {};
-                        }
-                        params[item.paramNames[index]] = value;
-                        return params;
-                    }, null);
+        var result = this.router.check(url);
+        if(null == result){
+            console.log('App.route: find no route -> 404');
+            this._404(url);
+            return;
+        }
 
-                isFind = true;
-                console.log('route: ' + url + ', ' + item.ui.id + ', ' + (params ? params.toString() : ""));
+        var item = this.routes[result.path];
+        var params = result.params;
+        console.log('route: ' + url + ', ' + item.ui);
+        console.log(params);
+        if(!item.containerId){
+            this.build(item, params);
+        }else{
+            item.ctrl.params = params;
+        }
+        this.show(item.containerId);
+        setTimeout(function(){
+            if(!item.ctrl.onRoute) return;
 
-                if (!$$(item.ui.id)) {
-                    this.ele.addView(item.ui);
-                    item.ctrl = new item.controller(item.ui.id, $$(item.ui.id));
-                    this.addController(item.ctrl);
-                    if (item.ctrl.init) item.ctrl.init();
-                }
-                $$(item.ui.id).show(true);
-
-                break;
+            try {
+                item.ctrl.onRoute();
+            } catch (error) {
+                console.log('ctrl onRoute error: ' + error);
             }
-        }
+        }, 400);
+    },
 
-        if (!isFind) {
-            console.log('find no route');
+    _404: function(url){
+        var id = this.prefix+'404';
+        if(!$('#'+id).length){
+            this.ele.append('<div class="uk-grid uk-grid-width-1-1" '+
+                'id="'+id+'">'+
+            '</div>');
+            $('#'+id).load('template/404.html', function(){
+                $('#404_url').text(url);
+            });
         }
+        this.show(id);
+        $('#404_url').text(url);
+    },
+
+    //build item
+    build: function(item, params){
+        //create container div
+        item.containerId = this.prefix+this.index;
+        this.index++;
+        this.ele.append('<div class="uk-grid uk-grid-width-1-1" '+
+            'id="'+item.containerId+'">'+
+        '</div>');
+
+        //build controller, call init() if exists
+        var ctrl = new item.buildCtrl($('#'+item.containerId));
+        ctrl.app = App;
+        ctrl.params = params;
+        item.ctrl = ctrl;
+
+        //init view: load template || init by webix || init by controller itself
+        if(typeof item.ui === 'string'){
+            $('#'+item.containerId).load(item.ui, function(){
+                var $this = $(this);
+                altair_forms.select_elements($this);
+                altair_md.checkbox_radio($this);
+                altair_md.inputs($this);
+
+                setTimeout(function(){
+                    if(!ctrl.init) return;
+
+                    try {
+                        ctrl.init();
+                    } catch (error) {
+                        console.log('ctrl init error: ' + error);
+                    }
+                }, 200);
+            });
+        }else if(boolean(webix) && typeof item.ui === 'object'){
+            webix.ui(item.ui, item.containerId);
+            if(ctrl.init) ctrl.init();
+        }else{
+            console.log('App.route: can not init view');
+            if(ctrl.init) ctrl.init();
+        }
+    },
+
+    //hide all children, show div with animation
+    show: function(id){
+        this.ele.children().hide();
+
+        $('#'+id).show()
+        .velocity({
+            //translateX: ['0%', '100%'],
+            opacity: [1, 0],
+            //scale: [1, 0]
+        },{
+            duration: 400,
+            easing: easing_swiftOut
+        });
     },
 
     listen: function () {
@@ -92,14 +157,29 @@ var App = {
 
     messages: [],
 
+    removeController: function(ctrl){
+        ctrl.app = null;
+        var route = App.getRouteByCtrlName(ctrl.name);
+        if(!route) return;
 
-    setRootController: function(rootCtrl){
-        App.rootCtrl = rootCtrl;
-    },
+        route.ctrl = null;
+        $('#'+route.containerId).velocity(
+            {
+                translateX: ['-100%', '0%'],
+                scale: [0, 1]
+            },
+            {
+                duration: 400,
+                easing: easing_swiftOut,
+                complete: function(elements){
+                    if(elements.length == 0) return;
+                    elements[0].remove();
+                }
+            }
+        );
+        route.containerId = null;
 
-    addController: function(ctrl){
-        ctrl.app = App;
-        App.controllers[ctrl.name] = ctrl;
+        history.back();
     },
 
     turnOffNotification : function(){
@@ -156,14 +236,14 @@ var App = {
                 }
             }
 
-            if(message["type"] == "error"){
-                toastr.error(message["text"]);
-            }else if(message["type"] == "success"){
-                toastr.success(message["text"]);
-            }else{
-                toastr.success(message["text"]);
-            }
-
+            //use uikit notify
+            // if(message["type"] == "error"){
+            //     toastr.error(message["text"]);
+            // }else if(message["type"] == "success"){
+            //     toastr.success(message["text"]);
+            // }else{
+            //     toastr.success(message["text"]);
+            // }
 
         }
 
@@ -206,10 +286,39 @@ var App = {
 
     controllerFunc: function(ctrl, method, args){
         return function(id, e, node) {
-            if (App.controllers[ctrl] != null && App.controllers[ctrl][method] != null) {
-                App.controllers[ctrl][method].apply(null, [args, id, e, node]);
+            var controller = App.getControllerByName(ctrl);
+            if (controller != null && controller[method] != null) {
+                controller[method].apply(null, [args, id, e, node]);
             }
         }
+    },
+
+    getRouteByCtrlName: function(ctrlName){
+        for(var key in this.routes){
+            if(this.routes[key].ctrl && this.routes[key].ctrl.name == ctrlName){
+                return this.routes[key];
+            }
+        }
+        return null;
+    },
+
+    getControllerByName: function(ctrlName){
+        for(var key in this.routes){
+            if(this.routes[key].ctrl && this.routes[key].ctrl.name == ctrlName){
+                return this.routes[key].ctrl;
+            }
+        }
+        return null;
+    },
+
+    getControllers: function(){
+        var ctrls = [];
+        for(var key in this.routes){
+            if(this.routes[key].ctrl){
+                ctrls.push(this.routes[key].ctrl);
+            }
+        }
+        return ctrls;
     },
 
     connect2WebSocket: function(){
@@ -226,7 +335,8 @@ var App = {
                 text: "正在尝试连接后台",
                 type: "success"
             });
-            _.each(App.controllers, function(ctrl){
+
+            _.each(App.getControllers(), function(ctrl){
 
                 _.each(ctrl.handlers(), function(handler){
 
@@ -256,7 +366,7 @@ var App = {
 
             //register controller events handler
             //consider difference between local event and web socket event
-            _.each(App.controllers, function (ctrl) {
+            _.each(App.getControllers(), function (ctrl) {
 
                 _.each(ctrl.handlers(), function (handler) {
 
@@ -266,34 +376,9 @@ var App = {
                     }
 
                 });
-
             });
-
-            //init ctrls
-            _.each(App.controllers, function (ctrl) {
-                ctrl.init();
-            });
-
         };
         App.eventBuses['local'].open();
-
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-bottom-right",
-            "preventDuplicates": true,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "500",
-            "timeOut": "3000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        };
 
         $(window).focus(function () {
             App.messageConfig.notificationByHtml5 = false;
@@ -304,7 +389,5 @@ var App = {
         });
 
         this.listen();
-    }
-
-
+    },
 };

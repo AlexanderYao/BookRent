@@ -1,117 +1,399 @@
-﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en" class="app_theme_dark_a">
 <head>
-    <meta charset="utf-8" />
-    <title>图书借阅系统</title>
-    <link rel="stylesheet" href="../ThirdParty/webix/webix.css" type="text/css" />
-    <link rel="stylesheet" href="../ThirdParty/toastr.min.css" type="text/css" />
-    <script src="../ThirdParty/webix/webix_debug.js" type="text/javascript"></script>
-    <script src="../ThirdParty/sockjs-0.3.4.min.js" type="text/javascript"></script>
-    <script src="../ThirdParty/underscore.js" type="text/javascript"></script>
-    <script src="../ThirdParty/toastr.min.js" type="text/javascript"></script>
-    <script src="../ThirdParty/jquery.1.9.1.min.js" type="text/javascript"></script>
-    
-    <script src="../Base/vertx-eventbus.js" type="text/javascript"></script>
-    <script src="../Base/local-eventbus.js" type="text/javascript"></script>
-    <script src="../Base/BaseCtrl.js" type="text/javascript"></script>
-    <script src="../Base/App.js" type="text/javascript"></script>
-    <script src="../Base/Route.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
-    <script src="../View/Book.js" type="text/javascript"></script>
-    <script src="../View/Person.js" type="text/javascript"></script>
-    <script src="../View/Rent.js" type="text/javascript"></script>
-    <script src="../View/Main.js" type="text/javascript"></script>
+    <title>图书借阅系统 v1.0.0</title>
 
-    <script src="../Controller/BookCtrl.js" type="text/javascript"></script>
-    <script src="../Controller/PersonCtrl.js" type="text/javascript"></script>
-    <script src="../Controller/RentCtrl.js" type="text/javascript"></script>
-    <script src="../Controller/MainCtrl.js" type="text/javascript"></script>
+    <!-- uikit -->
+    <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.css" media="all">
+
+    <!-- flag icons -->
+    <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
+
+    <!-- style switcher -->
+    <link rel="stylesheet" href="assets/css/style_switcher.css" media="all">
+
+    <!-- altair admin -->
+    <link rel="stylesheet" href="assets/css/main.css" media="all">
+    <link rel="stylesheet" href="assets/css/customize.css" media="all">
+
+    <!-- themes -->
+    <!-- TODO: concat all themes into a file -->
+    <!-- <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all"> -->
+    <link rel="stylesheet" href="assets/css/themes/_theme_a.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_b.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_c.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_d.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_e.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_f.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_g.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_h.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_i.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_dark.css" media="all">
+    <link rel="stylesheet" href="assets/css/themes/_theme_dark_a.css" media="all">
+
+    <!-- c3 charts -->
+    <link rel="stylesheet" href="bower_components/c3.min.css">
 </head>
-<body>
-<script type="text/javascript">
-    var adminToolbar = [
-        {
-            id: "UIToolbar.BookMgt",
-            value: "图书管理",
-            submenu: [
-                { id: "UIToolbar.QueryAllBook", value: "查看所有", href: "#book/all/query" },
-                { id: "UIToolbar.QueryBook", value: "查看单个", href: "#book/1/query" },
-                { id: "UIToolbar.AddBook", value: "新增", href: "#book/#/add?param=sth" },
-                { id: "UIToolbar.EditBook", value: "编辑", href: "#book/1/edit" },
-                { id: "UIToolbar.DelBook", value: "删除", href: "#book/1/del" },
-            ]
-        },
-        {
-            id: "UIToolbar.PersonMgt",
-            value: "会员管理",
-            submenu: [
-                { id: "UIToolbar.AddPerson", value: "新增", href: "#person/2/add" },
-                { id: "UIToolbar.DelPerson", value: "删除", href: "#person/2/del" },
-                { id: "UIToolbar.EditPerson", value: "编辑", href: "#person/2/edit" },
-            ]
-        },
-        {
-            id: "UIToolbar.RentMgt",
-            value: "借阅管理",
-            submenu: [
-                { id: "UIToolbar.AddRent", value: "借阅", href: "#rent/add" },
-                { id: "UIToolbar.DelRent", value: "归还", href: "#rent/del" },
-            ]
-        }
-    ];
+<body class=" sidebar_main_open sidebar_main_swipe">
+    <!-- main header -->
+    <header id="header_main">
+        <div class="header_main_content">
+            <nav class="uk-navbar">
 
-    var toolbar = {
-        view: "toolbar",
-        paddingY: 10,
-        hidden: false,
-        elements: [
-            {
-                view: "label",
-                width: 500,
-                template: "<span style='font-size: 18px'>图书借阅系统</span>&nbsp;&nbsp;" +
-                    "<span style='font-size:12px'>版本：1.0.0</span>&nbsp;&nbsp;"
-            },
-            {
-                view: "menu",
-                id: "UIToolbar.menu",
-                click: App.controllerFunc("RootCtrl", "routeMenu"),
-                data: adminToolbar
-            }
+                <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+                </a>
+                <a href="#" id="sidebar_secondary_toggle" class="sSwitch sSwitch_right sidebar_secondary_check">
+                    <span class="sSwitchIcon"></span>
+                </a>
 
-        ]
-    };
+                <div class="uk-navbar-nav login_page">
+                    <div class="uk-button-dropdown" data-uk-dropdown>
+                        <a href="javascript:void(0)" class="user_action_icon"><i class="material-icons md-48">person</i></a>
+                        <div class="uk-dropdown uk-dropdown-xlarge">
+                            <div class="md-card" id="login_card">
+                                <div class="md-card-content large-padding" id="login_form">
+                                    <div class="login_heading">
+                                        <div class="user_avatar"></div>
+                                    </div>
+                                    <div>
+                                        <div class="uk-form-row">
+                                            <label for="login_id">User Id</label>
+                                            <input class="md-input" type="text" id="login_id"/>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <label for="login_pwd">Password</label>
+                                            <input class="md-input" type="password" id="login_pwd"/>
+                                            <!-- <a class="uk-form-password-toggle" href="" data-uk-form-password>Show</a> -->
+                                        </div>
+                                        <div class="uk-margin-medium-top">
+                                            <button id="login_btn" class="md-btn md-btn-primary md-btn-block md-btn-wave-light">登 录</button>
+                                        </div>
+                                        <div class="uk-margin-top">
+                                            <a href="#register" id="login_register" class="uk-float-right">Register!</a>
+                                            <span class="icheck-inline">
+                                                <input type="checkbox" id="login_stay_in" data-md-icheck/>
+                                                <label for="login_stay_in" class="inline-label">Stay signed in</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="md-card-content large-padding" id="login_success" style="display:none">
+                                    <div class="login_heading">
+                                        <div class="user_avatar"></div>
+                                    </div>
+                                    <div>
+                                        <div class="uk-form-row">
+                                            <label>Id: </label><span id="logined_id"></span>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <label>Name: </label><span id="login_name"></span>
+                                        </div>
+                                        <div class="uk-form-row">
+                                            <label>Dept: </label><span id="login_dept"></span>
+                                        </div>
+                                        <div class="uk-margin-medium-top">
+                                            <button id="logout_btn" class="md-btn md-btn-primary md-btn-block md-btn-wave-light">登 出</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    var ui_scheme = {
-        view: "scrollview",
-        body: {
-            rows: [
-                toolbar,
-                {
-                    id: "view",
-                    view: "multiview",
-                    animate: {
-                        type: "slide",
-                        subtype: "together",
-                        direction: "right"
-                    },
-                    cells: [
-                        { template: "默认页" }
-                    ]
-                }
-            ]
-        }
-    };
+                <div class="uk-navbar-content uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+                        <li>
+                            <a href="#" title="全屏" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">fullscreen</i></a>
+                        </li>
+                        <li data-uk-dropdown>
+                            <a href="javascript:;" class="user_action_icon">
+                                <i class="material-icons md-24 md-light">notifications</i>
+                                <span class="uk-badge">8</span>
+                            </a>
+                            <div class="uk-dropdown uk-dropdown-xlarge">
+                                <div class="md-card-content">
+                                    <ul class="uk-tab uk-tab-grid" data-uk-tab="{connect:'#header_alerts',animation:'slide-horizontal'}">
+                                        <li class="uk-width-1-2 uk-active"><a href="#" class="js-uk-prevent uk-text-small">Messages (4)</a></li>
+                                        <li class="uk-width-1-2"><a href="#" class="js-uk-prevent uk-text-small">Alerts (4)</a></li>
+                                    </ul>
+                                    <ul id="header_alerts" class="uk-switcher uk-margin">
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-cyan">i</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">登录成功</span>
+                                                        <span class="uk-text-small uk-text-muted">2016.12.29 11:07:30</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-lime-700">ii</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">新建图书1</span>
+                                                        <span class="uk-text-small uk-text-muted">Quia aperiam quae ab in animi dolores enim eveniet et aut unde.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">iii</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">新建会员</span>
+                                                        <span class="uk-text-small uk-text-muted">Consequuntur natus dolor ut ut dolor cumque voluptatem error.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">iv</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">会员xx借出图书xx</span>
+                                                        <span class="uk-text-small uk-text-muted">Consequuntur natus dolor ut ut dolor cumque voluptatem error.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <span class="md-user-letters md-bg-light-green">iv</span>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">会员xx归还图书xx</span>
+                                                        <span class="uk-text-small uk-text-muted">Consequuntur natus dolor ut ut dolor cumque voluptatem error.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="uk-text-center uk-margin-top uk-margin-small-bottom">
+                                                <a href="#mailbox" class="md-btn md-btn-flat md-btn-flat-primary js-uk-prevent">Show All</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <ul class="md-list md-list-addon">
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-warning">&#xE8B2;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">警告</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Voluptatem accusantium officiis voluptas aut est.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-success">&#xE88F;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">成功</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Aspernatur dolorum eos dolorem quia tenetur.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-danger">&#xE001;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">错误</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Ratione atque aut ullam odio.</span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="md-list-addon-element">
+                                                        <i class="md-list-addon-icon material-icons uk-text-primary">&#xE8FD;</i>
+                                                    </div>
+                                                    <div class="md-list-content">
+                                                        <span class="md-list-heading">提示</span>
+                                                        <span class="uk-text-small uk-text-muted uk-text-truncate">Doloribus voluptatibus et beatae omnis.</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-    webix.ready(function () {
-        webix.ui(ui_scheme);
-        App.setRootController(null);
-        App.addRoute('/', UIMain, MainCtrl);
-        App.addRoute('book/:id/:action', UIBook, BookCtrl);
-        App.addRoute('person/:id/:action', UIPerson, PersonCtrl);
-        App.addRoute('rent/:type', UIRent, RentCtrl);
-        App.init();
-    });
-</script>
+                <div class="uk-navbar-center uk-text-bold title uk-hidden-small">
+                    <a href="#" class="md-color-grey-100">图书借阅系统</a>
+                </div>
+            </nav>
+        </div>
+    </header><!-- main header end -->
+    <!-- main sidebar -->
+    <aside id="sidebar_main">
+
+        <div class="menu_section">
+            <ul>
+                <li title="首页">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">dashboard</i></span>
+                        <span class="menu_title">首页</span>
+                    </a>
+                </li>
+
+                <li title="借阅管理">
+                    <a href="#rent">
+                        <span class="menu_icon"><i class="material-icons">mail</i></span>
+                        <span class="menu_title">借阅管理</span>
+                    </a>
+                </li>
+
+                <li title="图书入库管理">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">subject</i></span>
+                        <span class="menu_title">图书入库管理</span>
+                    </a>
+                    <ul>
+                        <li><a href="#book/add">新增</a></li>
+                        <li><a href="#book_list">所有图书</a></li>
+                    </ul>
+                </li>
+
+                <li title="会员管理">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">view_quilt</i></span>
+                        <span class="menu_title">会员管理</span>
+                    </a>
+                    <ul>
+                        <li><a href="#person/add">新增</a></li>
+                        <li><a href="#person_list">所有会员</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+
+    </aside><!-- main sidebar end -->
+
+    <div id="page_content">
+        <div id="page_content_inner">
+
+        </div>
+    </div>
+
+    <div id="style_switcher">
+        <div id="style_switcher_toggle"><i class="material-icons">&#xE8B8;</i></div>
+        <div class="uk-margin-medium-bottom">
+            <h4 class="heading_c uk-margin-bottom">Colors</h4>
+            <ul class="switcher_app_themes" id="theme_switcher">
+                <li class="app_style_default" data-app-theme="">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_a" data-app-theme="app_theme_a">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_b" data-app-theme="app_theme_b">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_c" data-app-theme="app_theme_c">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_d" data-app-theme="app_theme_d">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_e" data-app-theme="app_theme_e">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_f" data-app-theme="app_theme_f">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_g" data-app-theme="app_theme_g">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_h" data-app-theme="app_theme_h">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_i" data-app-theme="app_theme_i">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_dark" data-app-theme="app_theme_dark">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+                <li class="switcher_theme_dark_a active_theme" data-app-theme="app_theme_dark_a">
+                    <span class="app_color_main"></span>
+                    <span class="app_color_accent"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Sidebar</h4>
+            <p>
+                <input type="checkbox" name="style_sidebar_mini" id="style_sidebar_mini" data-md-icheck />
+                <label for="style_sidebar_mini" class="inline-label">Mini Sidebar</label>
+            </p>
+            <p>
+                <input type="checkbox" name="style_sidebar_slim" id="style_sidebar_slim" data-md-icheck />
+                <label for="style_sidebar_slim" class="inline-label">Slim Sidebar</label>
+            </p>
+        </div>
+        <div class="uk-visible-large uk-margin-medium-bottom">
+            <h4 class="heading_c">Layout</h4>
+            <p>
+                <input type="checkbox" name="style_layout_boxed" id="style_layout_boxed" data-md-icheck />
+                <label for="style_layout_boxed" class="inline-label">Boxed layout</label>
+            </p>
+        </div>
+        <div class="uk-visible-large">
+            <h4 class="heading_c">Main menu accordion</h4>
+            <p>
+                <input type="checkbox" name="accordion_mode_main_menu" id="accordion_mode_main_menu" data-md-icheck />
+                <label for="accordion_mode_main_menu" class="inline-label">Accordion mode</label>
+            </p>
+        </div>
+    </div>
+
+    <!-- common functions -->
+    <!-- TODO: use gulp to compress underscore into common.min.js -->
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="util/vue_filter.js"></script>
+    <script src="util/data_generator.js"></script>
+    <script src="util/enums.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/js-md5/build/md5.min.js"></script>
+    <script src="bower_components/sockjs-client/dist/sockjs-0.3.4.min.js"></script>
+    <script src="bower_components/d3.v3.min.js"></script>
+    <script src="bower_components/c3.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <!-- uikit functions -->
+    <script src="assets/js/uikit_custom.js"></script>
+    <!-- altair common functions/helpers -->
+    <script src="assets/js/altair_admin_common.js"></script>
+
+    <!--  cards component functions -->
+    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+
+    <script src="base/BaseCtrl.js"></script>
+    <script src="base/local-eventbus.js"></script>
+    <script src="base/vertx-eventbus.js"></script>
+    <!-- <script src="base/router.js"></script>
+    <script src="base/App.js"></script> -->
+    <script src="base/bundle.js"></script>
+    <script src="controller/MainCtrl.js"></script>
+    <script src="controller/RentCtrl.js"></script>
+    <script src="controller/BookCtrl.js"></script>
+    <script src="controller/BookListCtrl.js"></script>
+    <script src="controller/PersonCtrl.js"></script>
+    <script src="controller/PersonListCtrl.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

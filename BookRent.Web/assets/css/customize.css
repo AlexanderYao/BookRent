@@ -1,0 +1,133 @@
+.title { font-size: 30px; }
+.app_theme_dark .uk-panel-box{
+    background: transparent;
+    color: #fefefe;
+    border-color: #999;
+}
+.app_theme_dark .uk-navbar-content{
+    text-shadow: none;
+}
+.error_page_header {
+  background: #424242;
+  padding: 80px 0 20px;
+  color: #fff;
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+.login_page .md-card{
+    box-shadow: none;
+}
+.login_page .user_avatar {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50%;
+  background-image: url("../img/user.png");
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.085);
+  background-position: 50% 1px;
+}
+.login_page .login_heading {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login_page .large-padding {
+  padding: 24px 35px;
+}
+.app_theme_dark .login_page .user_avatar {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Components-self Style START */
+/*.selectize-input{
+    padding: 0px 8px!important;
+    font-size: 11px !important;
+    min-height: 0px !important;
+    border-radius: 2px;
+}
+.inline-label{
+    vertical-align: -8px !important;
+}
+
+@media (min-width: 1220px){
+    .uk-grid-divider>* {
+        padding-left: 20px !important;
+        padding-right: 16px;
+    }
+}*/
+/* END */
+
+/* optimization page */
+/*.left-border-title{
+    border-left: 3px solid #bbb;
+    height: auto;
+    padding-left: 8px;
+}
+.sideMenu{
+    position: fixed;
+    background: #424242;
+    width: 9%;
+}
+.sideNav{
+    padding-left: 30px;
+    line-height: 40px;
+    border-left: 2px solid transparent;
+}
+.sideNav a{
+    font-size: 14px;
+    color: #fff !important;
+    letter-spacing: -0.03px;
+}
+.sideNav:hover{
+    border-left: 2px solid #0095FF;
+}
+.sideNav:hover > a{
+    color: #0095FF !important;
+}
+.noPadding{
+    padding: 0px !important;
+}
+.noBorder{
+    border: none !important;
+}
+.noBorder:hover .left-border-title{
+    border-left: 3px solid #0095ff;
+    height: auto;
+    padding-left: 8px;
+    color: #0095ff;
+}
+.decPadding{
+    padding: 5px !important;
+}
+form{
+    font-size: 12px !important;
+    line-height: 30px;
+}
+table th, table td{
+    font-size: 11px !important;
+}
+.breadcrumbBtn{
+    position: absolute;
+    right: 400px;
+    top: 5px;
+}*/
+
+/* portfolio page */
+/*.tab-header > li > a{
+    border-top: 2px solid transparent;
+    border-bottom: 0px;
+}
+.tab-header > li.uk-active > a {
+    color: #fff;
+    border-top-color: #7cb342;
+    border-bottom-color: transparent;
+}
+.tab-header > li > a:hover, .uk-tab-double-header > li > a:focus{
+    border-top-color: #39a1f4;
+    border-bottom-color: transparent;
+}
+.conditionBar{
+    margin: 0px -21px !important;
+}*/

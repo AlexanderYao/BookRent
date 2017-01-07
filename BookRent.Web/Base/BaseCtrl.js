@@ -1,7 +1,8 @@
-var BaseController = function(name, ui, buildFunc){
+var BaseController = function(ui, buildFunc){
 
     this.app = null;
-    this.name = name;
+    this.params = null;
+    this.name = 'BaseController';
     this.ui = ui;
 
     this.validationFunction = {
@@ -40,6 +41,9 @@ var BaseController = function(name, ui, buildFunc){
         return [flag, validationRule];
     };
 
+    this.close = function(){
+        this.app.removeController(this);
+    };
 
     buildFunc(this);
 };
@@ -47,8 +51,8 @@ var BaseController = function(name, ui, buildFunc){
 
 function buildController(buildFunc){
 
-    var func = function(name, ui){
-        BaseController.call(this, name, ui, buildFunc);
+    var func = function(ui){
+        BaseController.call(this, ui, buildFunc);
     };
 
     func.prototype = Object.create(BaseController.prototype);

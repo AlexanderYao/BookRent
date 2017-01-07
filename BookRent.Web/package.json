@@ -1,0 +1,17 @@
+{
+  "name": "orient_trade",
+  "version": "1.0.0",
+  "description": "orient trading system",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "squard 7",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
