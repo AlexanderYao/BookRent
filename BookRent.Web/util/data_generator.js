@@ -1,4 +1,4 @@
-function fakeIsbn(){
+exports.fakeIsbn = function(){
     var result = '';
     for(var i=0;i<13;i++){
         result += getRandomInt(0,10);

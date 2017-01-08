@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                     <th></th>
+                    <th>ID</th>
                     <th>ISBN</th>
                     <th>书名</th>
                     <th>入库数量</th>
@@ -27,6 +28,7 @@
                         <button v-on:click="edit(book.id)" class="md-btn md-btn-small">编辑</button>
                         <button v-on:click="del(book.id)" class="md-btn md-btn-small">删除</button>
                     </td>
+                    <td>{{book.id}}</td>
                     <td>{{book.isbn}}</td>
                     <td>{{book.name}}</td>
                     <td>{{book.totalCount}}</td>
