@@ -8,6 +8,7 @@
             <thead>
                 <tr>
                     <th></th>
+                    <th></th>
                     <th>ID</th>
                     <th>ISBN</th>
                     <th>书名</th>
@@ -24,10 +25,8 @@
             </thead>
             <tbody>
                 <tr v-for="book in books">
-                    <td>
-                        <button v-on:click="edit(book.id)" class="md-btn md-btn-small">编辑</button>
-                        <button v-on:click="del(book.id)" class="md-btn md-btn-small">删除</button>
-                    </td>
+                    <td><button v-on:click="edit(book.id)" class="md-btn md-btn-small">编辑</button></td>
+                    <td><button v-on:click="del(book.id)" class="md-btn md-btn-small">删除</button></td>
                     <td>{{book.id}}</td>
                     <td>{{book.isbn}}</td>
                     <td>{{book.name}}</td>

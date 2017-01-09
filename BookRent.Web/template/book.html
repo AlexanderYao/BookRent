@@ -1,7 +1,7 @@
 <div>
 <div class="md-card">
     <div class="md-card-toolbar">
-        <span class="md-card-toolbar-heading-text">图书详情</span>
+        <span class="md-card-toolbar-heading-text">图书{{action}}</span>
         <div class="md-card-toolbar-actions">
             <i v-on:click="save" class="md-icon material-icons">save</i>
         </div>
@@ -44,9 +44,7 @@
                 <label>购买方式</label>
                 <select v-model="book.buyFrom" class="md-input label-fixed">
                     <option value="">请选择</option>
-                    <option value="0">淘宝</option>
-                    <option value="1">当当</option>
-                    <option value="2">捐赠</option>
+                    <option v-for="(value, key) in BuyFroms" :value="key">{{value}}</option>
                 </select>
             </div>
             <div>

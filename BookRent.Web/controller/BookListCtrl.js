@@ -1,40 +1,39 @@
 ﻿var BookListCtrl = buildController(function (ctrl) {
     ctrl.name = 'BookListCtrl';
-    ctrl.vue = null;
-    ctrl.data = null;
+    ctrl.vm = null;
 
     ctrl.init = function () {
-    };
-    ctrl.onRoute = function(){
-        //ctrl.data = ctrl.query();
-
-        $.get('book/list',function(data){
-            var books = {
-                books: JSON.parse(data)
-            };
-            ctrl.vue = new Vue({
-                el: '#'+ctrl.ui[0].id,
-                data: books,
-                methods:{
-                    edit:function(id){
-                        console.log('edit '+id);
-                        window.location.href = '#book/'+id;
-                    },
-                    del:function(id){
-                        console.log('del '+id);
-                        delete ctrl.vue[id];
-                    }
+        ctrl.vm = new Vue({
+            el: '#'+ctrl.ui[0].id,
+            data: {
+                books:null
+            },
+            methods:{
+                query:function(){
+                    var that = this;
+                    var promise = $.get('book/list');
+                    promise.done(function(data){
+                        that.$set(that, 'books', JSON.parse(data));
+                        //$('#booklist_table').DataTable();
+                    });
+                },
+                edit:function(id){
+                    window.location.href = '#book/'+id;
+                },
+                del:function(id){
+                    var that = this;
+                    var promise = $.ajax({
+                        type:'DELETE',
+                        url:'book/'+id
+                    });
+                    promise.done(function(res){
+                        console.log('delete book: id = '+res);
+                        UIkit.notify('删除成功!',{status:'info'});
+                        that.query();
+                    });
                 }
-            });
-            $('#booklist_table').DataTable();
+            }
         });
-    };
-    ctrl.query = function(){
-        var items = [];
-
-        var data = {
-            books: items
-        };
-        return data;
+        ctrl.onRoute = ctrl.vm.query;
     };
 });
