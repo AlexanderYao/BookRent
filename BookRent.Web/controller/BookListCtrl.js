@@ -1,6 +1,7 @@
 ﻿var BookListCtrl = buildController(function (ctrl) {
     ctrl.name = 'BookListCtrl';
     ctrl.vm = null;
+    ctrl.table = null;
 
     ctrl.init = function () {
         ctrl.vm = new Vue({
@@ -14,7 +15,13 @@
                     var promise = $.get('book/list');
                     promise.done(function(data){
                         that.$set(that, 'books', JSON.parse(data));
-                        //$('#booklist_table').DataTable();
+                        Vue.nextTick(function(){
+                            if(null == ctrl.table){
+                                ctrl.table = $('#booklist_table').DataTable();
+                            }else{
+                                ctrl.table.draw();
+                            }
+                        });
                     });
                 },
                 edit:function(id){

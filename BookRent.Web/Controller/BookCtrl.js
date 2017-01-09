@@ -48,6 +48,10 @@ var BookCtrl = buildController(function (ctrl) {
                   promise.fail(function(error){
                       console.log(error);
                   });
+              },
+              cancel:function(){
+                  window.history.go(-1);
+                  //ctrl.close();
               }
           }
       });
