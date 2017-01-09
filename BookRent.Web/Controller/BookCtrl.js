@@ -15,13 +15,13 @@
                     methods:{
                         save:function(){
                             console.log('save book:');
-                            
+
                             ctrl.close();
                         }
                     }
                 });
             }else{
-                ctrl.vm.book = JSON.parse(data);
+                ctrl.vm.$set(ctrl.vm, 'book', JSON.parse(data));
             }
         });
     };
