@@ -5,22 +5,13 @@
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
     <title>图书借阅系统 v1.0.0</title>
-
-    <!-- uikit -->
-    <link rel="stylesheet" href="bower_components/uikit/css/uikit.almost-flat.css" media="all">
-
-    <!-- flag icons -->
+    <link rel="stylesheet" href="node_modules/uikit/dist/css/uikit.almost-flat.css" media="all">
     <link rel="stylesheet" href="assets/icons/flags/flags.min.css" media="all">
-
-    <!-- style switcher -->
     <link rel="stylesheet" href="assets/css/style_switcher.css" media="all">
-
-    <!-- altair admin -->
     <link rel="stylesheet" href="assets/css/main.css" media="all">
     <link rel="stylesheet" href="assets/css/customize.css" media="all">
 
     <!-- themes -->
-    <!-- TODO: concat all themes into a file -->
     <!-- <link rel="stylesheet" href="assets/css/themes/themes_combined.min.css" media="all"> -->
     <link rel="stylesheet" href="assets/css/themes/_theme_a.css" media="all">
     <link rel="stylesheet" href="assets/css/themes/_theme_b.css" media="all">
@@ -34,8 +25,6 @@
     <link rel="stylesheet" href="assets/css/themes/_theme_dark.css" media="all">
     <link rel="stylesheet" href="assets/css/themes/_theme_dark_a.css" media="all">
 
-    <!-- c3 charts -->
-    <link rel="stylesheet" href="bower_components/c3.min.css">
 </head>
 <body class=" sidebar_main_open sidebar_main_swipe">
     <!-- main header -->
@@ -365,11 +354,8 @@
     <!-- TODO: use gulp to compress underscore into common.min.js -->
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="util/vue_filter.js"></script>
-    <script src="bower_components/underscore/underscore-min.js"></script>
-    <script src="bower_components/js-md5/build/md5.min.js"></script>
-    <script src="bower_components/sockjs-client/dist/sockjs-0.3.4.min.js"></script>
-    <script src="bower_components/d3.v3.min.js"></script>
-    <script src="bower_components/c3.min.js"></script>
+    <script src="node_modules/underscore/underscore-min.js"></script>
+    <!-- <script src="node_modules/md5/md5.js"></script> -->
     <script src="assets/js/common.js"></script>
     <!-- uikit functions -->
     <script src="assets/js/uikit_custom.js"></script>
@@ -378,12 +364,13 @@
     <script src="assets/js/index.js"></script>
 
     <!--  cards component functions -->
-    <script src="bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="node_modules/datatables-buttons/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="node_modules/datatables-buttons/js/dataTables.buttons.js"></script>
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
+    <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
 
     <script src="base/BaseCtrl.js"></script>
     <script src="base/local-eventbus.js"></script>
-    <script src="base/vertx-eventbus.js"></script>
     <!-- <script src="base/router.js"></script>
     <script src="base/App.js"></script> -->
     <script src="base/bundle.js"></script>

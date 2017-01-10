@@ -241,7 +241,8 @@ $(function() {
 });
 
 function encrytSalt(pwd, salt){
-    return btoa(md5(pwd+salt));
+    return btoa(pwd+salt);
+    //return btoa(md5(pwd+salt));
 }
 
 function login(loginItem){

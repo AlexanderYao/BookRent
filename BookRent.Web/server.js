@@ -3,7 +3,6 @@ var app = express();
 var fs = require('fs');
 var _ = require('underscore')
 var bodyParser = require('body-parser');
-//var urlencodedParser = bodyParser.urlencoded({extended: true});
 var fake = require('./util/data_generator');
 
 app.use('/assets', express.static('assets'));

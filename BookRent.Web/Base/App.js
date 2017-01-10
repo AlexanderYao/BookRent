@@ -196,13 +196,10 @@ window.App = {
             try {
                 App.eventBuses[eventBus].send(address, message, headers, callback);
             }catch(error){
-                if(eventBus == "webSocket") {
-                    App.notify({
-                        type: 'error',
-                        text: "服务器连接错误，正在尝试重连。如果问题持续，请按F5刷新页面。如果还有问题，请联系系统管理员。"
-                    });
-                    App.connect2WebSocket();
-                }
+                App.notify({
+                    type: 'error',
+                    text: error
+                });
             }
         }
 
@@ -214,13 +211,10 @@ window.App = {
             try {
                 App.eventBuses[eventBus].publish(address, message, headers);
             }catch(error){
-                if(eventBus == "webSocket") {
-                    App.notify({
-                        type: 'error',
-                        text: "服务器连接错误，正在尝试重连。如果问题持续，请按F5刷新页面。如果还有问题，请联系系统管理员。"
-                    });
-                    App.connect2WebSocket();
-                }
+                App.notify({
+                    type: 'error',
+                    text: error
+                });
             }
         }
 
@@ -319,39 +313,6 @@ window.App = {
             }
         }
         return ctrls;
-    },
-
-    connect2WebSocket: function(){
-        //connect to web socket
-        console.log("init websocket eventbus");
-        App.eventBuses['webSocket'] = new WebSocketEventBus('/eventbus')
-
-        //App.eventBuses['webSocket'] = new LocalEventBus("webSocket", mockProcessors);
-
-        App.eventBuses['webSocket'].onopen = function(){
-            console.log("websocket opened");
-
-            App.notify({
-                text: "正在尝试连接后台",
-                type: "success"
-            });
-
-            _.each(App.getControllers(), function(ctrl){
-
-                _.each(ctrl.handlers(), function(handler){
-
-                    if(handler.channel == "webSocket") {
-                        console.log("register handler " + JSON.stringify(handler) + " for channel webSocket" );
-                        App.eventBuses['webSocket'].registerHandler(handler.address, {}, handler.method);
-                    }
-
-                });
-
-            });
-
-            App.publishEvent("local", "websocket.connected", {}, {});
-
-        };
     },
 
     init: function() {

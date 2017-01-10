@@ -1,24 +1,36 @@
 {
-  "name": "orient_trade",
+  "name": "BookRent.Web",
   "version": "1.0.0",
-  "description": "orient trading system",
-  "main": "index.js",
+  "description": "BookRent app in web",
+  "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "mocha"
   },
-  "author": "squard 7",
+  "author": "AlexanderYao",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "nodemon": "^1.11.0",
+    "watchify": "^3.8.0"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
+    "datatables": "^1.10.13",
+    "datatables-buttons": "^1.0.3",
     "debug": "^2.6.0",
     "express": "^4.14.0",
-    "multer": "^1.2.1"
+    "md5": "^2.2.1",
+    "multer": "^1.2.1",
+    "uikit": "^2.27.2",
+    "underscore": "^1.8.3",
+    "vue": "^2.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderYao/BookRent.git"
   }
 }
