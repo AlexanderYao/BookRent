@@ -1,4 +1,5 @@
 var Router = require('./router');
+var NewBookCtrl = require('./../Controller/BookCtrl');
 
 window.App = {
 
@@ -92,10 +93,14 @@ window.App = {
         '</div>');
 
         //build controller, call init() if exists
-        var ctrl = new item.buildCtrl($('#'+item.containerId));
-        ctrl.app = App;
-        ctrl.params = params;
+        //var Controller = require('./../'+item.buildCtrl);
+        var ctrl = new NewBookCtrl(item.containerId, params);
         item.ctrl = ctrl;
+
+        // var ctrl = new item.buildCtrl($('#'+item.containerId));
+        // ctrl.app = App;
+        // ctrl.params = params;
+        // item.ctrl = ctrl;
 
         //init view: load template || init by webix || init by controller itself
         if(typeof item.ui === 'string'){

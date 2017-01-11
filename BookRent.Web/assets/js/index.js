@@ -1,14 +1,20 @@
+function inheritPrototype(childObject, parentObject){
+    var copyOfParent = Object.create(parentObject.prototype);
+    copyOfParent.constructor = childObject;
+    childObject.prototype = copyOfParent;
+}
+
 $(function(){
     //统计放主页
-    App.addRoute('/', 'template/main.html', MainCtrl);
+    // App.addRoute('/', 'template/main.html', MainCtrl);
+    //
+    // App.addRoute('rent', 'template/rent.html', RentCtrl);
 
-    App.addRoute('rent', 'template/rent.html', RentCtrl);
-
-    App.addRoute('book/:id', 'template/book.html', BookCtrl);
-    App.addRoute('book_list', 'template/book_list.html', BookListCtrl);
-
-    App.addRoute('person/:id', 'template/person.html', PersonCtrl);
-    App.addRoute('person_list', 'template/person_list.html', PersonListCtrl);
+    App.addRoute('book/:id', 'template/book.html', 'Controller/BookCtrl.js');
+    // App.addRoute('book_list', 'template/book_list.html', BookListCtrl);
+    //
+    // App.addRoute('person/:id', 'template/person.html', PersonCtrl);
+    // App.addRoute('person_list', 'template/person_list.html', PersonListCtrl);
 
     App.init();
 });

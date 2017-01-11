@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Router = require('./router');
+var NewBookCtrl = require('./../Controller/BookCtrl');
 
 window.App = {
 
@@ -93,10 +94,14 @@ window.App = {
         '</div>');
 
         //build controller, call init() if exists
-        var ctrl = new item.buildCtrl($('#'+item.containerId));
-        ctrl.app = App;
-        ctrl.params = params;
+        //var Controller = require('./../'+item.buildCtrl);
+        var ctrl = new NewBookCtrl(item.containerId, params);
         item.ctrl = ctrl;
+
+        // var ctrl = new item.buildCtrl($('#'+item.containerId));
+        // ctrl.app = App;
+        // ctrl.params = params;
+        // item.ctrl = ctrl;
 
         //init view: load template || init by webix || init by controller itself
         if(typeof item.ui === 'string'){
@@ -197,13 +202,10 @@ window.App = {
             try {
                 App.eventBuses[eventBus].send(address, message, headers, callback);
             }catch(error){
-                if(eventBus == "webSocket") {
-                    App.notify({
-                        type: 'error',
-                        text: "服务器连接错误，正在尝试重连。如果问题持续，请按F5刷新页面。如果还有问题，请联系系统管理员。"
-                    });
-                    App.connect2WebSocket();
-                }
+                App.notify({
+                    type: 'error',
+                    text: error
+                });
             }
         }
 
@@ -215,13 +217,10 @@ window.App = {
             try {
                 App.eventBuses[eventBus].publish(address, message, headers);
             }catch(error){
-                if(eventBus == "webSocket") {
-                    App.notify({
-                        type: 'error',
-                        text: "服务器连接错误，正在尝试重连。如果问题持续，请按F5刷新页面。如果还有问题，请联系系统管理员。"
-                    });
-                    App.connect2WebSocket();
-                }
+                App.notify({
+                    type: 'error',
+                    text: error
+                });
             }
         }
 
@@ -322,39 +321,6 @@ window.App = {
         return ctrls;
     },
 
-    connect2WebSocket: function(){
-        //connect to web socket
-        console.log("init websocket eventbus");
-        App.eventBuses['webSocket'] = new WebSocketEventBus('/eventbus')
-
-        //App.eventBuses['webSocket'] = new LocalEventBus("webSocket", mockProcessors);
-
-        App.eventBuses['webSocket'].onopen = function(){
-            console.log("websocket opened");
-
-            App.notify({
-                text: "正在尝试连接后台",
-                type: "success"
-            });
-
-            _.each(App.getControllers(), function(ctrl){
-
-                _.each(ctrl.handlers(), function(handler){
-
-                    if(handler.channel == "webSocket") {
-                        console.log("register handler " + JSON.stringify(handler) + " for channel webSocket" );
-                        App.eventBuses['webSocket'].registerHandler(handler.address, {}, handler.method);
-                    }
-
-                });
-
-            });
-
-            App.publishEvent("local", "websocket.connected", {}, {});
-
-        };
-    },
-
     init: function() {
 
         //connect to local event bus
@@ -393,7 +359,7 @@ window.App = {
     },
 };
 
-},{"./router":2}],2:[function(require,module,exports){
+},{"./../Controller/BookCtrl":3,"./router":2}],2:[function(require,module,exports){
 function Router () {
     this.routes = {};
 
@@ -449,5 +415,128 @@ function Router () {
     };
 }
 module.exports = Router;
+
+},{}],3:[function(require,module,exports){
+//var BuyFroms = require('./../util/enums');
+
+function NewBookCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(NewBookCtrl, BaseCtrl);
+    this.name = 'BookCtrl';
+
+    this.init = function () {
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data: {
+                action:'',
+                book:{},
+                BuyFroms:{
+                  0:'淘宝',
+                  1:'当当',
+                  2:'捐赠'
+                }
+            },
+            methods:{
+                query:function(){
+                    if(ctrl.params.id == 'add'){
+                        this.action = '新增';
+                        this.$set(this, 'book', {});
+                        return;
+                    }
+
+                    this.action = '编辑';
+                    var that = this;
+                    var promise = $.get('book/'+ctrl.params.id);
+                    promise.done(function(data){
+                        that.$set(that, 'book', JSON.parse(data));
+                    });
+                },
+                save:function(){
+                    console.log('save book:');
+                    console.log(this.book);
+                    var promise = $.ajax({
+                        type:'POST',
+                        url:'book/save',
+                        data:JSON.stringify(this.book),
+                        contentType:'application/json'
+                    });
+                    promise.done(function(res){
+                        console.log('save book: id = '+res);
+                        UIkit.notify('保存成功!',{status:'info'});
+                        ctrl.close();
+                    });
+                    promise.fail(function(error){
+                        console.log(error);
+                    });
+                },
+                cancel:function(){
+                    window.history.go(-1);
+                    //ctrl.close();
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    }
+}
+module.exports = NewBookCtrl;
+var BookCtrl = buildController(function (ctrl) {
+    ctrl.name = 'BookCtrl';
+    ctrl.vm = null;
+
+    ctrl.init = function () {
+      ctrl.vm = new Vue({
+          el: '#'+ctrl.ui[0].id,
+          data: {
+              action:'',
+              book:{},
+              BuyFroms:{
+                0:'淘宝',
+                1:'当当',
+                2:'捐赠'
+              }
+          },
+          methods:{
+              query:function(){
+                  if(ctrl.params.id == 'add'){
+                      this.action = '新增';
+                      this.$set(this, 'book', {});
+                      return;
+                  }
+
+                  this.action = '编辑';
+                  var that = this;
+                  var promise = $.get('book/'+ctrl.params.id);
+                  promise.done(function(data){
+                      that.$set(that, 'book', JSON.parse(data));
+                  });
+              },
+              save:function(){
+                  console.log('save book:');
+                  console.log(this.book);
+                  var promise = $.ajax({
+                      type:'POST',
+                      url:'book/save',
+                      data:JSON.stringify(this.book),
+                      contentType:'application/json'
+                  });
+                  promise.done(function(res){
+                      console.log('save book: id = '+res);
+                      UIkit.notify('保存成功!',{status:'info'});
+                      ctrl.close();
+                  });
+                  promise.fail(function(error){
+                      console.log(error);
+                  });
+              },
+              cancel:function(){
+                  window.history.go(-1);
+                  //ctrl.close();
+              }
+          }
+      });
+      ctrl.onRoute = ctrl.vm.query;
+    };
+});
 
 },{}]},{},[1]);
