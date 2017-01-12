@@ -10,7 +10,7 @@ $(function(){
     //
     // App.addRoute('rent', 'template/rent.html', RentCtrl);
 
-    App.addRoute('book/:id', 'template/book.html', 'Controller/BookCtrl.js');
+    App.addRoute('book/:id', 'template/book.html', './../Controller/BookCtrl');
     // App.addRoute('book_list', 'template/book_list.html', BookListCtrl);
     //
     // App.addRoute('person/:id', 'template/person.html', PersonCtrl);
