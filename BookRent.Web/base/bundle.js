@@ -1,23 +1,23 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Router = require('./router');
+var BaseCtrl = require('./BaseCtrl');
 var BookCtrl = require('./../Controller/BookCtrl');
+var BookListCtrl = require('./../Controller/BookListCtrl');
+var MainCtrl = require('./../Controller/MainCtrl');
+var PersonCtrl = require('./../Controller/PersonCtrl');
+var PersonListCtrl = require('./../Controller/PersonListCtrl');
+var RentCtrl = require('./../Controller/RentCtrl');
 
 window.App = {
 
     eventBuses: {},
-
     rootCtrl: null,
-
     cache: {},
 
     routes: {},
-
     router: new Router(),
-
     ele: null,
-
     index: 0,
-
     prefix: 'container-',
 
     addRoute: function (path, ui, buildCtrl) {
@@ -345,7 +345,27 @@ window.App = {
     },
 };
 
-},{"./../Controller/BookCtrl":3,"./router":2}],2:[function(require,module,exports){
+},{"./../Controller/BookCtrl":4,"./../Controller/BookListCtrl":5,"./../Controller/MainCtrl":6,"./../Controller/PersonCtrl":7,"./../Controller/PersonListCtrl":8,"./../Controller/RentCtrl":9,"./BaseCtrl":2,"./router":3}],2:[function(require,module,exports){
+function BaseCtrl(containerId, params){
+    this.app = App;
+    this.containerId = containerId;
+    this.params = params;
+    this.name = 'BaseCtrl';
+    this.vm = null;
+
+    this.init = function(){
+        console.log('BaseCtrl.init()');
+    };
+    this.onRoute = function(){
+        console.log('BaseCtrl.onRoute()');
+    };
+    this.close = function(){
+        this.app.removeController(this);
+    };
+}
+module.exports = BaseCtrl;
+
+},{}],3:[function(require,module,exports){
 function Router () {
     this.routes = {};
 
@@ -402,12 +422,13 @@ function Router () {
 }
 module.exports = Router;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
 var enums = require('./../util/enums');
 
 function BookCtrl(containerId, params){
     BaseCtrl.call(this, containerId, params);
-    inheritPrototype(NewBookCtrl, BaseCtrl);
+    inheritPrototype(BookCtrl, BaseCtrl);
     this.name = 'BookCtrl';
 
     this.init = function () {
@@ -463,7 +484,165 @@ function BookCtrl(containerId, params){
 }
 module.exports = BookCtrl;
 
-},{"./../util/enums":4}],4:[function(require,module,exports){
+},{"./../base/BaseCtrl":10,"./../util/enums":11}],5:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
+
+function BookListCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(BookListCtrl, BaseCtrl);
+    this.name = 'BookListCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+                books:[]
+            },
+            methods:{
+                query:function(){
+                    var that = this;
+                    var promise = $.get('book/list');
+                    promise.done(function(data){
+                        that.$set(that, 'books', JSON.parse(data));
+                        Vue.nextTick(function(){
+                            if(null == ctrl.table){
+                                ctrl.table = $('#booklist_table').DataTable();
+                            }else{
+                                ctrl.table.draw();
+                            }
+                        });
+                    });
+                },
+                edit:function(id){
+                    window.location.href = '#book/'+id;
+                },
+                del:function(id){
+                    var that = this;
+                    var promise = $.ajax({
+                        type:'DELETE',
+                        url:'book/'+id
+                    });
+                    promise.done(function(res){
+                        console.log('delete book: id = '+res);
+                        UIkit.notify('删除成功!',{status:'info'});
+                        that.query();
+                    });
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    };
+}
+module.exports = BookListCtrl;
+
+},{"./../base/BaseCtrl":10}],6:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
+
+function MainCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(MainCtrl, BaseCtrl);
+    this.name = 'MainCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+
+            },
+            methods:{
+                query:function(){
+
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    };
+}
+module.exports = MainCtrl;
+
+},{"./../base/BaseCtrl":10}],7:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
+
+function PersonCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(PersonCtrl, BaseCtrl);
+    this.name = 'PersonCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+
+            },
+            methods:{
+                query:function(){
+
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    };
+}
+module.exports = PersonCtrl;
+
+},{"./../base/BaseCtrl":10}],8:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
+
+function PersonListCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(PersonListCtrl, BaseCtrl);
+    this.name = 'PersonListCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+
+            },
+            methods:{
+                query:function(){
+
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    };
+}
+module.exports = PersonListCtrl;
+
+},{"./../base/BaseCtrl":10}],9:[function(require,module,exports){
+var BaseCtrl = require('./../base/BaseCtrl');
+
+function RentCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(RentCtrl, BaseCtrl);
+    this.name = 'RentCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+
+            },
+            methods:{
+                query:function(){
+
+                }
+            }
+        });
+        this.onRoute = this.vm.query;
+    };
+}
+module.exports = RentCtrl;
+
+},{"./../base/BaseCtrl":10}],10:[function(require,module,exports){
+arguments[4][2][0].apply(exports,arguments)
+},{"dup":2}],11:[function(require,module,exports){
 module.exports.BuyFroms = {
     0:'淘宝',
     1:'当当',

@@ -1,8 +1,9 @@
+var BaseCtrl = require('./../base/BaseCtrl');
 var enums = require('./../util/enums');
 
 function BookCtrl(containerId, params){
     BaseCtrl.call(this, containerId, params);
-    inheritPrototype(NewBookCtrl, BaseCtrl);
+    inheritPrototype(BookCtrl, BaseCtrl);
     this.name = 'BookCtrl';
 
     this.init = function () {

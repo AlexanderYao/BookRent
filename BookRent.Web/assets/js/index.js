@@ -5,16 +5,15 @@ function inheritPrototype(childObject, parentObject){
 }
 
 $(function(){
-    //统计放主页
-    // App.addRoute('/', 'template/main.html', MainCtrl);
-    //
-    // App.addRoute('rent', 'template/rent.html', RentCtrl);
+    App.addRoute('/', 'template/main.html', './../Controller/MainCtrl');
+
+    App.addRoute('rent', 'template/rent.html', './../Controller/RentCtrl');
 
     App.addRoute('book/:id', 'template/book.html', './../Controller/BookCtrl');
-    // App.addRoute('book_list', 'template/book_list.html', BookListCtrl);
-    //
-    // App.addRoute('person/:id', 'template/person.html', PersonCtrl);
-    // App.addRoute('person_list', 'template/person_list.html', PersonListCtrl);
+    App.addRoute('book_list', 'template/book_list.html', './../Controller/BookListCtrl');
+
+    App.addRoute('person/:id', 'template/person.html', './../Controller/PersonCtrl');
+    App.addRoute('person_list', 'template/person_list.html', './../Controller/PersonListCtrl');
 
     App.init();
 });

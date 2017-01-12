@@ -1,22 +1,22 @@
 var Router = require('./router');
+var BaseCtrl = require('./BaseCtrl');
 var BookCtrl = require('./../Controller/BookCtrl');
+var BookListCtrl = require('./../Controller/BookListCtrl');
+var MainCtrl = require('./../Controller/MainCtrl');
+var PersonCtrl = require('./../Controller/PersonCtrl');
+var PersonListCtrl = require('./../Controller/PersonListCtrl');
+var RentCtrl = require('./../Controller/RentCtrl');
 
 window.App = {
 
     eventBuses: {},
-
     rootCtrl: null,
-
     cache: {},
 
     routes: {},
-
     router: new Router(),
-
     ele: null,
-
     index: 0,
-
     prefix: 'container-',
 
     addRoute: function (path, ui, buildCtrl) {

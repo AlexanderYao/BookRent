@@ -1,13 +1,16 @@
-﻿var BookListCtrl = buildController(function (ctrl) {
-    ctrl.name = 'BookListCtrl';
-    ctrl.vm = null;
-    ctrl.table = null;
+var BaseCtrl = require('./../base/BaseCtrl');
 
-    ctrl.init = function () {
-        ctrl.vm = new Vue({
-            el: '#'+ctrl.ui[0].id,
-            data: {
-                books:null
+function BookListCtrl(containerId, params){
+    BaseCtrl.call(this, containerId, params);
+    inheritPrototype(BookListCtrl, BaseCtrl);
+    this.name = 'BookListCtrl';
+
+    this.init = function(){
+        var ctrl = this;
+        this.vm = new Vue({
+            el: '#'+ctrl.containerId,
+            data:{
+                books:[]
             },
             methods:{
                 query:function(){
@@ -41,6 +44,7 @@
                 }
             }
         });
-        ctrl.onRoute = ctrl.vm.query;
+        this.onRoute = this.vm.query;
     };
-});
+}
+module.exports = BookListCtrl;

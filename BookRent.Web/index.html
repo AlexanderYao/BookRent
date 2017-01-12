@@ -40,7 +40,7 @@
                 </a>
 
                 <div class="uk-navbar-nav login_page">
-                    <div class="uk-button-dropdown" data-uk-dropdown>
+                    <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
                         <a href="javascript:void(0)" class="user_action_icon"><i class="material-icons md-48">person</i></a>
                         <div class="uk-dropdown uk-dropdown-xlarge">
                             <div class="md-card" id="login_card">
@@ -99,7 +99,7 @@
                         <li>
                             <a href="#" title="全屏" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">fullscreen</i></a>
                         </li>
-                        <li data-uk-dropdown>
+                        <li data-uk-dropdown="{mode:'click'}">
                             <a href="javascript:;" class="user_action_icon">
                                 <i class="material-icons md-24 md-light">notifications</i>
                                 <span class="uk-badge">8</span>
@@ -369,16 +369,7 @@
     <script src="assets/js/custom/datatables/datatables.uikit.min.js"></script>
     <script src="assets/js/custom/datatables/buttons.uikit.js"></script>
 
-    <script src="base/BaseCtrl.js"></script>
     <script src="base/local-eventbus.js"></script>
-    <!-- <script src="base/router.js"></script>
-    <script src="base/App.js"></script> -->
     <script src="base/bundle.js"></script>
-    <script src="controller/MainCtrl.js"></script>
-    <script src="controller/RentCtrl.js"></script>
-    <!-- <script src="controller/BookCtrl.js"></script> -->
-    <script src="controller/BookListCtrl.js"></script>
-    <script src="controller/PersonCtrl.js"></script>
-    <script src="controller/PersonListCtrl.js"></script>
 </body>
 </html>

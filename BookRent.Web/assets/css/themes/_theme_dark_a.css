@@ -566,3 +566,6 @@
   background: transparent;
   color: #fff;
 }
+.app_theme_dark_a .uk-navbar-content{
+    text-shadow: none;
+}

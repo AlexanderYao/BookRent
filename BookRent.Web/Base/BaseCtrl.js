@@ -15,3 +15,4 @@ function BaseCtrl(containerId, params){
         this.app.removeController(this);
     };
 }
+module.exports = BaseCtrl;
