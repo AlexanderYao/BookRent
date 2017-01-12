@@ -2,7 +2,7 @@
   "name": "BookRent.Web",
   "version": "1.0.0",
   "description": "BookRent app in web",
-  "main": "server.js",
+  "main": "nodemon server.js",
   "directories": {
     "test": "test"
   },
