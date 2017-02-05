@@ -6,6 +6,7 @@ var MainCtrl = require('./../Controller/MainCtrl');
 var PersonCtrl = require('./../Controller/PersonCtrl');
 var PersonListCtrl = require('./../Controller/PersonListCtrl');
 var RentCtrl = require('./../Controller/RentCtrl');
+var filter = require('./../util/vue_filter');
 
 window.App = {
 

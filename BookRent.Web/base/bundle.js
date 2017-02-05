@@ -287,6 +287,7 @@ var MainCtrl = require('./../Controller/MainCtrl');
 var PersonCtrl = require('./../Controller/PersonCtrl');
 var PersonListCtrl = require('./../Controller/PersonListCtrl');
 var RentCtrl = require('./../Controller/RentCtrl');
+var filter = require('./../util/vue_filter');
 
 window.App = {
 
@@ -625,7 +626,7 @@ window.App = {
     },
 };
 
-},{"./../Controller/BookCtrl":1,"./../Controller/BookListCtrl":2,"./../Controller/MainCtrl":3,"./../Controller/PersonCtrl":4,"./../Controller/PersonListCtrl":5,"./../Controller/RentCtrl":6,"./BaseCtrl":8,"./router":9}],8:[function(require,module,exports){
+},{"./../Controller/BookCtrl":1,"./../Controller/BookListCtrl":2,"./../Controller/MainCtrl":3,"./../Controller/PersonCtrl":4,"./../Controller/PersonListCtrl":5,"./../Controller/RentCtrl":6,"./../util/vue_filter":11,"./BaseCtrl":8,"./router":9}],8:[function(require,module,exports){
 function BaseCtrl(containerId, params){
     this.app = App;
     this.containerId = containerId;
@@ -713,4 +714,46 @@ module.exports.Sexes = {
     1:'女'
 };
 
-},{}]},{},[7]);
+},{}],11:[function(require,module,exports){
+var enums = require('./enums');
+
+/**
+* Vue filter to convert given value to percent.
+*
+* @param {String} value     The value string.
+* @param {Number} decimals  The number of decimal places.
+*/
+Vue.filter('percent', function(value, decimals){
+    if(!value) value = 0;
+    if(!decimals) decimals = 0;
+
+    value = value * 100;
+    return Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals) + '%';
+});
+
+/**
+* Vue filter to round the decimal to given place.
+*
+* @param {String} value     The value string.
+* @param {Number} decimals  The number of decimal places.
+*/
+Vue.filter('round', function(value, decimals){
+    if(!value) value = 0;
+    if(!decimals) decimals = 0;
+
+    value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    return value;
+});
+
+/**
+* Vue filter to change enum value into description.
+*
+* @param {String} value     The enum value.
+* @param {String} enumName  The enum name.
+*/
+Vue.filter('enum', function(value, enumName){
+    if(!value) value = 0;
+    return enums[enumName][value];
+});
+
+},{"./enums":10}]},{},[7]);

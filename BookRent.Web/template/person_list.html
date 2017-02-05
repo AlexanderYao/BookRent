@@ -29,7 +29,7 @@
                         <td>{{person.id}}</td>
                         <td>{{person.name}}</td>
                         <td>{{person.pinyin}}</td>
-                        <td>{{person.sex}}</td>
+                        <td>{{person.sex | enum('Sexes')}}</td>
                         <td>{{person.startDate}}</td>
                         <td>{{person.endDate}}</td>
                         <td>{{person.fee}}</td>

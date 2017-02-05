@@ -1,3 +1,5 @@
+var enums = require('./enums');
+
 /**
 * Vue filter to convert given value to percent.
 *
@@ -24,4 +26,15 @@ Vue.filter('round', function(value, decimals){
 
     value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
     return value;
+});
+
+/**
+* Vue filter to change enum value into description.
+*
+* @param {String} value     The enum value.
+* @param {String} enumName  The enum name.
+*/
+Vue.filter('enum', function(value, enumName){
+    if(!value) value = 0;
+    return enums[enumName][value];
 });
