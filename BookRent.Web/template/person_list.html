@@ -1,0 +1,45 @@
+<div>
+    <div class="md-card">
+        <div class="md-card-toolbar">
+            <span class="md-card-toolbar-heading-text">会员列表</span>
+        </div>
+        <div class="md-card-content">
+            <table id="personlist_table" class="uk-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>序号</th>
+                        <th>名字</th>
+                        <th>拼音首字母</th>
+                        <th>性别</th>
+                        <th>开始日期</th>
+                        <th>到期日期</th>
+                        <th>会费</th>
+                        <th>押金</th>
+                        <th>联系方式</th>
+                        <th>联系人</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="person in persons">
+                        <td><button v-on:click="edit(person.id)" class="md-btn md-btn-small">编辑</button></td>
+                        <td><button v-on:click="del(person.id)" class="md-btn md-btn-small">删除</button></td>
+                        <td>{{person.id}}</td>
+                        <td>{{person.name}}</td>
+                        <td>{{person.pinyin}}</td>
+                        <td>{{person.sex}}</td>
+                        <td>{{person.startDate}}</td>
+                        <td>{{person.endDate}}</td>
+                        <td>{{person.fee}}</td>
+                        <td>{{person.deposit}}</td>
+                        <td>{{person.phoneNo}}</td>
+                        <td>{{person.contacter}}</td>
+                        <td>{{person.remark}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

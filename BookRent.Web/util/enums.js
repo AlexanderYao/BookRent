@@ -3,3 +3,7 @@ module.exports.BuyFroms = {
     1:'当当',
     2:'捐赠'
 };
+module.exports.Sexes = {
+    0:'男',
+    1:'女'
+};
