@@ -1,0 +1,62 @@
+<div>
+<div class="md-card">
+    <div class="md-card-toolbar">
+        <span class="md-card-toolbar-heading-text">会员{{action}}</span>
+        <div class="md-card-toolbar-actions">
+            <i v-on:click="save" class="md-icon material-icons">save</i>
+            <i v-on:click="cancel" class="md-icon material-icons">cancel</i>
+        </div>
+    </div>
+    <div class="md-card-content">
+        <div class="uk-grid uk-grid-width-medium-1-2" data-uk-grid-margin>
+            <div>
+                <label>ID</label>
+                <input v-model="person.id" type="text" class="md-input label-fixed" disabled/>
+            </div>
+            <div>
+                <label>名字</label>
+                <input v-model="person.name" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>拼音首字母</label>
+                <input v-model="person.pinyin" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>性别</label>
+                <select v-model="person.sex" class="md-input label-fixed">
+                    <option value="">请选择</option>
+                    <option v-for="(value, key) in Sexes" :value="key">{{value}}</option>
+                </select>
+            </div>
+            <div>
+                <label>开始日期</label>
+                <input v-model="person.startDate" type="text" class="md-input label-fixed" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+            </div>
+            <div>
+                <label>到期日期</label>
+                <input v-model="person.endDate" type="text" class="md-input label-fixed" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+            </div>
+            <div>
+                <label>会费</label>
+                <input v-model.number="person.fee" type="number" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>押金</label>
+                <input v-model.number="person.deposit" type="number" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>联系方式</label>
+                <input v-model="person.phoneNo" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>联系人</label>
+                <input v-model="person.contacter" type="text" class="md-input label-fixed"/>
+            </div>
+            <div>
+                <label>备注</label>
+                <input v-model="person.remark" type="text" class="md-input label-fixed"/>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
