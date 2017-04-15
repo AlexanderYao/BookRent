@@ -183,9 +183,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Data\BookRent.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -205,7 +202,6 @@
     <Resource Include="Resources\rent.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\BookRent.sql" />
     <Resource Include="Resources\SplashScreen.png" />
     <Resource Include="Resources\rent.ico" />
   </ItemGroup>

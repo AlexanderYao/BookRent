@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookRent", "BookRent\BookRent.csproj", "{A8B28F27-C3A5-4209-B9C5-21237EEE04A5}"
 EndProject
@@ -45,6 +45,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BookRent.Web", "http://loca
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "BookRent.Web\"
 		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{E047170F-2658-4A17-A5E0-F8F89735871F}"
+	ProjectSection(SolutionItems) = preProject
+		DB\BookRent.db = DB\BookRent.db
+		DB\BookRent.sql = DB\BookRent.sql
 	EndProjectSection
 EndProject
 Global
