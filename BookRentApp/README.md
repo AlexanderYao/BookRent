@@ -3,6 +3,6 @@
 ```
 git clone https://github.com/AlexanderYao/BookRent/BookRent.App
 cd BookRent.App
-npm install
-react-native run-ios
+yarn
+react-native run-ios --simulator 'iPhone 6'
 ```
