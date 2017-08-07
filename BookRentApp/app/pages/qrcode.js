@@ -6,7 +6,9 @@ import {
 	StyleSheet,
 } from 'react-native';
 import QRCode from 'react-native-qrcode';
-
+import Toast from 'react-native-root-toast';
+import format from 'string-format';
+import Constants from '../utils/constants.js';
 import styles from '../styles.js';
 
 class QrCodeScreen extends React.Component {
@@ -14,14 +16,68 @@ class QrCodeScreen extends React.Component {
 		super(props);
 
 		this.state = {
-			qrcode: 'AlexanderYao',
+			userId: '',
+			token: '',
+			url: '',
+		}
+	}
+
+	componentDidMount(){
+		this.getStorage();
+		// this.getUrl();
+	}
+
+	getStorage(){
+		storage.load({
+			key: Constants.loginState,
+		}).then(res => {
+			this.setState({
+				userId: res.userId,
+				token: res.token,
+			});
+
+			let entryRes = this.getUrl();
+			if(Constants.SUCCESS === entryRes.code){
+				this.setState({url: entryRes.entry});
+			}else{
+				this.props.navigation.navigate('Register');
+			}
+		}).catch(err => {
+			console.log(err.message);
+			switch(err.name){
+				case 'NotFoundError':
+					this.props.navigation.navigate('Register');
+					break;
+				case 'ExpiredError':
+					this.props.navigation.navigate('Register');
+					break;
+			}
+		});
+	}
+
+	async getUrl(){
+		try{
+			let request = {
+				userId: this.state.userId,
+				token: this.state.token,
+			};
+			let url = format(Constants.entry, request);
+			let response = await fetch(url);
+			let responseJson = await response.json();
+			return responseJson;
+		}catch(error){
+			console.error(error);
+			return { 
+				code: Constants.SUCCESS,
+				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
+			};
 		}
 	}
 	
 	render(){
 		return (
 			<View style={styles.flexCenter}>
-				<QRCode value={this.state.qrcode} size={200}
+				<QRCode value={this.state.url} size={200}
 					bgColor='black' fgColor='white'/>
 			</View>
 		);
