@@ -5,6 +5,7 @@ import {
   Text,
   Button,
   View,
+  Image,
   ListView,
   ScrollView,
   AsyncStorage,
@@ -47,21 +48,30 @@ const MainTabNavigator = TabNavigator({
 		screen: QrCodeStackNavigator,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '二维码',
-			// tabBarIcon: ()
+			tabBarIcon: ({tintColor}) => (
+				<Image source={require('./images/qrcode.png')}
+					style={{width:25, height:25}}/>
+			)
 		}),
 	},
 	Shopcart: {
 		screen: ShopcartStackNavigator,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '我的书架',
-			// tabBarIcon: ()
+			tabBarIcon: ({tintColor}) => (
+				<Image source={require('./images/shelf.png')}
+					style={{width:25, height:25}}/>
+			)
 		}),
 	},
 	User: {
 		screen: UserStackNavigator,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '个人中心',
-			// tabBarIcon: ()
+			tabBarIcon: ({tintColor}) => (
+				<Image source={require('./images/account.png')}
+					style={{width:25, height:25}}/>
+			)
 		}),
 	},
 });

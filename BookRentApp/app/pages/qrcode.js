@@ -8,8 +8,12 @@ import {
 import QRCode from 'react-native-qrcode';
 import Toast from 'react-native-root-toast';
 import format from 'string-format';
-import Constants from '../utils/constants.js';
-import styles from '../styles.js';
+import {
+	SUCCESS,
+	loginState,
+	entry,
+} from '../utils/constants';
+import styles from '../styles';
 
 class QrCodeScreen extends React.Component {
 	constructor(props) {
@@ -29,7 +33,7 @@ class QrCodeScreen extends React.Component {
 
 	getStorage(){
 		storage.load({
-			key: Constants.loginState,
+			key: loginState,
 		}).then(res => {
 			this.setState({
 				userId: res.userId,
@@ -37,7 +41,7 @@ class QrCodeScreen extends React.Component {
 			});
 
 			let entryRes = this.getUrl();
-			if(Constants.SUCCESS === entryRes.code){
+			if(SUCCESS === entryRes.code){
 				this.setState({url: entryRes.entry});
 			}else{
 				this.props.navigation.navigate('Register');
@@ -61,14 +65,14 @@ class QrCodeScreen extends React.Component {
 				userId: this.state.userId,
 				token: this.state.token,
 			};
-			let url = format(Constants.entry, request);
+			let url = format(entry, request);
 			let response = await fetch(url);
 			let responseJson = await response.json();
 			return responseJson;
 		}catch(error){
 			console.error(error);
 			return { 
-				code: Constants.SUCCESS,
+				code: SUCCESS,
 				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
 			};
 		}

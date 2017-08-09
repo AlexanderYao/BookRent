@@ -2,15 +2,22 @@ import React from 'react';
 import {
 	Text,
 	View,
-	Button,
 	Image,
 	TextInput,
+	TouchableOpacity,
+	ViewPropTypes,
 } from 'react-native';
 import format from 'string-format';
 import Toast from 'react-native-root-toast';
 import CheckBox from 'react-native-checkbox';
 import { NavigationActions } from 'react-navigation';
-import Constants from '../utils/constants.js';
+import Button from 'apsl-react-native-button';
+import {
+	SUCCESS, 
+	loginState,
+	getCaptcha,
+	login,
+} from '../utils/constants';
 
 export default class RegisterScreen extends React.Component {
 	constructor(props){
@@ -20,40 +27,103 @@ export default class RegisterScreen extends React.Component {
 			phoneNo: '',
 			sendEnabled: false,
 			code: '',
-			agreeChecked: true,
+
+			codeReady: false,
+			checkReady: false,
 			loginEnabled: false,
-		}
+		};
+	}
+
+	render(){
+		return (
+			<View style={{flex:1, alignItems:'center'}}>
+				<View style={{height:200, alignItems:'center', justifyContent:'center'}}>
+					<Image source={require('../images/book.png')} style={{width:50, height:50}}/>
+					<Text style={{fontSize:18, fontWeight:'bold'}}>AIGO</Text>
+					{/*<Text>this.state.phoneNo: {this.state.phoneNo}</Text>
+					<Text>this.state.sendEnabled: {''+this.state.sendEnabled}</Text>*/}
+				</View>
+				<TextInput placeholder="手机号" value={this.state.phoneNo}
+					style={{width:'85%', borderBottomWidth:1}}
+					keyboardType='numeric' autoFocus={true}
+					onChangeText={(text) => this.inputPhoneNo(text)}/>
+				<View style={{flexDirection:'row', marginTop:10}}>
+					<TextInput placeholder="验证码" value={this.state.code} 
+						onChangeText={(text) => this.inputCode(text)}
+						style={{width:'60%', borderBottomWidth:1}}/>
+					<Button onPress={() => this.sendCode()} 
+						isDisabled={!this.state.sendEnabled} 
+						style={{height:30, width:'25%', borderWidth:0, borderRadius:2, backgroundColor:'gold'}}>
+						发送
+					</Button>
+				</View>
+				<View style={{flexDirection:'row', marginTop:10, marginLeft:30, alignSelf:'flex-start'}}>
+					<CheckBox label='已阅读并同意'
+						onChange={(checked) => this.updateLoginEnabled(checked)}
+						checkboxStyle={{height:15, width:15}}/>
+					<Text onPress={() => this.showTermOfService()}>
+						《服务条款》
+					</Text>
+				</View>
+				<Button title='注册/登录' onPress={() => this.login()} 
+					isDisabled={!this.state.loginEnabled}
+					style={{height:30, marginTop:20, marginLeft:25, marginRight:25, borderWidth:0, borderRadius:2, backgroundColor:'gold'}}>
+					注册/登录
+				</Button>
+			</View>
+		)
+	}
+
+	inputPhoneNo(text){
+		console.log('phoneNo: '+text);
+		this.setState({phoneNo: text});	
+		let tmp = /^1[0-9]{10}$/.test(text);
+		console.log('sendEnabled = '+tmp);
+		this.setState({sendEnabled: tmp});
+	}
+
+	inputCode(text){
+		console.log('code: '+text);
+		this.setState({code: text});	
+		let tmp = /^[0-9]{4}$/.test(text);
+		this.setState({codeReady: tmp});
+		this.setState({loginEnabled: tmp && this.state.checkReady});
 	}
 
 	sendCode(){
-		let response = this.sendCodeImpl(this.state.phoneNo);
-		if(Constants.SUCCESS === response.code){
-			Toast.show('短信已发送，请查收');
-		}else{
-			Toast.show('发送失败：'+response.message);
-		}
+		this.sendCodeImpl(this.state.phoneNo).then(response => {
+			if(SUCCESS === response.code){
+				Toast.show('短信已发送，请查收', {duration:1000});
+			}else{
+				Toast.show('发送失败：'+response.message, {duration:1000});
+			}
 
-		//MOCK
-		this.setState({code: '1001'});
+			this.setState({code: response.captcha});
+			this.setState({codeReady: true});
+			this.setState({loginEnabled: true && this.state.checkReady});
+		}, error => {
+			console.log(error);
+		});
 	}
 
 	async sendCodeImpl(phoneNo){
 		try{
-			let request = { phoneNo : this.state.phoneNo };
-			let url = format(Constants.getCaptcha, request);
+			let request = { phoneNo : phoneNo };
+			let url = format(getCaptcha, request);
+			console.log('url: '+url);
 			let response = await fetch(url);
 			let responseJson = await response.json();
 			return responseJson;
 		} catch(error){
-			console.error(error);
-			return {
-				code: Constants.SUCCESS,
-			};
+			console.log(error);
 		}
 	}
 
-	updateLoginEnabled(){
-		this.setState({loginEnabled: this.state.agreeChecked});
+	updateLoginEnabled(checked){
+		// 选中 vs checked值 刚好相反！
+		console.log('checked = '+checked);
+		this.setState({checkReady: !checked});
+		this.setState({loginEnabled: this.state.codeReady && !checked});
 	}
 
 	showTermOfService(){
@@ -63,10 +133,10 @@ export default class RegisterScreen extends React.Component {
 
 	login(){
 		let response = this.loginImpl();
-		if(Constants.SUCCESS === response.code){
-			Toast.show('注册成功！');
+		if(SUCCESS === response.code){
+			Toast.show('注册成功！', {duration:1000});
 			storage.save({
-				key: Constants.loginState,
+				key: loginState,
 				data: {
 					userId: response.userId,
 					token: response.token,
@@ -80,7 +150,7 @@ export default class RegisterScreen extends React.Component {
 			// });
 			// this.props.navigation.dispatch(backAction);
 		}else{
-			Toast.show('注册失败：'+response.message);
+			Toast.show('注册失败：'+response.message, {duration:1000});
 		}
 	}
 
@@ -90,7 +160,7 @@ export default class RegisterScreen extends React.Component {
 				phoneNo: this.state.phoneNo,
 				captcha: this.state.code,
 			};
-			let response = await fetch(Constants.login, {
+			let response = await fetch(login, {
 				method: 'POST',
 				body: JSON.stringify(request)
 			});
@@ -99,35 +169,11 @@ export default class RegisterScreen extends React.Component {
 		}catch(error){
 			console.error(error);
 			return { 
-				code: Constants.SUCCESS,
+				code: SUCCESS,
 				userId: this.state.phoneNo,
 				token: 'AD775KJAL456K63D',
 				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
 			};
 		}
-	}
-
-	render(){
-		return (
-			<View>
-				<Image source={require('../images/book.png')}/>
-				<TextInput placeholder="手机号" value={this.state.phoneNo}
-					keyboardType='numeric' maxLength={11}
-					onChangeText={(text)=>{
-						console.log('phoneNo: '+text);
-						this.setState({phoneNo: text});	
-						let sendEnabled = /^1[0-9]{10}$/.test(this.state.phoneNo);
-						console.log('sendEnabled = '+sendEnabled);
-						this.setState({sendEnabled: sendEnabled});
-					}}/>
-				<TextInput placeholder="验证码" value={this.state.code} />
-				<Button title="发送" onPress={this.sendCode} disabled={!this.sendEnabled} />
-				<CheckBox lable='已阅读并同意' 
-					checked={this.state.agreeChecked}
-					onChange={(checked) => this.updateLoginEnabled()}/>
-				<Text onPress={this.showTermOfService}>《服务条款》</Text>
-				<Button title='注册/登录' onPress={this.login} />
-			</View>
-		)
 	}
 }
