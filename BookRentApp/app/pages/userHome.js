@@ -29,8 +29,12 @@ export default class UserHomeScreen extends React.Component {
 		);
 	}
 
+	componentWillMount(){
+		console.log('in userHome componentWillMount');
+	}
+
 	componentDidMount(){
-		this.getStorage();
+		console.log('in userHome componentDidMount');
 	}
 
 	async getStorage(){

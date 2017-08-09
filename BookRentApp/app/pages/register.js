@@ -74,6 +74,14 @@ export default class RegisterScreen extends React.Component {
 		)
 	}
 
+	componentWillMount(){
+		console.log('in register componentWillMount');
+	}
+
+	componentDidMount(){
+		console.log('in register componentDidMount');
+	}
+
 	inputPhoneNo(text){
 		console.log('phoneNo: '+text);
 		this.setState({phoneNo: text});	

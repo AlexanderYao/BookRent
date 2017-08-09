@@ -35,7 +35,12 @@ class QrCodeScreen extends React.Component {
 		);
 	}
 
+	componentWillMount(){
+		console.log('in qrcode componentWillMount');
+	}
+
 	componentDidMount(){
+		console.log('in qrcode componentDidMount');
 		this.getStorageUrl();
 	}
 
