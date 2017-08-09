@@ -80,10 +80,6 @@ class QrCodeScreen extends React.Component {
 			return responseJson;
 		}catch(error){
 			console.error(error);
-			return { 
-				code: SUCCESS,
-				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
-			};
 		}
 	}
 }

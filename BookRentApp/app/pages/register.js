@@ -65,7 +65,7 @@ export default class RegisterScreen extends React.Component {
 						《服务条款》
 					</Text>
 				</View>
-				<Button title='注册/登录' onPress={() => this.login()} 
+				<Button title='注册/登录' onPress={() => this.doLogin()} 
 					isDisabled={!this.state.loginEnabled}
 					style={{height:30, marginTop:20, marginLeft:25, marginRight:25, borderWidth:0, borderRadius:2, backgroundColor:'gold'}}>
 					注册/登录
@@ -130,49 +130,51 @@ export default class RegisterScreen extends React.Component {
 		this.props.navigation.navigate('TermOfService');
 	}
 
-	login(){
-		let response = this.loginImpl();
-		if(SUCCESS === response.code){
-			Toast.show('注册成功！', {duration:1000});
-			storage.save({
-				key: loginState,
-				data: {
-					userId: response.userId,
-					token: response.token,
-					entry: response.entry,
-				},
-			})
-			this.props.navigation.back();
+	doLogin(){
+		this.loginImpl().then(response => {
+			console.log(response);
+			if(SUCCESS === response.code){
+				Toast.show('注册/登录成功！', {duration:1000});
+				storage.save({
+					key: loginState,
+					data: {
+						userId: response.userId,
+						token: response.token,
+					},
+				})
+				//this.props.navigation.back();
 
-			// const backAction = NavigationActions.back({
-			// 	key: 'QrCode'
-			// });
-			// this.props.navigation.dispatch(backAction);
-		}else{
-			Toast.show('注册失败：'+response.message, {duration:1000});
-		}
+				// const backAction = NavigationActions.back({
+				// 	key: 'QrCode'
+				// });
+				// this.props.navigation.dispatch(backAction);
+			}else{
+				Toast.show('注册/登录失败：'+response.message, {duration:1000});
+			}
+		}, error => {
+			console.log(error);
+		});
 	}
 
 	async loginImpl(){
 		try{
+			console.log(login);
 			let request = {
 				phoneNo: this.state.phoneNo,
 				captcha: this.state.code,
 			};
 			let response = await fetch(login, {
+				headers: {
+					// 'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
 				method: 'POST',
-				body: JSON.stringify(request)
+				body: JSON.stringify(request),
 			});
 			let responseJson = await response.json();
 			return responseJson;
 		}catch(error){
 			console.error(error);
-			return { 
-				code: SUCCESS,
-				userId: this.state.phoneNo,
-				token: 'AD775KJAL456K63D',
-				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
-			};
 		}
 	}
 }
