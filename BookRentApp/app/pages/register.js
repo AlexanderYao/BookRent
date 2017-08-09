@@ -127,8 +127,7 @@ export default class RegisterScreen extends React.Component {
 	}
 
 	showTermOfService(){
-		const { navigate } = this.props.navigation;
-		navigate('TermOfService');
+		this.props.navigation.navigate('TermOfService');
 	}
 
 	login(){

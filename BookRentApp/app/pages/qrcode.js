@@ -25,6 +25,15 @@ class QrCodeScreen extends React.Component {
 			url: '',
 		}
 	}
+	
+	render(){
+		return (
+			<View style={styles.flexCenter}>
+				<QRCode value={this.state.url} size={200}
+					bgColor='black' fgColor='white'/>
+			</View>
+		);
+	}
 
 	componentDidMount(){
 		this.getStorage();
@@ -76,15 +85,6 @@ class QrCodeScreen extends React.Component {
 				entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
 			};
 		}
-	}
-	
-	render(){
-		return (
-			<View style={styles.flexCenter}>
-				<QRCode value={this.state.url} size={200}
-					bgColor='black' fgColor='white'/>
-			</View>
-		);
 	}
 }
 

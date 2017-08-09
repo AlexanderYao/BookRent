@@ -13,12 +13,12 @@ import {
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import Storage from 'react-native-storage';
 
-import QrCodeScreen from './pages/qrcode.js';
-import RegisterScreen from './pages/register.js';
-import TermOfServiceScreen from './pages/termOfService.js';
-import ShopcartScreen from './pages/shopcart.js';
-import ShopcartDetailScreen from './pages/shopcartDetail.js';
-import UserHomeScreen from './pages/userHome.js';
+import QrCodeScreen from './pages/qrcode';
+import RegisterScreen from './pages/register';
+import TermOfServiceScreen from './pages/termOfService';
+import ShopcartScreen from './pages/shopcart';
+import ShopcartDetailScreen from './pages/shopcartDetail';
+import UserHomeScreen from './pages/userHome';
 
 const storage = new Storage({
 	size: 1000,
@@ -31,7 +31,7 @@ global.storage = storage;
 const QrCodeStackNavigator = StackNavigator({
 	QrCode: {screen: QrCodeScreen},
 	Register: {screen: RegisterScreen},
-	termOfService: {screen: TermOfServiceScreen},
+	TermOfService: {screen: TermOfServiceScreen},
 });
 
 const ShopcartStackNavigator = StackNavigator({
