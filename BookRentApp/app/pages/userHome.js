@@ -2,23 +2,54 @@ import React from 'react';
 import {
 	Text,
 	View,
-	Button,
 } from 'react-native';
+import Button from 'apsl-react-native-button';
+import Toast from 'react-native-root-toast';
+import {
+	SUCCESS, 
+	loginState,
+} from '../utils/constants';
 
 export default class UserHomeScreen extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			userInfo: {id: 'Alex', name: '邬文尧'},
+			userId: '',
+			token: '',
 		};
 	}
 
 	render(){
 		return (
 			<View>
-				<Text>ID: {this.state.userInfo.id}</Text>
-				<Text>Name: {this.state.userInfo.name}</Text>
+				<Text>ID: {this.state.userId}</Text>
+				<Text>Token: {this.state.token}</Text>
+				<Button onPress={() => this.logout()}>登出</Button>
 			</View>
 		);
+	}
+
+	componentDidMount(){
+		this.getStorage();
+	}
+
+	async getStorage(){
+		let res;
+		try{
+			res = await storage.load({ key: loginState });
+			this.setState({
+				userId: res.userId,
+				token: res.token,
+			});
+		}catch(err){
+			console.log(err.message);
+		}
+	}
+
+	logout(){
+		storage.remove({
+			key: loginState
+		});
+		Toast.show('已登出', {duration:1000});
 	}
 }

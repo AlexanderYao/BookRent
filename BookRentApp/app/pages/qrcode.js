@@ -36,8 +36,44 @@ class QrCodeScreen extends React.Component {
 	}
 
 	componentDidMount(){
-		this.getStorage();
-		// this.getUrl();
+		this.getStorageUrl();
+	}
+
+	async getStorageUrl(){
+		let res1;
+		try{
+			res1 = await storage.load({ key: loginState });
+			console.log('res1: ');
+			console.log(res1);
+			this.setState({
+				userId: res1.userId,
+				token: res1.token,
+			});
+		}catch(err){
+			console.log(err.message);
+			switch(err.name){
+				case 'NotFoundError':
+					this.props.navigation.navigate('Register');
+					return;
+				case 'ExpiredError':
+					this.props.navigation.navigate('Register');
+					return;
+			}
+		}
+
+		try{
+			let request = {
+				userId: res1.userId,
+				token: res1.token,
+			};
+			let url = format(entry, request);
+			let res2 = await fetch(url);
+			let resJson = await res2.json();
+			console.log(resJson);
+			this.setState({url: resJson.entry});
+		}catch(error){
+			console.error(error);
+		}
 	}
 
 	getStorage(){
@@ -77,6 +113,7 @@ class QrCodeScreen extends React.Component {
 			let url = format(entry, request);
 			let response = await fetch(url);
 			let responseJson = await response.json();
+			console.log(responseJson);
 			return responseJson;
 		}catch(error){
 			console.error(error);

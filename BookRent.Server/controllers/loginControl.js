@@ -25,3 +25,14 @@ export const login = (req, res, next) => {
 	};
 	res.json(result);
 }
+
+export const entry = (req, res) => {
+	console.log(req.params);
+	let userId = req.params.userId;
+	let token = req.params.token;
+	let result = {
+		code: '0000',
+		entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
+	};
+	res.json(result);
+}

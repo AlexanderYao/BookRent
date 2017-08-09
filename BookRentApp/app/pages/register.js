@@ -142,12 +142,9 @@ export default class RegisterScreen extends React.Component {
 						token: response.token,
 					},
 				})
-				//this.props.navigation.back();
 
-				// const backAction = NavigationActions.back({
-				// 	key: 'QrCode'
-				// });
-				// this.props.navigation.dispatch(backAction);
+				const backAction = NavigationActions.back();
+				this.props.navigation.dispatch(backAction);
 			}else{
 				Toast.show('注册/登录失败：'+response.message, {duration:1000});
 			}
@@ -165,7 +162,6 @@ export default class RegisterScreen extends React.Component {
 			};
 			let response = await fetch(login, {
 				headers: {
-					// 'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
 				method: 'POST',
