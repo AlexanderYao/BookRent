@@ -29,7 +29,7 @@ class QrCodeScreen extends React.Component {
 	
 	render(){
 		return (
-			<View style={styles.flexCenter}>
+			<View style={[styles.flexCenter, styles.alignVertical]}>
 				<TouchableHighlight
 					underlayColor='transparent'
 					onPress={() => this.getUrl()} >

@@ -15,3 +15,4 @@ export const getUserInfo = urlPrefix + 'user/info/{userId}';
 export const updateUserInfo = urlPrefix + 'user/info';
 
 export const books = urlPrefix + 'books';
+export const doubanApi = 'https://api.douban.com/v2/book/{id}';
