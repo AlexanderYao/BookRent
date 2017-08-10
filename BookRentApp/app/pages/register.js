@@ -151,8 +151,7 @@ export default class RegisterScreen extends React.Component {
 					},
 				})
 
-				const backAction = NavigationActions.back();
-				this.props.navigation.dispatch(backAction);
+				this.props.navigation.goBack();
 			}else{
 				Toast.show('注册/登录失败：'+response.message, {duration:1000});
 			}
