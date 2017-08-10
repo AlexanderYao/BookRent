@@ -9,10 +9,16 @@ import {
 
 export default class ShopcartDetailScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    title: `book name: ${navigation.state.params.book}`,
+    title: `${navigation.state.params.book.title}`,
   });
   render(){
-    const { params } = this.props.navigation.state;
-    return <Text>书名：{params.book}</Text>;
+    const { book } = this.props.navigation.state.params;
+    return (
+      <View>
+        <Text>ID：{book.id}</Text>
+        <Text>书名：{book.title}</Text>
+        <Text>作者：{book.author}</Text>
+      </View>
+    );
   }
 }

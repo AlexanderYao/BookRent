@@ -13,3 +13,5 @@ export const getOrderHistory = urlPrefix + 'order/list/{userId}?from={from}&to={
 export const getOrderInfo = urlPrefix + 'order/{orderId}';
 export const getUserInfo = urlPrefix + 'user/info/{userId}';
 export const updateUserInfo = urlPrefix + 'user/info';
+
+export const books = urlPrefix + 'books';

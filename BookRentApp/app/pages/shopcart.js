@@ -10,27 +10,27 @@ import {
 import {
   StackNavigator
 } from 'react-navigation';
-import styles from '../styles.js';
+import styles from '../styles';
+import {
+  books,
+  SUCCESS,
+} from '../utils/constants';
 
 export default class ShopcartScreen extends Component {
   constructor(props){
     super(props);
 
-    const bookList = [
-      {key:0, name:'平凡的世界',author:'[中]路遥'},
-      {key:1, name:'画的秘密',author:'[法]马克-安托万·马修'},
-      {key:2, name:'万历十五年',author:'[美]黄仁宇'},
-      {key:3, name:'我也有一个梦想',author:'[中]林达'},
-      {key:4, name:'琅琊榜',author:'[中]海宴'},
-    ];
-
     this.state = {
-      bookList: bookList,
+      bookList: [],
     };
   }
 
-  static navigationOptions = {
-    title: '书架',
+  static navigationOptions = ({navigation}) =>{
+    const {params = {}} = navigation.state;
+    return {
+      title: '书架',
+      headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />,
+    };
   };
 
   render(){
@@ -41,13 +41,31 @@ export default class ShopcartScreen extends Component {
           renderItem={({item}) => 
             <View style={styles.rowStyle}>
               <Text style={styles.rowText}
-                onPress={() => navigate('ShopcartDetail', {book: item.name})}>
-                {item.name}:   {item.author}
+                onPress={() => navigate('ShopcartDetail', {book: item})}>
+                {item.title}:   {item.author}
               </Text>
             </View>
           }
         />
       </View>
     );
+  }
+
+  componentDidMount(){
+    this.props.navigation.setParams({handleRefresh: () => this.getBooks()});
+    this.getBooks();
+  }
+
+  async getBooks(){
+    try{
+      console.log('shopcart.getBooks');
+      let res = await fetch(books);
+      let resJson = await res.json();
+      console.log(resJson);
+      resJson.forEach(item => item.key = item.id);
+      this.setState({bookList: resJson});
+    }catch(error){
+      console.error(error);
+    }
   }
 }
