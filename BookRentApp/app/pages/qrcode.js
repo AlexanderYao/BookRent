@@ -4,6 +4,7 @@ import {
 	View,
 	Button,
 	StyleSheet,
+	TouchableHighlight,
 } from 'react-native';
 import QRCode from 'react-native-qrcode';
 import Toast from 'react-native-root-toast';
@@ -29,34 +30,38 @@ class QrCodeScreen extends React.Component {
 	render(){
 		return (
 			<View style={styles.flexCenter}>
-				<QRCode value={this.state.url} size={200}
-					bgColor='black' fgColor='white'/>
+				<TouchableHighlight
+					underlayColor='transparent'
+					onPress={() => this.getUrl()} >
+					<View>
+						<QRCode value={this.state.url} size={200}
+							bgColor='black' fgColor='white'/>
+						<Text style={{textAlign:'center', marginTop:10}}>点击刷新</Text>
+					</View>
+				</TouchableHighlight>
 			</View>
 		);
 	}
 
-	componentWillMount(){
-		console.log('in qrcode componentWillMount');
-	}
+	static navigationOptions = ({navigation}) =>{
+		const {params = {}} = navigation.state;
+		return {
+			headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />
+		};
+	};
 
 	componentDidMount(){
-		console.log('in qrcode componentDidMount');
+		console.log('qrcode.componentDidMount');
+		this.props.navigation.setParams({handleRefresh: () => this.getStorageUrl()});
 		this.getStorageUrl();
 	}
 
-	async getStorageUrl(){
-		let res1;
-		try{
-			res1 = await storage.load({ key: loginState });
-			console.log('res1: ');
-			console.log(res1);
-			this.setState({
-				userId: res1.userId,
-				token: res1.token,
-			});
-		}catch(err){
-			console.log(err.message);
-			switch(err.name){
+	getStorageUrl(){
+		this.getStorage().then(value => {
+			this.getUrl();
+		}, error => {
+			console.log(error.message);
+			switch(error.name){
 				case 'NotFoundError':
 					this.props.navigation.navigate('Register');
 					return;
@@ -64,62 +69,38 @@ class QrCodeScreen extends React.Component {
 					this.props.navigation.navigate('Register');
 					return;
 			}
-		}
-
-		try{
-			let request = {
-				userId: res1.userId,
-				token: res1.token,
-			};
-			let url = format(entry, request);
-			let res2 = await fetch(url);
-			let resJson = await res2.json();
-			console.log(resJson);
-			this.setState({url: resJson.entry});
-		}catch(error){
-			console.error(error);
-		}
+		});
 	}
 
-	getStorage(){
-		storage.load({
-			key: loginState,
-		}).then(res => {
-			this.setState({
-				userId: res.userId,
-				token: res.token,
-			});
-
-			let entryRes = this.getUrl();
-			if(SUCCESS === entryRes.code){
-				this.setState({url: entryRes.entry});
-			}else{
-				this.props.navigation.navigate('Register');
-			}
-		}).catch(err => {
-			console.log(err.message);
-			switch(err.name){
-				case 'NotFoundError':
-					this.props.navigation.navigate('Register');
-					break;
-				case 'ExpiredError':
-					this.props.navigation.navigate('Register');
-					break;
-			}
+	async getStorage(){
+		console.log('qrcode.getStorage');
+		let res = await storage.load({ key: loginState });
+		console.log(res);
+		this.setState({
+			userId: res.userId,
+			token: res.token,
 		});
 	}
 
 	async getUrl(){
 		try{
+			console.log('qrcode.getUrl');
+			let userId = this.state.userId;
+			let token = this.state.token;
+
+			if(!userId || !token){
+				return;
+			}
+
 			let request = {
-				userId: this.state.userId,
-				token: this.state.token,
+				userId: userId,
+				token: token,
 			};
 			let url = format(entry, request);
 			let response = await fetch(url);
 			let responseJson = await response.json();
 			console.log(responseJson);
-			return responseJson;
+			this.setState({url: responseJson.entry});
 		}catch(error){
 			console.error(error);
 		}

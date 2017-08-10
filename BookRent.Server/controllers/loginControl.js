@@ -27,12 +27,13 @@ export const login = (req, res, next) => {
 }
 
 export const entry = (req, res) => {
-	console.log(req.params);
-	let userId = req.params.userId;
-	let token = req.params.token;
+	console.log(req.query);
+	let userId = req.query.userId;
+	let token = req.query.token;
+	let random = Math.floor(Math.random()*1000000);
 	let result = {
 		code: '0000',
-		entry: 'http://www.yunna.me/api/entry/7894561234567/U1LX097XRS',
+		entry: 'http://www.yunna.me/api/entry/'+userId+'/'+token+'/'+random,
 	};
 	res.json(result);
 }
