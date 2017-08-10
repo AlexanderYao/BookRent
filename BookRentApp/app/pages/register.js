@@ -34,6 +34,11 @@ export default class RegisterScreen extends React.Component {
 		};
 	}
 
+	static navigationOptions = {
+		title: '登录',
+		headerLeft: null,
+	};
+
 	render(){
 		return (
 			<View style={{flex:1, alignItems:'center'}}>
@@ -72,14 +77,6 @@ export default class RegisterScreen extends React.Component {
 				</Button>
 			</View>
 		)
-	}
-
-	componentWillMount(){
-		console.log('in register componentWillMount');
-	}
-
-	componentDidMount(){
-		console.log('in register componentDidMount');
 	}
 
 	inputPhoneNo(text){

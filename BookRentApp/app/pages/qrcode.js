@@ -46,7 +46,8 @@ class QrCodeScreen extends React.Component {
 	static navigationOptions = ({navigation}) =>{
 		const {params = {}} = navigation.state;
 		return {
-			headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />
+			title: '二维码',
+			headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />,
 		};
 	};
 
