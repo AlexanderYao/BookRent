@@ -18,6 +18,7 @@ export default styles = StyleSheet.create({
     borderRightColor: 'white',
     borderBottomColor: '#E0E0E0',
     borderWidth: 1,
+    flexDirection: 'row',
   },
 	rowText: {
     alignSelf: 'flex-start', 
@@ -31,5 +32,15 @@ export default styles = StyleSheet.create({
 	},
 	paragraph: {
 		lineHeight: 30,
-	}
+	},
+	image: {
+		width: 20,
+		height: 20,
+	},
+	avatar: {
+    backgroundColor:'#16A085',
+    borderRadius:20,
+		width: 60,
+		height: 60,
+	},
 });
