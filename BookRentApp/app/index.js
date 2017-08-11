@@ -16,9 +16,15 @@ import Storage from 'react-native-storage';
 import QrCodeScreen from './pages/qrcode';
 import RegisterScreen from './pages/register';
 import TermOfServiceScreen from './pages/termOfService';
+
 import ShopcartScreen from './pages/shopcart';
 import ShopcartDetailScreen from './pages/shopcartDetail';
+
 import UserHomeScreen from './pages/userHome';
+import UserDetailScreen from './pages/userDetail';
+import WalletScreen from './pages/wallet';
+import HistoryScreen from './pages/history';
+import SettingScreen from './pages/setting';
 
 const storage = new Storage({
 	size: 1000,
@@ -41,6 +47,10 @@ const ShopcartStackNavigator = StackNavigator({
 
 const UserStackNavigator = StackNavigator({
 	UserHome: {screen: UserHomeScreen},
+	UserDetail: {screen: UserDetailScreen},
+	Wallet: {screen: WalletScreen},
+	History: {screen: HistoryScreen},
+	Setting: {screen: SettingScreen},
 });
 
 const MainTabNavigator = TabNavigator({

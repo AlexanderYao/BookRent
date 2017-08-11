@@ -27,7 +27,7 @@ export default class UserHomeScreen extends React.Component {
 	render(){
 		return (
 			<View>
-				<TouchableOpacity style={styles.rowStyle}>
+				<TouchableOpacity style={styles.rowStyle} onPress={() => this.navigateTo('UserDetail')}>
 					<Image source={require('../images/book.png')} style={styles.avatar}/>
 					<View style={{marginLeft: 20}}>
 						<Text style={styles.rowText}>{this.state.userName}</Text>
@@ -35,17 +35,17 @@ export default class UserHomeScreen extends React.Component {
 					</View>
 				</TouchableOpacity>
 
-				<TouchableOpacity style={styles.rowStyle}>
+				<TouchableOpacity style={styles.rowStyle} onPress={() => this.navigateTo('Wallet')}>
 					<Image source={require('../images/account.png')}  style={styles.image}/>
 					<Text style={[styles.rowText, {marginTop: 0}]}>我的钱包</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity style={styles.rowStyle}>
+				<TouchableOpacity style={styles.rowStyle} onPress={() => this.navigateTo('History')}>
 					<Image source={require('../images/history.png')}  style={styles.image}/>
 					<Text style={[styles.rowText, {marginTop: 0}]}>历史订单</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity style={styles.rowStyle}>
+				<TouchableOpacity style={styles.rowStyle} onPress={() => this.navigateTo('Setting')}>
 					<Image source={require('../images/set.png')}  style={styles.image}/>
 					<Text style={[styles.rowText, {marginTop: 0}]}>设置</Text>
 				</TouchableOpacity>
@@ -81,6 +81,13 @@ export default class UserHomeScreen extends React.Component {
 		}catch(err){
 			console.log(err.message);
 		}
+	}
+
+	navigateTo(screenName){
+		this.props.navigation.navigate(screenName, {
+			userId:this.state.userId, 
+			token:this.state.token
+		});
 	}
 
 	logout(){
