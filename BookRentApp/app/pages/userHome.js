@@ -4,6 +4,7 @@ import {
 	View,
 	Image,
 	TouchableOpacity,
+	Alert,
 } from 'react-native';
 import Button from 'apsl-react-native-button';
 import Toast from 'react-native-root-toast';
@@ -91,9 +92,14 @@ export default class UserHomeScreen extends React.Component {
 	}
 
 	logout(){
-		storage.remove({
-			key: loginState
-		});
-		Toast.show('已登出', {duration:1000});
+		Alert.alert('提示', '确认退出登录？', [
+			{text:'取消', onPress:()=>console.log('cancel'), style:'cancel'},
+			{text:'确定', onPress:()=>{
+				storage.remove({
+					key: loginState
+				});
+				Toast.show('已成功退出！', {duration:1000});
+			}},
+		]);
 	}
 }

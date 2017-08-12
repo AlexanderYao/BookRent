@@ -20,6 +20,9 @@ export default styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: 'row',
   },
+  rowStyleSpace:{
+  	justifyContent: 'space-between',
+  },
 	rowText: {
     alignSelf: 'flex-start', 
     marginTop: 10, 
@@ -29,6 +32,9 @@ export default styles = StyleSheet.create({
 	rowTitle: {
 		fontSize: 18,
 		color: 'green',
+	},
+	rowTextRight: {
+		marginRight: 20,
 	},
 	paragraph: {
 		lineHeight: 30,
