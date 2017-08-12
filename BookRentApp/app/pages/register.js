@@ -18,6 +18,7 @@ import {
 	getCaptcha,
 	login,
 } from '../utils/constants';
+import styles from '../styles';
 
 export default class RegisterScreen extends React.Component {
 	constructor(props){
@@ -72,7 +73,7 @@ export default class RegisterScreen extends React.Component {
 				</View>
 				<Button title='注册/登录' onPress={() => this.doLogin()} 
 					isDisabled={!this.state.loginEnabled}
-					style={{height:30, marginTop:20, marginLeft:25, marginRight:25, borderWidth:0, borderRadius:2, backgroundColor:'gold'}}>
+					style={styles.rowButton}>
 					注册/登录
 				</Button>
 			</View>

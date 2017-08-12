@@ -23,6 +23,9 @@ export default styles = StyleSheet.create({
   rowStyleSpace:{
   	justifyContent: 'space-between',
   },
+  rowSpaceAround:{
+  	justifyContent: 'space-around',
+  },
 	rowText: {
     alignSelf: 'flex-start', 
     marginTop: 10, 
@@ -49,4 +52,16 @@ export default styles = StyleSheet.create({
 		width: 60,
 		height: 60,
 	},
+	rowButton: {
+		height:30, 
+		marginTop:20, 
+		marginLeft:25, 
+		marginRight:25, 
+		borderWidth:0, 
+		borderRadius:2, 
+		backgroundColor:'gold',
+	},
+	radioButton: {
+		width: '35	%',
+	}
 });

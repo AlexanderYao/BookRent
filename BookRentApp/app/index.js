@@ -23,6 +23,7 @@ import ShopcartDetailScreen from './pages/shopcartDetail';
 import UserHomeScreen from './pages/userHome';
 import UserDetailScreen from './pages/userDetail';
 import WalletScreen from './pages/wallet';
+import TopupScreen from './pages/topup';
 import HistoryScreen from './pages/history';
 import SettingScreen from './pages/setting';
 
@@ -49,6 +50,7 @@ const UserStackNavigator = StackNavigator({
 	UserHome: {screen: UserHomeScreen},
 	UserDetail: {screen: UserDetailScreen},
 	Wallet: {screen: WalletScreen},
+	Topup: {screen: TopupScreen},
 	History: {screen: HistoryScreen},
 	Setting: {screen: SettingScreen},
 });

@@ -3137,6 +3137,10 @@ react-native-root-toast@^1.1.2:
   dependencies:
     react-native-root-siblings "^1.2.1"
 
+react-native-simple-radio-button@^2.6.0:
+  version "2.6.0"
+  resolved "http://registry.npm.taobao.org/react-native-simple-radio-button/download/react-native-simple-radio-button-2.6.0.tgz#db7446da6a2c69e1858ad28452c6d5e373097cf0"
+
 react-native-storage@^0.2.2:
   version "0.2.2"
   resolved "http://registry.npm.taobao.org/react-native-storage/download/react-native-storage-0.2.2.tgz#4449197f122b2da0650e3704e1f050260ed58d9f"

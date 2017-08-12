@@ -23,6 +23,7 @@ export default class SettingScreen extends React.Component {
 			allowSendMsg: true,
 			allowAutoPay: true,
 			needNotLogin: 'sixMonth',
+			version: '1.0.0.alpha',
 		};
 	}
 
@@ -37,7 +38,7 @@ export default class SettingScreen extends React.Component {
 				</View>
 
 				<View style={[styles.rowStyle, styles.rowStyleSpace]}>
-					<Text style={styles.rowText}>开启小额免密</Text>
+					<Text style={styles.rowText}>开启小额免密(200元)</Text>
 					<Switch value={this.state.allowAutoPay}
 						onValueChange={(value) => this.setState({allowAutoPay: value})} 
 						style={styles.rowTextRight}/>
@@ -57,7 +58,7 @@ export default class SettingScreen extends React.Component {
 
 				<View style={[styles.rowStyle, styles.rowStyleSpace]}>
 					<Text style={styles.rowText}>版本号</Text>
-					<Text style={[styles.rowText, styles.rowTextRight]}>1.0.0.alpha</Text>
+					<Text style={[styles.rowText, styles.rowTextRight]}>{this.state.version}</Text>
 				</View>
 			</View>
 		);
