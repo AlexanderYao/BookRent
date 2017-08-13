@@ -3125,6 +3125,10 @@ react-native-qrcode@^0.2.4:
     prop-types "^15.5.10"
     qr.js "0.0.0"
 
+react-native-radio-buttons@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-radio-buttons/download/react-native-radio-buttons-1.0.0.tgz#be828b85897f80ca66ad66ad7adedb6b1890ab9d"
+
 react-native-root-siblings@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/react-native-root-siblings/download/react-native-root-siblings-1.2.1.tgz#6f8d0e711dbf9aef4e57e73aea751372b5aefcff"

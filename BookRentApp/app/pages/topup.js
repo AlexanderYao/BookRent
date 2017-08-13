@@ -13,6 +13,9 @@ import RadioForm, {
 	RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 import {
+	RadioButtons
+} from 'react-native-radio-buttons';
+import {
 	SUCCESS, 
 	loginState,
 } from '../utils/constants';
@@ -34,10 +37,11 @@ export default class TopupScreen extends React.Component {
 			],
 			enumPayTypes: [
 				{label:'支付宝支付', value:'zhifubao'},
-				{label:'微信支付', value:'weixin'},
+				{label:'微 信 支 付 ', value:'weixin'},
 			],
 			money: 10,
 			payType: 'zhifubao',
+			payTypeIndex: 0,
 		};
 	}
 
@@ -48,17 +52,51 @@ export default class TopupScreen extends React.Component {
 					<Text style={styles.rowText}>充值金额</Text>
 				</View>
 
-				<RadioForm initial={this.state.money}
-					radio_props={this.state.enumMoney}
-					onPress={(value) => this.setState({money: value})} />
+				<RadioButtons options={this.state.enumMoney}
+					onSelection={(option) => this.setState({money: option.value})}
+					selectedOption={this.state.money}
+					renderOption={this.renderOption}
+					renderContainer={this.renderContainer}
+					extractText={(option) => option.label}
+					testOptionEqual={(selectedValue, option) => selectedValue === option.value}
+				/>
 
 				<View style={styles.rowStyle}>
 					<Text style={styles.rowText}>请选择支付方式</Text>
 				</View>
 
-				<RadioForm initial={this.state.payType}
-					radio_props={this.state.enumPayTypes}
-					onPress={(value) => this.setState({payType: value})} />
+				<RadioForm initial={'zhifubao'}
+					animation={false}
+				>
+					{this.state.enumPayTypes.map((obj, i) => {
+						let that = this;
+						let isSelected = this.state.payTypeIndex == i;
+						let onPress = (value, index) => {
+							this.setState({
+								payType: value,
+								payTypeIndex: index,
+							})
+						};
+						return (
+							<RadioButton key={i} style={{margin:10}}>
+								<RadioButtonLabel
+									obj={obj}
+									index={i}
+									onPress={onPress}
+									labelStyle={{fontSize:16}}
+								/>
+								<RadioButtonInput
+									obj={obj}
+									index={i}
+									isSelected={this.state.payTypeIndex === i}
+									onPress={onPress}
+									buttonSize={10}
+									buttonStyle={{marginLeft:200}}
+								/>
+							</RadioButton>
+						)
+					})}
+				</RadioForm>
 
 				<Button style={styles.rowButton} 
 					onPress={() => this.props.navigation.navigate('TopupZhifubao')}>
@@ -83,8 +121,30 @@ export default class TopupScreen extends React.Component {
 		console.log('topup.componentDidMount');
 	}
 
-	selectMoney(aa, money){
-		console.log(aa);
-		console.log(money);
+	renderOption(option, selected, onSelect, index){
+		const style = {
+			width: 150,
+			borderWidth: 1,
+			padding: 10,
+			margin: 10,
+			fontSize: 20,
+			textAlign: 'center',
+			borderColor: 'gray',
+			borderRadius: 4,
+		};
+		const styleSelected = selected ? {backgroundColor:'gold'} : {};
+		return (
+			<TouchableOpacity key={index} onPress={onSelect}>
+				<Text style={[style, styleSelected]}>{option.label}</Text>
+			</TouchableOpacity>
+		)
+	}
+
+	renderContainer(optionNodes){
+		return <View style={{
+			flexDirection:'row', 
+			flexWrap:'wrap',
+			justifyContent:'center',
+		}}>{optionNodes}</View>
 	}
 }

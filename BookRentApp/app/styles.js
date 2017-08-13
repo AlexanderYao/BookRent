@@ -61,7 +61,4 @@ export default styles = StyleSheet.create({
 		borderRadius:2, 
 		backgroundColor:'gold',
 	},
-	radioButton: {
-		width: '35	%',
-	}
 });
