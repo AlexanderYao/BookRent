@@ -24,6 +24,7 @@ import UserHomeScreen from './pages/userHome';
 import UserDetailScreen from './pages/userDetail';
 import WalletScreen from './pages/wallet';
 import TopupScreen from './pages/topup';
+import TermOfServiceTopupScreen from './pages/termOfServiceTopup';
 import HistoryScreen from './pages/history';
 import SettingScreen from './pages/setting';
 
@@ -51,6 +52,7 @@ const UserStackNavigator = StackNavigator({
 	UserDetail: {screen: UserDetailScreen},
 	Wallet: {screen: WalletScreen},
 	Topup: {screen: TopupScreen},
+	TermOfServiceTopup: {screen: TermOfServiceTopupScreen},
 	History: {screen: HistoryScreen},
 	Setting: {screen: SettingScreen},
 });

@@ -99,12 +99,16 @@ export default class TopupScreen extends React.Component {
 				</RadioForm>
 
 				<Button style={styles.rowButton} 
-					onPress={() => this.props.navigation.navigate('TopupZhifubao')}>
+					onPress={() => this.topupNow()}>
 					立即充值
 				</Button>
 
 				<Text style={{fontSize:12, marginLeft:30}}>
-					点击立即充值，即表示您已阅读并同意《充值活动协议》
+					点击立即充值，即表示您已阅读并同意
+					<Text onPress={() => this.props.navigation.navigate('TermOfServiceTopup')}
+						style={styles.textLink}>
+						《充值活动协议》
+					</Text>
 				</Text>
 			</View>
 		);
@@ -146,5 +150,10 @@ export default class TopupScreen extends React.Component {
 			flexWrap:'wrap',
 			justifyContent:'center',
 		}}>{optionNodes}</View>
+	}
+
+	topupNow(){
+		console.log(this.state.money);
+		console.log(this.state.payType);
 	}
 }

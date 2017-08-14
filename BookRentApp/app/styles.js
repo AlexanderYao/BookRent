@@ -61,4 +61,7 @@ export default styles = StyleSheet.create({
 		borderRadius:2, 
 		backgroundColor:'gold',
 	},
+	textLink: {
+		textDecorationLine: 'underline',
+	}
 });
