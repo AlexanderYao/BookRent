@@ -5,6 +5,9 @@ import {
 	login,
 	entry,
 } from './controllers/loginControl';
+import {
+	recharge
+} from './controllers/tradeControl';
 
 const router = Router();
 
@@ -13,5 +16,7 @@ router.route('/books').get(index);
 router.route('/captcha/:phoneNo').get(captcha);
 router.route('/login').post(login);
 router.route('/entry').get(entry);
+
+router.route('/recharge').post(recharge);
 
 export default router;
