@@ -9,11 +9,8 @@ import {
 import QRCode from 'react-native-qrcode';
 import Toast from 'react-native-root-toast';
 import format from 'string-format';
-import {
-	SUCCESS,
-	loginState,
-	entry,
-} from '../utils/constants';
+import * as WeChat from 'react-native-wechat';
+import * as constants from '../utils/constants';
 import styles from '../styles';
 
 class QrCodeScreen extends React.Component {
@@ -53,6 +50,10 @@ class QrCodeScreen extends React.Component {
 
 	componentDidMount(){
 		console.log('qrcode.componentDidMount');
+
+		// 必须初始化（有且只有）一次
+		WeChat.registerApp(constants.APPID);
+
 		this.props.navigation.setParams({handleRefresh: () => this.getStorageUrl()});
 		this.getStorageUrl();
 	}
@@ -75,7 +76,7 @@ class QrCodeScreen extends React.Component {
 
 	async getStorage(){
 		console.log('qrcode.getStorage');
-		let res = await storage.load({ key: loginState });
+		let res = await storage.load({ key: constants.loginState });
 		console.log(res);
 		this.setState({
 			userId: res.userId,
@@ -97,7 +98,7 @@ class QrCodeScreen extends React.Component {
 				userId: userId,
 				token: token,
 			};
-			let url = format(entry, request);
+			let url = format(constants.entry, request);
 			let response = await fetch(url);
 			let responseJson = await response.json();
 			console.log(responseJson);

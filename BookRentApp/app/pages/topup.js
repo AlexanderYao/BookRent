@@ -16,6 +16,7 @@ import {
 	RadioButtons
 } from 'react-native-radio-buttons';
 import Alipay from 'react-native-yunpeng-alipay';
+import * as WeChat from 'react-native-wechat';
 import {
 	SUCCESS, 
 	loginState,
@@ -154,7 +155,7 @@ export default class TopupScreen extends React.Component {
 		}}>{optionNodes}</View>
 	}
 
-	topupNow(){
+	async topupNow(){
 		switch(this.state.payType){
 			case 'zhifubao':
 				let params = {
@@ -199,6 +200,38 @@ export default class TopupScreen extends React.Component {
 				break;
 			case 'weixin':
 				console.log('weixin pay');
+				let res = {
+					appid: 'wx8888888888888888',	/*微信开放平台审核通过的应用APPID*/
+		      partnerId: '1900000109',  		/*商家向财付通申请的商家id*/
+		      prepayId: 'WX1217752501201407033233368018',    /*预支付订单*/
+		      nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',    /*随机串，防重发*/
+		      timeStamp: '1412000000',  /*时间戳，防重发*/
+		      package: 'Sign=WXPay',      /*商家根据财付通文档填写的数据和签名*/
+		      sign: 'C380BEC2BFD727A4B6845133519F3AD6',            /*商家根据微信开放平台文档对数据做的签名*/
+				};
+
+				try {
+			    let result = await WeChat.pay({
+			      partnerId: res.partnerid,  /*商家向财付通申请的商家id*/
+			      prepayId: res.prepayid,    /*预支付订单*/
+			      nonceStr: res.noncestr,    /*随机串，防重发*/
+			      timeStamp: res.timestamp,  /*时间戳，防重发*/
+			      package: res.package,      /*商家根据财付通文档填写的数据和签名*/
+			      sign: res.sign,            /*商家根据微信开放平台文档对数据做的签名*/
+			    });
+
+			    console.log(result);
+			    if(result.errCode === 0){
+			    	Toast.show('支付成功', {duration:1000});
+			    }else if(result.errCode === -1){
+			    	Toast.show('订单支付失败：'+result.errStr, {duration:1000});
+			    }else if(result.errCode === -2){
+			    	Toast.show('用户取消', {duration:1000});
+			    }
+			  } catch (error) {
+			  	console.log(error);
+			  	Toast.show('失败：'+error, {duration:1000});
+			  }
 				break;
 			default:
 				console.error('unknown payType');

@@ -1,3 +1,4 @@
+export const APPID = 'TestWechat';
 export const SUCCESS = '0000';
 
 // storages
