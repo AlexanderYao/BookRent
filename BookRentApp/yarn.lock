@@ -3156,6 +3156,10 @@ react-native-tab-view@^0.0.67:
   dependencies:
     prop-types "^15.5.8"
 
+react-native-yunpeng-alipay@^2.0.0:
+  version "2.0.0"
+  resolved "http://registry.npm.taobao.org/react-native-yunpeng-alipay/download/react-native-yunpeng-alipay-2.0.0.tgz#a9d3d68a5eef2e5c75bb66c460384e1288d9aaad"
+
 react-native@0.46.4:
   version "0.46.4"
   resolved "http://registry.npm.taobao.org/react-native/download/react-native-0.46.4.tgz#281bbcc165e5c36b4c8eaa868e6768543e811bcb"
