@@ -19,9 +19,11 @@ export default class UserHomeScreen extends React.Component {
 		super(props);
 
 		this.state = {
-			userId: 'AlexanderYao',
-			userName: '邬文尧',
+			userId: '7894561234567',
 			token: '',
+
+			userName: 'AlexanderYao',
+			phoneNo: '13774436724',
 		};
 	}
 
@@ -32,7 +34,7 @@ export default class UserHomeScreen extends React.Component {
 					<Image source={require('../images/book.png')} style={styles.avatar}/>
 					<View style={{marginLeft: 20}}>
 						<Text style={styles.rowText}>{this.state.userName}</Text>
-						<Text style={[styles.rowText, {fontSize:13}]}>ID: {this.state.userId}</Text>
+						<Text style={[styles.rowText, {fontSize:13}]}>手机号：{this.state.phoneNo}</Text>
 					</View>
 				</TouchableOpacity>
 

@@ -53,7 +53,7 @@ export default styles = StyleSheet.create({
 		height: 60,
 	},
 	rowButton: {
-		height:30, 
+		height:40, 
 		marginTop:20, 
 		marginLeft:25, 
 		marginRight:25, 
@@ -63,5 +63,15 @@ export default styles = StyleSheet.create({
 	},
 	textLink: {
 		textDecorationLine: 'underline',
-	}
+	},
+
+	textSmall:{
+		fontSize: 12,
+	},
+	textMiddle:{
+		fontSize: 16,
+	},
+	textLarge:{
+		fontSize: 18,
+	},
 });
