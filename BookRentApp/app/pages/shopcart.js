@@ -27,6 +27,8 @@ export default class ShopcartScreen extends Component {
   }
 
   static navigationOptions = ({navigation}) =>{
+    //TODO: change png to react-native-vector-icons
+    //TODO: use react-native-camera to scan barcode + qrcode
     const {params = {}} = navigation.state;
     return {
       title: '书架',

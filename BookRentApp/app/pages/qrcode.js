@@ -3,8 +3,9 @@ import {
 	Text,
 	View,
 	Button,
+	Image,
 	StyleSheet,
-	TouchableHighlight,
+	TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode';
 import Toast from 'react-native-root-toast';
@@ -27,7 +28,7 @@ class QrCodeScreen extends React.Component {
 	render(){
 		return (
 			<View style={[styles.flexCenter, styles.alignVertical]}>
-				<TouchableHighlight
+				<TouchableOpacity
 					underlayColor='transparent'
 					onPress={() => this.getUrl()} >
 					<View>
@@ -35,7 +36,7 @@ class QrCodeScreen extends React.Component {
 							bgColor='black' fgColor='white'/>
 						<Text style={{textAlign:'center', marginTop:10}}>点击刷新</Text>
 					</View>
-				</TouchableHighlight>
+				</TouchableOpacity>
 			</View>
 		);
 	}
@@ -44,7 +45,11 @@ class QrCodeScreen extends React.Component {
 		const {params = {}} = navigation.state;
 		return {
 			title: '二维码',
-			headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />,
+			headerRight: (
+				<TouchableOpacity onPress={() => params.handleRefresh()}>
+          <Image source={require('../images/refresh.png')} style={{height:30, width:30, margin:10}}/>
+        </TouchableOpacity>
+			),
 		};
 	};
 

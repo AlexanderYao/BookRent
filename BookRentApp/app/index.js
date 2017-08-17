@@ -36,30 +36,9 @@ const storage = new Storage({
 });
 global.storage = storage;
 
-const QrCodeStackNavigator = StackNavigator({
-	QrCode: {screen: QrCodeScreen},
-	Register: {screen: RegisterScreen},
-	TermOfService: {screen: TermOfServiceScreen},
-});
-
-const ShopcartStackNavigator = StackNavigator({
-  Shopcart: {screen: ShopcartScreen},
-  ShopcartDetail: {screen: ShopcartDetailScreen},
-});
-
-const UserStackNavigator = StackNavigator({
-	UserHome: {screen: UserHomeScreen},
-	UserDetail: {screen: UserDetailScreen},
-	Wallet: {screen: WalletScreen},
-	Topup: {screen: TopupScreen},
-	TermOfServiceTopup: {screen: TermOfServiceTopupScreen},
-	History: {screen: HistoryScreen},
-	Setting: {screen: SettingScreen},
-});
-
 const MainTabNavigator = TabNavigator({
 	QrCode: {
-		screen: QrCodeStackNavigator,
+		screen: QrCodeScreen,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '二维码',
 			tabBarIcon: ({tintColor}) => (
@@ -69,7 +48,7 @@ const MainTabNavigator = TabNavigator({
 		}),
 	},
 	Shopcart: {
-		screen: ShopcartStackNavigator,
+		screen: ShopcartScreen,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '我的书架',
 			tabBarIcon: ({tintColor}) => (
@@ -79,7 +58,7 @@ const MainTabNavigator = TabNavigator({
 		}),
 	},
 	User: {
-		screen: UserStackNavigator,
+		screen: UserHomeScreen,
 		navigationOptions: ({navigation}) => ({
 			tabBarLabel: '个人中心',
 			tabBarIcon: ({tintColor}) => (
@@ -90,4 +69,17 @@ const MainTabNavigator = TabNavigator({
 	},
 });
 
-AppRegistry.registerComponent('BookRentApp', () => MainTabNavigator);
+const MainStackNavigation = StackNavigator({
+	MainTab: {screen: MainTabNavigator},
+	Register: {screen: RegisterScreen},
+	TermOfService: {screen: TermOfServiceScreen},
+  ShopcartDetail: {screen: ShopcartDetailScreen},
+	UserDetail: {screen: UserDetailScreen},
+	Wallet: {screen: WalletScreen},
+	Topup: {screen: TopupScreen},
+	TermOfServiceTopup: {screen: TermOfServiceTopupScreen},
+	History: {screen: HistoryScreen},
+	Setting: {screen: SettingScreen},
+});
+
+AppRegistry.registerComponent('BookRentApp', () => MainStackNavigation);
