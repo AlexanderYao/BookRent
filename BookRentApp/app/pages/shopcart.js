@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   StackNavigator
@@ -29,7 +30,16 @@ export default class ShopcartScreen extends Component {
     const {params = {}} = navigation.state;
     return {
       title: '书架',
-      headerRight: <Button title="刷新" onPress={() => params.handleRefresh()} />,
+      headerRight: (
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity onPress={() => params.handleRefresh()}>
+            <Image source={require('../images/refresh.png')} style={{height:30, width:30}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => params.handleScan()} >
+            <Image source={require('../images/scanning.png')} style={{height:20, width:20, marginLeft:10, marginRight:10, marginTop:5}}/>
+          </TouchableOpacity>
+        </View>
+      ),
     };
   };
 
@@ -52,7 +62,10 @@ export default class ShopcartScreen extends Component {
   }
 
   componentDidMount(){
-    this.props.navigation.setParams({handleRefresh: () => this.getBooks()});
+    this.props.navigation.setParams({
+      handleRefresh: () => this.getBooks(),
+      handleScan: () => this.scan(),
+    });
     this.getBooks();
   }
 
@@ -67,5 +80,9 @@ export default class ShopcartScreen extends Component {
     }catch(error){
       console.error(error);
     }
+  }
+
+  scan(){
+    console.log('in scan');
   }
 }
