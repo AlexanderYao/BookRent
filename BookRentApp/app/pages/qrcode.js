@@ -63,6 +63,10 @@ class QrCodeScreen extends React.Component {
 		this.getStorageUrl();
 	}
 
+	componentWillReceiveProps(nextProps){
+		console.log('qrcode.componentWillReceiveProps');
+	}
+
 	getStorageUrl(){
 		this.getStorage().then(value => {
 			this.getUrl();

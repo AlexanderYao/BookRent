@@ -5,7 +5,7 @@ export const SUCCESS = '0000';
 export const loginState = 'loginState';
 
 // services
-const urlPrefix = 'http://localhost:9000/api/v1/';
+const urlPrefix = 'http://10.10.10.119:9000/api/v1/';
 export const getCaptcha = urlPrefix + 'captcha/{phoneNo}';
 export const login = urlPrefix + 'login';
 export const bind = urlPrefix + 'bind';

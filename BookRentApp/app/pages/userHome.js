@@ -73,6 +73,10 @@ export default class UserHomeScreen extends React.Component {
 		// this.getStorage();
 	}
 
+	componentWillReceiveProps(nextProps){
+		console.log('userHome.componentWillReceiveProps');
+	}
+
 	async getStorage(){
 		let res;
 		try{

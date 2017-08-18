@@ -8,6 +8,9 @@ import {
 import {
 	recharge
 } from './controllers/tradeControl';
+import {
+	orders
+} from './controllers/orderControl';
 
 const router = Router();
 
@@ -18,5 +21,6 @@ router.route('/login').post(login);
 router.route('/entry').get(entry);
 
 router.route('/recharge').post(recharge);
+router.route('/order/list/:userId').get(orders);
 
 export default router;

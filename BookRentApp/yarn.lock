@@ -3254,6 +3254,12 @@ react-native-root-toast@^1.1.2:
     prop-types "^15.5.10"
     react-native-root-siblings "^1.2.1"
 
+react-native-scrollable-tab-view@^0.6.7:
+  version "0.6.7"
+  resolved "http://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.6.7.tgz#3a5fe8a4bd5bc7eb023f306099323bbd9cc284a2"
+  dependencies:
+    react-timer-mixin "^0.13.3"
+
 react-native-simple-radio-button@^2.6.0:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/react-native-simple-radio-button/download/react-native-simple-radio-button-2.6.1.tgz#6277812044ea87645ae52a8f8c3f7eb0d9385228"
@@ -3392,7 +3398,7 @@ react-test-renderer@16.0.0-alpha.12:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react-timer-mixin@^0.13.2:
+react-timer-mixin@^0.13.2, react-timer-mixin@^0.13.3:
   version "0.13.3"
   resolved "http://registry.npm.taobao.org/react-timer-mixin/download/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
 
