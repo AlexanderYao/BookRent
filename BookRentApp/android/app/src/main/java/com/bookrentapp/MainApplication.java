@@ -1,6 +1,8 @@
 package com.bookrentapp;
 
 import android.app.Application;
+import android.content.Context;
+// import android.support.multidex.MultiDex;
 
 import com.facebook.react.ReactApplication;
 import com.theweflex.react.WeChatPackage;
@@ -41,4 +43,10 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
+
+  // @Override
+  // protected void attachBaseContext(Context base) {
+  //     super.attachBaseContext(base);
+  //     MultiDex.install(this);     
+  // }
 }

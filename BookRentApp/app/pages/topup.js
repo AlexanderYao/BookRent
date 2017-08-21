@@ -17,10 +17,7 @@ import {
 } from 'react-native-radio-buttons';
 import Alipay from 'react-native-yunpeng-alipay';
 import * as WeChat from 'react-native-wechat';
-import {
-	SUCCESS, 
-	loginState,
-} from '../utils/constants';
+import * as constants from '../utils/constants';
 import styles from '../styles';
 
 export default class TopupScreen extends React.Component {
@@ -28,22 +25,22 @@ export default class TopupScreen extends React.Component {
 		super(props);
 
 		this.state = {
-			userId: 'AlexanderYao',
+			userId: '20170802121212000U000001',
 			userName: '邬文尧',
 			token: '',
 			enumMoney: [
-				{label:'充500元', value:500},
-				{label:'充100元', value:100},
-				{label:'充50元', value:50},
-				{label:'充10元', value:10},
-				{label:'充0.01元', value:0.01},
+				{label:'充500元', value:"500"},
+				{label:'充100元', value:"100"},
+				{label:'充50元', value:"50"},
+				// {label:'充10元', value:"10"},
+				{label:'充0.01元', value:"0.01"},
 			],
 			enumPayTypes: [
-				{label:'支付宝支付', value:'zhifubao'},
-				{label:'微 信 支 付 ', value:'weixin'},
+				{label:'支付宝支付', value:'alipay'},
+				{label:'微 信 支 付 ', value:'wechat_pay'},
 			],
-			money: 10,
-			payType: 'zhifubao',
+			money: "20.36",
+			payType: 'alipay',
 			payTypeIndex: 0,
 		};
 	}
@@ -68,7 +65,7 @@ export default class TopupScreen extends React.Component {
 					<Text style={styles.rowText}>请选择支付方式</Text>
 				</View>
 
-				<RadioForm initial={'zhifubao'}
+				<RadioForm initial={'alipay'}
 					animation={false}
 				>
 					{this.state.enumPayTypes.map((obj, i) => {
@@ -155,27 +152,54 @@ export default class TopupScreen extends React.Component {
 		}}>{optionNodes}</View>
 	}
 
-	topupNow(){
-		switch(this.state.payType){
-			case 'zhifubao':
-				this.alipay();
-				break;
-			case 'weixin':
-				this.wxpay();
-				break;
-			default:
-				console.error('unknown payType');
+	async topupNow(){
+		console.log('topup.topupNow');
+		try{
+			let request = { 
+				userId : this.state.userId,
+				rechargeAmt: this.state.money,
+				payType: this.state.payType, 
+			};
+			let response = await fetch(constants.recharge, {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				body: JSON.stringify(request),
+			});
+			console.log(response);
+			let resJson = await response.json();
+			console.log(resJson);
+
+			if(resJson.code !== constants.SUCCESS){
+				Toast.show('获取订单号失败，支付取消');
+				return;
+			}else{
+				let {orderId, orderInfo} = resJson.data;
+				switch(this.state.payType){
+					case 'alipay':
+						this.alipay(orderInfo);
+						break;
+					case 'wechat_pay':
+						this.wxpay();
+						break;
+					default:
+						console.error('unknown payType');
+				}
+			}
+		} catch(error){
+			console.log(error);
 		}
 	}
 
-	alipay(){
-		let params = {
-			orderString: 'app_id=2015052600090779&biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A%220.01%22%2C%22subject%22%3A%221%22%2C%22body%22%3A%22%E6%88%91%E6%98%AF%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%22%2C%22out_trade_no%22%3A%22IQJZSRC1YMQB5HU%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fdomain.merchant.com%2Fpayment_notify&sign_type=RSA2&timestamp=2016-08-25%2020%3A26%3A31&version=1.0&sign=cYmuUnKi5QdBsoZEAbMXVMmRWjsuUj%2By48A2DvWAVVBuYkiBj13CFDHu2vZQvmOfkjE0YqCUQE04kqm9Xg3tIX8tPeIGIFtsIyp%2FM45w1ZsDOiduBbduGfRo1XRsvAyVAv2hCrBLLrDI5Vi7uZZ77Lo5J0PpUUWwyQGt0M4cj8g%3D',
-		};
-		console.log(Alipay);
-		Alipay.pay(params.orderString).then((data) => {
-			if (data.length && data[0].resultStatus) {
-				switch (data[0].resultStatus) {
+	alipay(orderInfo){
+		console.log('alipay');
+		//let orderInfo = 'charset=utf-8&biz_content=%7B%22out_trade_no%22%3A%22170821000P00000035%22%2C%22total_amount%22%3A%2220.36%22%2C%22subject%22%3A%22%E4%B8%8A%E6%B5%B7%E4%BA%91%E6%8B%BF%E6%99%BA%E8%83%BD%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%22%2C%22body%22%3A%22%E4%BA%91%E6%8B%BF%E8%B4%A6%E6%88%B7%E5%85%85%E5%80%BC%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%7D&method=alipay.trade.app.pay&format=JSON&sign=ff%2F7u4E6XmNyGi6DAfgrz%2BQc%2BQaqdnYqTgTO35LKDmiWd9kLuJNJEk6dlKw3NsxIPOETQARr5qITbVZ3w4f1FFDlzDWzA6BT1TG8fFhNu1uo%2BkuzSTqx9l0HV96yH9yR3r3m9OQvrUnvY%2B7PD%2BvnC11kRtEMr3NpycLmjbt68t0i%2FGiw4yQFA3rVqycPEyHal2iEzZ8U8KNWdu4jcI9esZmSfX472gKpLA8ss7%2B08tdOVDSpOV3K3B%2Bl5JhCvK5b4Tl6XfaQzMscZVxCeAoLZDFWcFCVM64XiyAHbbGzGDS2ZbsDOTNhIUZDpqRuDSGAawUZTVailHfQx16yrW98KQ%3D%3D&notify_url=http%3A%2F%2F10.10.10.141%3A8080%2Frest%2Fapi%2Fv1%2Ftrade%2Falipay_notify&app_id=2016080700190975&version=1.0&sign_type=RSA2&timestamp=2017-08-21+11%3A15%3A13';
+		console.log(orderInfo);
+		Alipay.payV2(orderInfo).then((data) => {
+			console.log(data);
+			if (data && data.resultStatus) {
+				switch (data.resultStatus) {
 					case "9000":
 						Toast.show('支付成功')
 						break;
@@ -205,6 +229,7 @@ export default class TopupScreen extends React.Component {
 				Toast.show('其他失败原因')
 			} 
 		}, (err) => {
+			console.log(err);
 			Toast.show('支付失败，请重新支付')
 		});
 	}

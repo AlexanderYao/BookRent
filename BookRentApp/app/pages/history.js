@@ -27,32 +27,22 @@ export default class HistoryScreen extends Component {
 	}
 
 	render(){
-		const {navigate} = this.props.navigation;
-							console.log(this.state.orders);
 		return (
-			<View>
-				<ScrollableTabView
-					scrollWithoutAnimation={true}
-				>
-					<View tabLabel='所有订单'>
-						{
-							this.state.orders.map((item, i) => {
-								return (
-									// <OrderItem order={item} key={i} navigation={this.props.navigation}/>
-									<View style={styles.rowStyle} key={i}>
-										<Text style={styles.rowText}
-											onPress={() => navigate('OrderDetail', {orderId:item.orderId})}>
-											{item.store}:   {item.price}
-										</Text>
-									</View>
-								);
-							})
-						}
-					</View>
-					<View tabLabel='未支付订单'></View>
-					<View tabLabel='已支付订单'></View>
-				</ScrollableTabView>
-			</View>
+			<ScrollableTabView style={{height:100}}
+				scrollWithoutAnimation={true}
+			>
+				<View tabLabel='所有订单'>
+					{
+						this.state.orders.map((item, i) => {
+							return (
+								<OrderItem key={i} order={item} navigation={this.props.navigation} />
+							);
+						})
+					}
+				</View>
+				<View tabLabel='未支付订单'></View>
+				<View tabLabel='已支付订单'></View>
+			</ScrollableTabView>
 		);
 	}
 
@@ -97,7 +87,7 @@ class OrderItem extends Component {
 		console.log('OrderItem.render');
 		const {navigate} = this.props.navigation;
 		const {order} = this.props;
-		console.log(order);
+		
 		return (
 			<View style={styles.rowStyle}>
 				<Text style={styles.rowText}
